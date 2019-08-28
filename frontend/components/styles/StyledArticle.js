@@ -4,6 +4,7 @@ const article = styled.li`
     background: white;
     display: flex;
     flex-direction: column;
+    padding: 1rem 1.8rem 0;
     position: relative;
     border: 1px solid #ebebeb;
     box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.08);

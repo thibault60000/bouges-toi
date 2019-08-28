@@ -19,7 +19,7 @@ class User extends Component {
   render() {
     console.log( { ... this.props })
     return (
-      <Query {...this.props} query={CURRENT_USER_QUERY} fetchPolicy="network-only">
+      <Query {...this.props} query={CURRENT_USER_QUERY} >
         {payload => this.props.children(payload)}
       </Query>
     );
