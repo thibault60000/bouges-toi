@@ -28,7 +28,7 @@ const Navbar = () => (
           </>
         )}
         {!me && (
-          <Link href="/signupPage">
+          <Link href="/login">
             <a> Inscription </a>
           </Link>
         )}
