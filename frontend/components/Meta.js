@@ -9,7 +9,7 @@ const Meta = () => (
       <link rel="shortcut icon" href="/static/favicon.png" />
       <link rel="stylesheet" type="text/css" href="/static/nprogress.css" />
       {/* Title */}
-      <title> Mon Site </title>
+      <title> Bouges toi ! </title>
     </Head>
   </div>
 );
