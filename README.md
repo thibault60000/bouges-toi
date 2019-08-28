@@ -1,7 +1,7 @@
 # bouges-toi ! :rocket:
 
 
-## COMMANDES 
+:computer: ## COMMANDES 
 
 ### Déploiement du schéma de BDD : 
 npm run deploy
@@ -13,7 +13,7 @@ npm run dev
 npm run start
 
 
-## DOCUMENTATION
+:page_facing_up: ## DOCUMENTATION
 
 ###  Inscrire une deuxième clé SSH sur son PC : 
 https://medium.com/@thibault60000/cr%C3%A9er-cl%C3%A9-ssh-2-comptes-git-sur-windows-19702d1f62d7
