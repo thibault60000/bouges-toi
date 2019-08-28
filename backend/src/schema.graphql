@@ -1,0 +1,48 @@
+# import * from './generated/prisma.graphql'
+
+type SuccessMessage {
+  message: String
+}
+
+type Mutation {
+  """ CREATE ARTICLE """
+  createArticle(
+    title: String!
+    description: String!
+    image: String
+    greatImage: String
+    price: Int!
+  ): Article!
+  """ UPDATE ARTICLE """
+  updateArticle(
+    id: ID!
+    title: String
+    description: String
+    price: Int
+  ): Article!
+  """ DELETE ARTICLE """
+  deleteArticle(id: ID!): Article
+  """ USER AUTHENTIFICATION """
+  signup(email: String!, password: String!, name: String!, surname: String!): User!
+  signin(email: String!, password: String!): User!
+  signout: SuccessMessage
+  requestReset(email: String!): SuccessMessage
+  resetPassword(resetToken: String!, password: String!, confirmPassword: String!): User
+}
+
+type Query {
+  """ ARTICLES """
+  articles(where: ArticleWhereInput, orderBy: ArticleOrderByInput, skip: Int, first: Int): [Article!]!
+  article(where: ArticleWhereUniqueInput!): Article
+  articlesConnection(where: ArticleWhereInput): ArticleConnection!
+  """ Authentification """
+  me: User
+}
+
+type User {
+  id: ID!
+  email: String!
+  name: String!
+  surname: String!
+  permissions: [Permission!]!
+}

@@ -1,0 +1,53 @@
+enum Permission {
+  ADMIN
+  USER
+  ARTICLECREATE
+  ARTICLEUPDATE
+  ARTICLEDELETE
+  RUBRIQUECREATE
+  RUBRIQUEUPDATE 
+  RUBRIQUEDELETE 
+  CATEGORYCREATE
+  CATEGORYUPDATE
+  CATEGORYDELETE
+  PERMISSIONUPDATE
+  PRENIUM
+}
+
+type User {
+  id: ID! @id
+  name: String!
+  surname: String!
+  email: String! @unique
+  password: String!
+  resetToken: String
+  resetTokenExpiry: Float
+  permissions: [Permission] @scalarList(strategy:RELATION)
+
+}
+
+type Article {
+  id: ID! @id
+  title: String!
+  description: String!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  image: String
+  greatImage: String
+  price: Int!
+}
+
+type Category {
+  id: ID! @id
+  title: String!
+  description: String!
+  image: String
+  greatImage: String
+}
+
+type Rubrique {
+  id: ID! @id
+  title: String!
+  image: String
+  greatImage: String
+}
