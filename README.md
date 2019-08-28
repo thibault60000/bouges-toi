@@ -21,6 +21,9 @@ https://medium.com/@thibault60000/cr%C3%A9er-cl%C3%A9-ssh-2-comptes-git-sur-wind
 ###  APOLLO : Client Front
 https://www.apollographql.com/docs/react/
 
+### MAILTRAP : Safe Email Testing 
+https://mailtrap.io/
+
 ###   GRAPHQL : Système de requêtage 
 https://graphql.org/learn/
 
