@@ -14,7 +14,13 @@ const Mutations = {
     if (!ctx.request.userId) {
       throw new Errort("Vous devez être connecté");
     }
-    // 2. Créer l'article
+    // 2. Test si on a les droits de création
+    const hasPermission = ctx.request.user.permissions.some(p =>
+      ["ADMIN", "ARTICLECREATE"].includes(p)
+    );
+    if (!hasPermission)
+      throw new Error("Vous n'êtes pas autorisé à faire ça ! ");
+    // 3. Créer l'article
     const article = await ctx.db.mutation.createArticle(
       {
         data: {
@@ -35,8 +41,25 @@ const Mutations = {
     ------- UPDATE ARTICLE ----------------------
     ---------------------------------------------*/
   updateArticle(parent, args, ctx, info) {
-    const updates = { ...args };
+    // 1. Test si on a la permission et que c'est notre article
+    const hasPermission = ctx.request.user.permissions.some(p =>
+      ["ADMIN", "ARTICLECREATE"].includes(p)
+    );
+    const ownsArticle = args.user === ctx.request.userId;
+    if (!hasPermission && !ownsArticle)
+      throw new Error("Vous n'êtes pas autorisé !");
+    // 2. Construction de l'objet final à envoyer
+    const updates = {
+      ...args,
+      user: {
+        connect: {
+          id: ctx.request.userId
+        }
+      }
+    };
+    // 3. Suppression de l'ID
     delete updates.id;
+    // 4. Execution de la mise à jour
     return ctx.db.mutation.updateArticle(
       {
         data: updates,
@@ -59,7 +82,7 @@ const Mutations = {
     // 2. Test si on est le créateur de l'article
     const ownsArticle = article.user.id === ctx.request.userId;
     const hasPermission = ctx.request.user.permissions.some(p =>
-      ["ADMIN", "ITEMDELETE"].includes(p)
+      ["ADMIN", "ARTICLEDELETE"].includes(p)
     );
     if (!ownsArticle && !hasPermission) {
       throw new Error("Vous n'êtes pas autorisé à faire ça ! ");

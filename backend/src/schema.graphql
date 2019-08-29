@@ -23,6 +23,7 @@ type Mutation {
     title: String
     description: String
     price: Int
+    user: String
   ): Article!
   """
    DELETE ARTICLE
