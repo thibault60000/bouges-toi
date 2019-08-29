@@ -3,6 +3,8 @@ const jwt = require("jsonwebtoken");
 const { randomBytes } = require("crypto");
 const { promisify } = require("util");
 const { transport, email } = require("../mail");
+const { hasPermission } = require("../utils");
+
 const Mutations = {
   /* ------------------------------------------
     ------- CREATE ARTICLE ----------------------
@@ -170,6 +172,38 @@ const Mutations = {
     });
     // 7. Retourner l'utilisateur
     return updatedUser;
+  },
+  /* ------------------------------------
+  ------ UPDATE PERMISSIONS -------------
+  ---------------------------------------*/
+  async updatePermissions(parent, args, ctx, info) {
+    // 1. Test si on est authentifié
+    if (!ctx.request.userId) throw new Error("Vous devez être connecté");
+    // 2. Récupère l'utilisateur courant
+    const currentUser = await ctx.db.query.user(
+      {
+        where: {
+          id: ctx.request.userId
+        }
+      },
+      `{id, permissions, email, name, surname permissions }`
+    );
+    // 3. Tester les permissions pour mettre à jour
+    hasPermission(currentUser, ["ADMIN", "PERMISSIONUPDATE"]);
+    // 4. Mettre à jour les permissions
+    return ctx.db.mutation.updateUser(
+      {
+        data: {
+          permissions: {
+            set: args.permissions
+          }
+        },
+        where: {
+          id: args.userId
+        }
+      },
+      info
+    );
   }
 };
 
