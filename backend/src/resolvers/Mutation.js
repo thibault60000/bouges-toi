@@ -8,9 +8,19 @@ const Mutations = {
     ------- CREATE ARTICLE ----------------------
     ---------------------------------------------*/
   async createArticle(parent, args, ctx, info) {
+    // 1. Test si le user est connecté
+    if (!ctx.request.userId) {
+      throw new Errort("Vous devez être connecté");
+    }
+    // 2. Créer l'article
     const article = await ctx.db.mutation.createArticle(
       {
         data: {
+          user: {
+            connect: {
+              id: ctx.request.userId
+            }
+          },
           ...args
         }
       },
