@@ -51,10 +51,19 @@ const Mutations = {
     ------- DELETE ARTICLE ----------------------
     ---------------------------------------------*/
   async deleteArticle(parent, args, ctx, info) {
+    // 1. Récupère l'article
     const article = await ctx.db.query.article(
       { where: { id: args.id } },
-      ` { id title }`
+      ` { id title user { id } }`
     );
+    // 2. Test si on est le créateur de l'article
+    const ownsArticle = article.user.id === ctx.request.userId;
+    const hasPermission = ctx.request.user.permissions.some(p =>
+      ["ADMIN", "ITEMDELETE"].includes(p)
+    );
+    if (!ownsArticle && !hasPermission) {
+      throw new Error("Vous n'êtes pas autorisé à faire ça ! ");
+    }
     return ctx.db.mutation.deleteArticle({ where: { id: args.id } }, info);
   },
   /* ------------------------------------------
@@ -132,7 +141,6 @@ const Mutations = {
         `Votre lien de récupération est : \n\n <a href="${process.env.FRONTEND_URL}/resetPasswordPage?resetToken=${resetToken}" > le suivant </a>`
       )
     });
-    console.log(mailResponse);
     // 4. Retourne le message
     return { message: "Mot de passe envoyé" };
   },
