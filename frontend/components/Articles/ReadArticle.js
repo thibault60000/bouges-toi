@@ -46,7 +46,7 @@ export default class ReadArticle extends Component {
             return (
               <StyledReadArticle>
                 <Head>
-                  <title> Mon Site - {article.title}</title>
+                  <title> Bouges toi ! Sortie : {article.title}</title>
                 </Head>
                 <img src={article.greatImage} alt={article.title} />
                 <div className="informations">

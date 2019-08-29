@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "the backend",
   "scripts": {
-    "start": "nodemon -e js,graphql -x node src/index.js",
+    "dev": "nodemon -e js,graphql -x node src/index.js",
     "debug": "nodemon -e js,graphql -x node --inspect src/index.js",
     "playground": "graphql playground --port 4444 --dotenv variables.env",
-    "dev": "npm-run-all --parallel debug playground",
+    "start": "npm-run-all --parallel debug playground",
     "test": "jest",
     "deploy": "prisma deploy --env-file variables.env"
   },

@@ -28,6 +28,7 @@ class RequestReset extends Component {
         {(reset, { error, loading, called }) => (
           <StyledForm
             method="post"
+            /* OnSubmit */
             onSubmit={async e => {
               e.preventDefault();
               const response = await reset();

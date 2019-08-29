@@ -32,7 +32,7 @@ class Pagination extends Component {
             <StyledPagination>
               <Head>
                 <title>
-                  Mon Site - Page {page} sur {pages}
+                  Bouges toi ! - Sorties : Page {page} sur {pages}
                 </title>
               </Head>
               {/* Précédent */}
