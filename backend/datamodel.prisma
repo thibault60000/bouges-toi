@@ -35,6 +35,7 @@ type Article {
   image: String
   greatImage: String
   price: Int!
+  user: User!
 }
 
 type Category {

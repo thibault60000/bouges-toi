@@ -2,15 +2,25 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { randomBytes } = require("crypto");
 const { promisify } = require("util");
-
+const { transport, email } = require("../mail");
 const Mutations = {
   /* ------------------------------------------
     ------- CREATE ARTICLE ----------------------
     ---------------------------------------------*/
   async createArticle(parent, args, ctx, info) {
+    // 1. Test si le user est connecté
+    if (!ctx.request.userId) {
+      throw new Errort("Vous devez être connecté");
+    }
+    // 2. Créer l'article
     const article = await ctx.db.mutation.createArticle(
       {
         data: {
+          user: {
+            connect: {
+              id: ctx.request.userId
+            }
+          },
           ...args
         }
       },
@@ -111,8 +121,18 @@ const Mutations = {
       where: { email: args.email },
       data: { resetToken, resetTokenExpiry }
     });
-    return { message: "Mot de passe envoyé" };
     // 3. Envoyer le nouveau token par mail
+    const mailResponse = await transport.sendMail({
+      from: "thibault.jeanpierre.dev@gmail.com",
+      to: user.email,
+      subject: "Récupération de mot de passe",
+      html: email(
+        `Votre lien de récupération est : \n\n <a href="${process.env.FRONTEND_URL}/resetPasswordPage?resetToken=${resetToken}" > le suivant </a>`
+      )
+    });
+    console.log(mailResponse);
+    // 4. Retourne le message
+    return { message: "Mot de passe envoyé" };
   },
   /* ------------------------------------------
     ------- RESET PASSWORD ----------------------
