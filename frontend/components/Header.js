@@ -59,7 +59,7 @@ const Header = () => (
     <div className="navbar">
       <StyledTitle>
         <Link href="/">
-          <a> Mon Site </a>
+          <a> Bouges toi ! </a>
         </Link>
       </StyledTitle>
       <Navbar />

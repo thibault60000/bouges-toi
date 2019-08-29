@@ -4,7 +4,7 @@ import gql from "graphql-tag";
 import PropTypes from "prop-types";
 
 const CURRENT_USER_QUERY = gql`
-  query CURRENT_USER_QUERY{
+  query CURRENT_USER_QUERY {
     me {
       id
       email
@@ -15,11 +15,14 @@ const CURRENT_USER_QUERY = gql`
 `;
 
 class User extends Component {
-    
   render() {
-    console.log( { ... this.props })
+    console.log({ ...this.props });
     return (
-      <Query {...this.props} query={CURRENT_USER_QUERY} >
+      <Query
+        {...this.props}
+        query={CURRENT_USER_QUERY}
+        fetchPolicy="no-cache"
+      >
         {payload => this.props.children(payload)}
       </Query>
     );

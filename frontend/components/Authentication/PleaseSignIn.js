@@ -3,7 +3,7 @@ import { CURRENT_USER_QUERY } from "./User";
 import Signin from "./Signin";
 
 const PleaseSignIn = props => (
-  <Query query={CURRENT_USER_QUERY}>
+  <Query query={CURRENT_USER_QUERY} fetchPolicy="no-cache">
     {({ data, loading }) => {
       if (loading) return <p>Chargement...</p>;
       if (!data.me) {

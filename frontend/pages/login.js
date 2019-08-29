@@ -6,7 +6,7 @@ const SignupPage = props => (
   <div>
     <Signin />
     <Signup />
-    <Link href="/passwordReset">
+    <Link href="/requestResetPage">
       <a> Mot de passe oublié ?</a>
     </Link>
   </div>
