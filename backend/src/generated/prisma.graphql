@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/thibault-jeanpierre/backend-tutoriel/dev
-# timestamp: Thu Aug 29 2019 16:17:32 GMT+0200 (GMT+02:00)
+# timestamp: Thu Aug 29 2019 22:36:54 GMT+0200 (GMT+02:00)
 
 type AggregateArticle {
   count: Int!
@@ -24,6 +24,9 @@ type Article implements Node {
   createdAt: DateTime!
   updatedAt: DateTime!
   image: String
+  articleNumber: Int
+  userNumber: Int
+  maxUserNumber: Int
   greatImage: String
   price: Int!
   user: User!
@@ -44,6 +47,9 @@ input ArticleCreateInput {
   title: String!
   description: String!
   image: String
+  articleNumber: Int
+  userNumber: Int
+  maxUserNumber: Int
   greatImage: String
   price: Int!
   user: UserCreateOneInput!
@@ -71,6 +77,12 @@ enum ArticleOrderByInput {
   updatedAt_DESC
   image_ASC
   image_DESC
+  articleNumber_ASC
+  articleNumber_DESC
+  userNumber_ASC
+  userNumber_DESC
+  maxUserNumber_ASC
+  maxUserNumber_DESC
   greatImage_ASC
   greatImage_DESC
   price_ASC
@@ -84,6 +96,9 @@ type ArticlePreviousValues {
   createdAt: DateTime!
   updatedAt: DateTime!
   image: String
+  articleNumber: Int
+  userNumber: Int
+  maxUserNumber: Int
   greatImage: String
   price: Int!
 }
@@ -129,6 +144,9 @@ input ArticleUpdateInput {
   title: String
   description: String
   image: String
+  articleNumber: Int
+  userNumber: Int
+  maxUserNumber: Int
   greatImage: String
   price: Int
   user: UserUpdateOneRequiredInput
@@ -138,6 +156,9 @@ input ArticleUpdateManyMutationInput {
   title: String
   description: String
   image: String
+  articleNumber: Int
+  userNumber: Int
+  maxUserNumber: Int
   greatImage: String
   price: Int
 }
@@ -355,6 +376,72 @@ input ArticleWhereInput {
 
   """All values not ending with the given string."""
   image_not_ends_with: String
+  articleNumber: Int
+
+  """All values that are not equal to given value."""
+  articleNumber_not: Int
+
+  """All values that are contained in given list."""
+  articleNumber_in: [Int!]
+
+  """All values that are not contained in given list."""
+  articleNumber_not_in: [Int!]
+
+  """All values less than the given value."""
+  articleNumber_lt: Int
+
+  """All values less than or equal the given value."""
+  articleNumber_lte: Int
+
+  """All values greater than the given value."""
+  articleNumber_gt: Int
+
+  """All values greater than or equal the given value."""
+  articleNumber_gte: Int
+  userNumber: Int
+
+  """All values that are not equal to given value."""
+  userNumber_not: Int
+
+  """All values that are contained in given list."""
+  userNumber_in: [Int!]
+
+  """All values that are not contained in given list."""
+  userNumber_not_in: [Int!]
+
+  """All values less than the given value."""
+  userNumber_lt: Int
+
+  """All values less than or equal the given value."""
+  userNumber_lte: Int
+
+  """All values greater than the given value."""
+  userNumber_gt: Int
+
+  """All values greater than or equal the given value."""
+  userNumber_gte: Int
+  maxUserNumber: Int
+
+  """All values that are not equal to given value."""
+  maxUserNumber_not: Int
+
+  """All values that are contained in given list."""
+  maxUserNumber_in: [Int!]
+
+  """All values that are not contained in given list."""
+  maxUserNumber_not_in: [Int!]
+
+  """All values less than the given value."""
+  maxUserNumber_lt: Int
+
+  """All values less than or equal the given value."""
+  maxUserNumber_lte: Int
+
+  """All values greater than the given value."""
+  maxUserNumber_gt: Int
+
+  """All values greater than or equal the given value."""
+  maxUserNumber_gte: Int
   greatImage: String
 
   """All values that are not equal to given value."""
@@ -433,8 +520,7 @@ type Category implements Node {
   id: ID!
   title: String!
   description: String!
-  image: String
-  greatImage: String
+  categoryNumber: Int
 }
 
 """A connection to a list of items."""
@@ -451,8 +537,7 @@ input CategoryCreateInput {
   id: ID
   title: String!
   description: String!
-  image: String
-  greatImage: String
+  categoryNumber: Int
 }
 
 """An edge in a connection."""
@@ -471,18 +556,15 @@ enum CategoryOrderByInput {
   title_DESC
   description_ASC
   description_DESC
-  image_ASC
-  image_DESC
-  greatImage_ASC
-  greatImage_DESC
+  categoryNumber_ASC
+  categoryNumber_DESC
 }
 
 type CategoryPreviousValues {
   id: ID!
   title: String!
   description: String!
-  image: String
-  greatImage: String
+  categoryNumber: Int
 }
 
 type CategorySubscriptionPayload {
@@ -525,15 +607,13 @@ input CategorySubscriptionWhereInput {
 input CategoryUpdateInput {
   title: String
   description: String
-  image: String
-  greatImage: String
+  categoryNumber: Int
 }
 
 input CategoryUpdateManyMutationInput {
   title: String
   description: String
-  image: String
-  greatImage: String
+  categoryNumber: Int
 }
 
 input CategoryWhereInput {
@@ -665,86 +745,28 @@ input CategoryWhereInput {
 
   """All values not ending with the given string."""
   description_not_ends_with: String
-  image: String
+  categoryNumber: Int
 
   """All values that are not equal to given value."""
-  image_not: String
+  categoryNumber_not: Int
 
   """All values that are contained in given list."""
-  image_in: [String!]
+  categoryNumber_in: [Int!]
 
   """All values that are not contained in given list."""
-  image_not_in: [String!]
+  categoryNumber_not_in: [Int!]
 
   """All values less than the given value."""
-  image_lt: String
+  categoryNumber_lt: Int
 
   """All values less than or equal the given value."""
-  image_lte: String
+  categoryNumber_lte: Int
 
   """All values greater than the given value."""
-  image_gt: String
+  categoryNumber_gt: Int
 
   """All values greater than or equal the given value."""
-  image_gte: String
-
-  """All values containing the given string."""
-  image_contains: String
-
-  """All values not containing the given string."""
-  image_not_contains: String
-
-  """All values starting with the given string."""
-  image_starts_with: String
-
-  """All values not starting with the given string."""
-  image_not_starts_with: String
-
-  """All values ending with the given string."""
-  image_ends_with: String
-
-  """All values not ending with the given string."""
-  image_not_ends_with: String
-  greatImage: String
-
-  """All values that are not equal to given value."""
-  greatImage_not: String
-
-  """All values that are contained in given list."""
-  greatImage_in: [String!]
-
-  """All values that are not contained in given list."""
-  greatImage_not_in: [String!]
-
-  """All values less than the given value."""
-  greatImage_lt: String
-
-  """All values less than or equal the given value."""
-  greatImage_lte: String
-
-  """All values greater than the given value."""
-  greatImage_gt: String
-
-  """All values greater than or equal the given value."""
-  greatImage_gte: String
-
-  """All values containing the given string."""
-  greatImage_contains: String
-
-  """All values not containing the given string."""
-  greatImage_not_contains: String
-
-  """All values starting with the given string."""
-  greatImage_starts_with: String
-
-  """All values not starting with the given string."""
-  greatImage_not_starts_with: String
-
-  """All values ending with the given string."""
-  greatImage_ends_with: String
-
-  """All values not ending with the given string."""
-  greatImage_not_ends_with: String
+  categoryNumber_gte: Int
 }
 
 input CategoryWhereUniqueInput {
@@ -852,9 +874,10 @@ type Query {
 
 type Rubrique implements Node {
   id: ID!
+  rubriqueNumber: Int
   title: String!
   image: String
-  greatImage: String
+  user: User!
 }
 
 """A connection to a list of items."""
@@ -869,9 +892,10 @@ type RubriqueConnection {
 
 input RubriqueCreateInput {
   id: ID
+  rubriqueNumber: Int
   title: String!
   image: String
-  greatImage: String
+  user: UserCreateOneInput!
 }
 
 """An edge in a connection."""
@@ -886,19 +910,19 @@ type RubriqueEdge {
 enum RubriqueOrderByInput {
   id_ASC
   id_DESC
+  rubriqueNumber_ASC
+  rubriqueNumber_DESC
   title_ASC
   title_DESC
   image_ASC
   image_DESC
-  greatImage_ASC
-  greatImage_DESC
 }
 
 type RubriquePreviousValues {
   id: ID!
+  rubriqueNumber: Int
   title: String!
   image: String
-  greatImage: String
 }
 
 type RubriqueSubscriptionPayload {
@@ -939,15 +963,16 @@ input RubriqueSubscriptionWhereInput {
 }
 
 input RubriqueUpdateInput {
+  rubriqueNumber: Int
   title: String
   image: String
-  greatImage: String
+  user: UserUpdateOneRequiredInput
 }
 
 input RubriqueUpdateManyMutationInput {
+  rubriqueNumber: Int
   title: String
   image: String
-  greatImage: String
 }
 
 input RubriqueWhereInput {
@@ -999,6 +1024,28 @@ input RubriqueWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  rubriqueNumber: Int
+
+  """All values that are not equal to given value."""
+  rubriqueNumber_not: Int
+
+  """All values that are contained in given list."""
+  rubriqueNumber_in: [Int!]
+
+  """All values that are not contained in given list."""
+  rubriqueNumber_not_in: [Int!]
+
+  """All values less than the given value."""
+  rubriqueNumber_lt: Int
+
+  """All values less than or equal the given value."""
+  rubriqueNumber_lte: Int
+
+  """All values greater than the given value."""
+  rubriqueNumber_gt: Int
+
+  """All values greater than or equal the given value."""
+  rubriqueNumber_gte: Int
   title: String
 
   """All values that are not equal to given value."""
@@ -1079,46 +1126,7 @@ input RubriqueWhereInput {
 
   """All values not ending with the given string."""
   image_not_ends_with: String
-  greatImage: String
-
-  """All values that are not equal to given value."""
-  greatImage_not: String
-
-  """All values that are contained in given list."""
-  greatImage_in: [String!]
-
-  """All values that are not contained in given list."""
-  greatImage_not_in: [String!]
-
-  """All values less than the given value."""
-  greatImage_lt: String
-
-  """All values less than or equal the given value."""
-  greatImage_lte: String
-
-  """All values greater than the given value."""
-  greatImage_gt: String
-
-  """All values greater than or equal the given value."""
-  greatImage_gte: String
-
-  """All values containing the given string."""
-  greatImage_contains: String
-
-  """All values not containing the given string."""
-  greatImage_not_contains: String
-
-  """All values starting with the given string."""
-  greatImage_starts_with: String
-
-  """All values not starting with the given string."""
-  greatImage_not_starts_with: String
-
-  """All values ending with the given string."""
-  greatImage_ends_with: String
-
-  """All values not ending with the given string."""
-  greatImage_not_ends_with: String
+  user: UserWhereInput
 }
 
 input RubriqueWhereUniqueInput {

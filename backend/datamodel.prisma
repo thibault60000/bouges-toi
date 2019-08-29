@@ -33,6 +33,9 @@ type Article {
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
   image: String
+  articleNumber: Int
+  userNumber: Int
+  maxUserNumber: Int
   greatImage: String
   price: Int!
   user: User!
@@ -42,13 +45,13 @@ type Category {
   id: ID! @id
   title: String!
   description: String!
-  image: String
-  greatImage: String
+  categoryNumber: Int
 }
 
 type Rubrique {
   id: ID! @id
+  rubriqueNumber: Int
   title: String!
   image: String
-  greatImage: String
+  user: User!
 }
