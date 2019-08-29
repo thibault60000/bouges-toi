@@ -20,7 +20,7 @@ export class Article extends Component {
                 <StyledTitle> 
                     {/* Titre  */}
                     <Link href={{
-                        pathname: "/article",
+                        pathname: "articles/article",
                         query: { id: article.id }
                     }}>
                         <a> { article.title } </a>
@@ -31,7 +31,7 @@ export class Article extends Component {
                {/*  Boutons d'action */}
                <div className="actionButtons">
                    <Link href={{
-                       pathname: "updateArticlePage",
+                       pathname: "articles/updateArticlePage",
                        query: { id: article.id }
                    }}>
                         <a> Modifier </a>

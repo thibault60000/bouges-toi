@@ -12,10 +12,10 @@ const Navbar = () => (
         </Link>
         {me && (
           <>
-            <Link href="/createArticlePage">
+            <Link href="articles/createArticlePage">
               <a> Création </a>
             </Link>
-            <Link href="/articles">
+            <Link href="articles//articles">
               <a> Articles </a>
             </Link>
             <Link href="/commandes">

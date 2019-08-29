@@ -9,6 +9,7 @@ const CURRENT_USER_QUERY = gql`
       id
       email
       name
+      surname
       permissions
     }
   }
@@ -16,12 +17,9 @@ const CURRENT_USER_QUERY = gql`
 
 class User extends Component {
   render() {
-    console.log({ ...this.props });
     return (
       <Query
-        {...this.props}
-        query={CURRENT_USER_QUERY}
-        fetchPolicy="no-cache"
+        {...this.props} query={CURRENT_USER_QUERY} fetchPolicy="network-only"
       >
         {payload => this.props.children(payload)}
       </Query>

@@ -15,15 +15,17 @@ const DELETE_ARTICLE_MUTATION = gql`
 
 class DeleteArticle extends Component {
   // Delete Article
-  deleteArticleMethod = async deleteArticle => {
-    await deleteArticle({
+  deleteArticleMethod = deleteArticle => {
+    deleteArticle({
       variables: {
         id: this.props.id
       }
+    }).catch(err => {
+      alert(err.message);
     });
     Router.push({
-      pathname: '/articles',
-      query: { page: 1}
+      pathname: "articles/articles",
+      query: { page: 1 }
     });
   };
 
@@ -52,7 +54,7 @@ class DeleteArticle extends Component {
           <button
             onClick={() => {
               if (confirm("Êtes vous sûr de vouloir supprimer cet article")) {
-                this.deleteArticleMethod(deleteArticle)
+                this.deleteArticleMethod(deleteArticle);
               }
             }}
           >

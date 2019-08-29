@@ -1,3 +1,3 @@
-import Articles from "./articles";
+import Articles from "./articles/articles";
 
 export default Articles;

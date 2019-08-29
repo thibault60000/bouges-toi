@@ -13,6 +13,9 @@ const GET_ARTICLE_QUERY = gql`
       title
       description
       price
+      user {
+        id
+      }
     }
   }
 `;
@@ -24,17 +27,22 @@ const UPDATE_ARTICLE_MUTATION = gql`
     $title: String
     $description: String
     $price: Int
+    $user: String
   ) {
     updateArticle(
       id: $id
       title: $title
       description: $description
       price: $price
+      user: $user
     ) {
       id
       title
       description
       price
+      user {
+        id
+      }
     }
   }
 `;
@@ -51,16 +59,19 @@ export class UpdateArticle extends Component {
   };
 
   // Update Article
-  updateArticle = async (e, mutation) => {
+  updateArticle = async (e, mutation, article) => {
     e.preventDefault();
+    console.log("Article", article);
+    const { id } = article;  
+    const user = article.user.id;  
     await mutation({
       variables: {
-        id: this.props.id,
-        ...this.state
+        id,
+        user
       }
     });
     Router.push({
-      pathname: '/articles'
+      pathname: 'articles/articles'
     });
   };
 
@@ -82,7 +93,7 @@ export class UpdateArticle extends Component {
                   disabled={loading}
                   aria-busy={loading}
                   onSubmit={e => {
-                    this.updateArticle(e, updateArticle)}
+                    this.updateArticle(e, updateArticle, data.article )}
                   }
                 >
                   <Error error={error} />
