@@ -11,8 +11,8 @@ const Mutations = {
     ---------------------------------------------*/
   async createArticle(parent, args, ctx, info) {
     // 1. Test si le user est connecté
-    if (!ctx.request.userId) {
-      throw new Errort("Vous devez être connecté");
+    if (!ctx.response.req.session.userId) {
+      throw new Error("Vous devez être connecté");
     }
     // 2. Test si on a les droits de création
     const hasPermission = ctx.request.user.permissions.some(p =>
@@ -26,7 +26,7 @@ const Mutations = {
         data: {
           user: {
             connect: {
-              id: ctx.request.userId
+              id: ctx.response.req.session.userId
             }
           },
           ...args
@@ -45,7 +45,7 @@ const Mutations = {
     const hasPermission = ctx.request.user.permissions.some(p =>
       ["ADMIN", "ARTICLECREATE"].includes(p)
     );
-    const ownsArticle = args.user === ctx.request.userId;
+    const ownsArticle = args.user === ctx.response.req.session.userId;
     if (!hasPermission && !ownsArticle)
       throw new Error("Vous n'êtes pas autorisé !");
     // 2. Construction de l'objet final à envoyer
@@ -53,7 +53,7 @@ const Mutations = {
       ...args,
       user: {
         connect: {
-          id: ctx.request.userId
+          id: ctx.response.req.session.userId
         }
       }
     };
@@ -80,7 +80,7 @@ const Mutations = {
       ` { id title user { id } }`
     );
     // 2. Test si on est le créateur de l'article
-    const ownsArticle = article.user.id === ctx.request.userId;
+    const ownsArticle = article.user.id === ctx.response.req.session.userId;
     const hasPermission = ctx.request.user.permissions.some(p =>
       ["ADMIN", "ARTICLEDELETE"].includes(p)
     );
@@ -107,11 +107,7 @@ const Mutations = {
       },
       info
     );
-    const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
-    ctx.response.cookie("token", token, {
-      httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 24 * 365
-    });
+    ctx.response.req.session.userId = user.id;
     return user;
   },
   /* ------------------------------------------
@@ -126,18 +122,15 @@ const Mutations = {
     if (!valid) {
       throw new Error("Mot de passe incorrect");
     }
-    const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
-    ctx.response.cookie("token", token, {
-      httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 24 * 365
-    });
+    ctx.response.req.session.userId = user.id;
+
     return user;
   },
   /* ------------------------------------------
     ------- SIGN OUT --------------------------
     ---------------------------------------------*/
   signout(parent, args, ctx, info) {
-    ctx.response.clearCookie("token");
+    ctx.response.req.session.destroy();
     return { message: "Au revoir !" };
   },
   /* ------------------------------------------
@@ -209,12 +202,12 @@ const Mutations = {
   ---------------------------------------*/
   async updatePermissions(parent, args, ctx, info) {
     // 1. Test si on est authentifié
-    if (!ctx.request.userId) throw new Error("Vous devez être connecté");
+    if (!ctx.response.req.session.userId) throw new Error("Vous devez être connecté");
     // 2. Récupère l'utilisateur courant
     const currentUser = await ctx.db.query.user(
       {
         where: {
-          id: ctx.request.userId
+          id: ctx.response.req.session.userId
         }
       },
       `{id, permissions, email, name, surname permissions }`

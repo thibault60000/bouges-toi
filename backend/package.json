@@ -13,12 +13,11 @@
   "dependencies": {
     "babel-preset-env": "1.7.0",
     "bcryptjs": "2.4.3",
-    "cookie-parser": "1.4.4",
     "dotenv": "8.0.0",
+    "express-session": "^1.16.2",
     "graphql": "14.4.2",
     "graphql-cli": "3.0.12",
     "graphql-yoga": "1.18.1",
-    "jsonwebtoken": "8.5.1",
     "nodemailer": "6.3.0",
     "nodemon": "^1.19.1",
     "npm-run-all": "4.1.5",
