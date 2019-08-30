@@ -38,6 +38,37 @@ const Mutations = {
     return article;
   },
   /* ------------------------------------------
+    ------- CREATE RUBRIQUE ----------------------
+    ---------------------------------------------*/
+  async createRubrique(parent, args, ctx, info) {
+    // 1. Test si le user est connecté
+    if (!ctx.response.req.session.userId) {
+      throw new Error("Vous devez être connecté");
+    }
+    // 2. Test si on a les droits de création
+    const hasPermission = ctx.request.user.permissions.some(p =>
+      ["ADMIN", "RUBRIQUECREATE"].includes(p)
+    );
+    if (!hasPermission)
+      throw new Error("Vous n'êtes pas autorisé à faire ça ! ");
+    // 3. Créer la rubrique
+    const rubrique = await ctx.db.mutation.createRubrique(
+      {
+        data: {
+          user: {
+            connect: {
+              id: ctx.response.req.session.userId
+            }
+          },
+          ...args
+        }
+      },
+      info
+    );
+
+    return rubrique;
+  },
+  /* ------------------------------------------
     ------- UPDATE ARTICLE ----------------------
     ---------------------------------------------*/
   updateArticle(parent, args, ctx, info) {
@@ -202,7 +233,8 @@ const Mutations = {
   ---------------------------------------*/
   async updatePermissions(parent, args, ctx, info) {
     // 1. Test si on est authentifié
-    if (!ctx.response.req.session.userId) throw new Error("Vous devez être connecté");
+    if (!ctx.response.req.session.userId)
+      throw new Error("Vous devez être connecté");
     // 2. Récupère l'utilisateur courant
     const currentUser = await ctx.db.query.user(
       {

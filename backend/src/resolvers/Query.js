@@ -4,6 +4,7 @@ const Query = {
   articles: forwardTo("db"),
   article: forwardTo("db"),
   articlesConnection: forwardTo("db"),
+  rubrique: forwardTo("db"),
   me(parent, args, ctx, info) {
     if (!ctx.response.req.session.userId) {
       return null;

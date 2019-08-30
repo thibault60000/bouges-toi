@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/thibault-jeanpierre/backend-tutoriel/dev
-# timestamp: Thu Aug 29 2019 22:36:54 GMT+0200 (GMT+02:00)
+# timestamp: Fri Aug 30 2019 08:00:21 GMT+0200 (GMT+02:00)
 
 type AggregateArticle {
   count: Int!
@@ -10,6 +10,10 @@ type AggregateCategory {
 }
 
 type AggregateRubrique {
+  count: Int!
+}
+
+type AggregateRubriqueNumber {
   count: Int!
 }
 
@@ -785,26 +789,32 @@ type Mutation {
   createArticle(data: ArticleCreateInput!): Article!
   createCategory(data: CategoryCreateInput!): Category!
   createRubrique(data: RubriqueCreateInput!): Rubrique!
+  createRubriqueNumber(data: RubriqueNumberCreateInput!): RubriqueNumber!
   createUser(data: UserCreateInput!): User!
   updateArticle(data: ArticleUpdateInput!, where: ArticleWhereUniqueInput!): Article
   updateCategory(data: CategoryUpdateInput!, where: CategoryWhereUniqueInput!): Category
   updateRubrique(data: RubriqueUpdateInput!, where: RubriqueWhereUniqueInput!): Rubrique
+  updateRubriqueNumber(data: RubriqueNumberUpdateInput!, where: RubriqueNumberWhereUniqueInput!): RubriqueNumber
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   deleteArticle(where: ArticleWhereUniqueInput!): Article
   deleteCategory(where: CategoryWhereUniqueInput!): Category
   deleteRubrique(where: RubriqueWhereUniqueInput!): Rubrique
+  deleteRubriqueNumber(where: RubriqueNumberWhereUniqueInput!): RubriqueNumber
   deleteUser(where: UserWhereUniqueInput!): User
   upsertArticle(where: ArticleWhereUniqueInput!, create: ArticleCreateInput!, update: ArticleUpdateInput!): Article!
   upsertCategory(where: CategoryWhereUniqueInput!, create: CategoryCreateInput!, update: CategoryUpdateInput!): Category!
   upsertRubrique(where: RubriqueWhereUniqueInput!, create: RubriqueCreateInput!, update: RubriqueUpdateInput!): Rubrique!
+  upsertRubriqueNumber(where: RubriqueNumberWhereUniqueInput!, create: RubriqueNumberCreateInput!, update: RubriqueNumberUpdateInput!): RubriqueNumber!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   updateManyArticles(data: ArticleUpdateManyMutationInput!, where: ArticleWhereInput): BatchPayload!
   updateManyCategories(data: CategoryUpdateManyMutationInput!, where: CategoryWhereInput): BatchPayload!
   updateManyRubriques(data: RubriqueUpdateManyMutationInput!, where: RubriqueWhereInput): BatchPayload!
+  updateManyRubriqueNumbers(data: RubriqueNumberUpdateManyMutationInput!, where: RubriqueNumberWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   deleteManyArticles(where: ArticleWhereInput): BatchPayload!
   deleteManyCategories(where: CategoryWhereInput): BatchPayload!
   deleteManyRubriques(where: RubriqueWhereInput): BatchPayload!
+  deleteManyRubriqueNumbers(where: RubriqueNumberWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
 }
 
@@ -855,14 +865,17 @@ type Query {
   articles(where: ArticleWhereInput, orderBy: ArticleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Article]!
   categories(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Category]!
   rubriques(where: RubriqueWhereInput, orderBy: RubriqueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Rubrique]!
+  rubriqueNumbers(where: RubriqueNumberWhereInput, orderBy: RubriqueNumberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RubriqueNumber]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   article(where: ArticleWhereUniqueInput!): Article
   category(where: CategoryWhereUniqueInput!): Category
   rubrique(where: RubriqueWhereUniqueInput!): Rubrique
+  rubriqueNumber(where: RubriqueNumberWhereUniqueInput!): RubriqueNumber
   user(where: UserWhereUniqueInput!): User
   articlesConnection(where: ArticleWhereInput, orderBy: ArticleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ArticleConnection!
   categoriesConnection(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CategoryConnection!
   rubriquesConnection(where: RubriqueWhereInput, orderBy: RubriqueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RubriqueConnection!
+  rubriqueNumbersConnection(where: RubriqueNumberWhereInput, orderBy: RubriqueNumberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RubriqueNumberConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
 
   """Fetches an object given its ID"""
@@ -874,7 +887,6 @@ type Query {
 
 type Rubrique implements Node {
   id: ID!
-  rubriqueNumber: Int
   title: String!
   image: String
   user: User!
@@ -892,7 +904,6 @@ type RubriqueConnection {
 
 input RubriqueCreateInput {
   id: ID
-  rubriqueNumber: Int
   title: String!
   image: String
   user: UserCreateOneInput!
@@ -907,11 +918,172 @@ type RubriqueEdge {
   cursor: String!
 }
 
+type RubriqueNumber implements Node {
+  id: ID!
+  number: Int
+}
+
+"""A connection to a list of items."""
+type RubriqueNumberConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [RubriqueNumberEdge]!
+  aggregate: AggregateRubriqueNumber!
+}
+
+input RubriqueNumberCreateInput {
+  id: ID
+  number: Int
+}
+
+"""An edge in a connection."""
+type RubriqueNumberEdge {
+  """The item at the end of the edge."""
+  node: RubriqueNumber!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum RubriqueNumberOrderByInput {
+  id_ASC
+  id_DESC
+  number_ASC
+  number_DESC
+}
+
+type RubriqueNumberPreviousValues {
+  id: ID!
+  number: Int
+}
+
+type RubriqueNumberSubscriptionPayload {
+  mutation: MutationType!
+  node: RubriqueNumber
+  updatedFields: [String!]
+  previousValues: RubriqueNumberPreviousValues
+}
+
+input RubriqueNumberSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [RubriqueNumberSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [RubriqueNumberSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [RubriqueNumberSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: RubriqueNumberWhereInput
+}
+
+input RubriqueNumberUpdateInput {
+  number: Int
+}
+
+input RubriqueNumberUpdateManyMutationInput {
+  number: Int
+}
+
+input RubriqueNumberWhereInput {
+  """Logical AND on all given filters."""
+  AND: [RubriqueNumberWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [RubriqueNumberWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [RubriqueNumberWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  number: Int
+
+  """All values that are not equal to given value."""
+  number_not: Int
+
+  """All values that are contained in given list."""
+  number_in: [Int!]
+
+  """All values that are not contained in given list."""
+  number_not_in: [Int!]
+
+  """All values less than the given value."""
+  number_lt: Int
+
+  """All values less than or equal the given value."""
+  number_lte: Int
+
+  """All values greater than the given value."""
+  number_gt: Int
+
+  """All values greater than or equal the given value."""
+  number_gte: Int
+}
+
+input RubriqueNumberWhereUniqueInput {
+  id: ID
+}
+
 enum RubriqueOrderByInput {
   id_ASC
   id_DESC
-  rubriqueNumber_ASC
-  rubriqueNumber_DESC
   title_ASC
   title_DESC
   image_ASC
@@ -920,7 +1092,6 @@ enum RubriqueOrderByInput {
 
 type RubriquePreviousValues {
   id: ID!
-  rubriqueNumber: Int
   title: String!
   image: String
 }
@@ -963,14 +1134,12 @@ input RubriqueSubscriptionWhereInput {
 }
 
 input RubriqueUpdateInput {
-  rubriqueNumber: Int
   title: String
   image: String
   user: UserUpdateOneRequiredInput
 }
 
 input RubriqueUpdateManyMutationInput {
-  rubriqueNumber: Int
   title: String
   image: String
 }
@@ -1024,28 +1193,6 @@ input RubriqueWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
-  rubriqueNumber: Int
-
-  """All values that are not equal to given value."""
-  rubriqueNumber_not: Int
-
-  """All values that are contained in given list."""
-  rubriqueNumber_in: [Int!]
-
-  """All values that are not contained in given list."""
-  rubriqueNumber_not_in: [Int!]
-
-  """All values less than the given value."""
-  rubriqueNumber_lt: Int
-
-  """All values less than or equal the given value."""
-  rubriqueNumber_lte: Int
-
-  """All values greater than the given value."""
-  rubriqueNumber_gt: Int
-
-  """All values greater than or equal the given value."""
-  rubriqueNumber_gte: Int
   title: String
 
   """All values that are not equal to given value."""
@@ -1137,6 +1284,7 @@ type Subscription {
   article(where: ArticleSubscriptionWhereInput): ArticleSubscriptionPayload
   category(where: CategorySubscriptionWhereInput): CategorySubscriptionPayload
   rubrique(where: RubriqueSubscriptionWhereInput): RubriqueSubscriptionPayload
+  rubriqueNumber(where: RubriqueNumberSubscriptionWhereInput): RubriqueNumberSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 

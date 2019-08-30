@@ -6,7 +6,7 @@ type SuccessMessage {
 
 type Mutation {
   """
-   CREATE ARTICLE
+  CREATE ARTICLE
   """
   createArticle(
     title: String!
@@ -16,7 +16,11 @@ type Mutation {
     price: Int!
   ): Article!
   """
-   UPDATE ARTICLE
+  CREATE RUBRIQUE
+  """
+  createRubrique(title: String!, image: String): Article!
+  """
+  UPDATE ARTICLE
   """
   updateArticle(
     id: ID!
@@ -26,11 +30,11 @@ type Mutation {
     user: String
   ): Article!
   """
-   DELETE ARTICLE
+  DELETE ARTICLE
   """
   deleteArticle(id: ID!): Article
   """
-   USER AUTHENTIFICATION
+  USER AUTHENTIFICATION
   """
   signup(
     email: String!
@@ -47,14 +51,14 @@ type Mutation {
     confirmPassword: String!
   ): User
   """
-   USER 
+  USER
   """
   updatePermissions(permissions: [Permission], userId: ID!): User
 }
 
 type Query {
   """
-   ARTICLES
+  ARTICLES
   """
   articles(
     where: ArticleWhereInput
@@ -65,11 +69,15 @@ type Query {
   article(where: ArticleWhereUniqueInput!): Article
   articlesConnection(where: ArticleWhereInput): ArticleConnection!
   """
-   Authentification
+  RUBRIQUES
+  """
+  rubrique(where: RubriqueWhereUniqueInput!): Rubrique
+  """
+  Authentification
   """
   me: User
   """
-   Users
+  Users
   """
   users: [User]!
 }

@@ -50,8 +50,12 @@ type Category {
 
 type Rubrique {
   id: ID! @id
-  rubriqueNumber: Int
   title: String!
   image: String
   user: User!
+}
+
+type RubriqueNumber {
+  id: ID! @id
+  number: Int
 }
