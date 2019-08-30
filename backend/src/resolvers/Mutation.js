@@ -11,7 +11,7 @@ const Mutations = {
     ---------------------------------------------*/
   async createArticle(parent, args, ctx, info) {
     // 1. Test si le user est connecté
-    if (!ctx.response.req.session.userId) {
+    if (!ctx.request.userId) {
       throw new Error("Vous devez être connecté");
     }
     // 2. Test si on a les droits de création
@@ -26,7 +26,7 @@ const Mutations = {
         data: {
           user: {
             connect: {
-              id: ctx.response.req.session.userId
+              id: ctx.request.userId
             }
           },
           ...args
@@ -42,7 +42,7 @@ const Mutations = {
     ---------------------------------------------*/
   async createRubrique(parent, args, ctx, info) {
     // 1. Test si le user est connecté
-    if (!ctx.response.req.session.userId) {
+    if (!ctx.request.userId) {
       throw new Error("Vous devez être connecté");
     }
     // 2. Test si on a les droits de création
@@ -57,7 +57,7 @@ const Mutations = {
         data: {
           user: {
             connect: {
-              id: ctx.response.req.session.userId
+              id: ctx.request.userId
             }
           },
           ...args
@@ -76,7 +76,7 @@ const Mutations = {
     const hasPermission = ctx.request.user.permissions.some(p =>
       ["ADMIN", "ARTICLECREATE"].includes(p)
     );
-    const ownsArticle = args.user === ctx.response.req.session.userId;
+    const ownsArticle = args.user === ctx.request.userId;
     if (!hasPermission && !ownsArticle)
       throw new Error("Vous n'êtes pas autorisé !");
     // 2. Construction de l'objet final à envoyer
@@ -84,7 +84,7 @@ const Mutations = {
       ...args,
       user: {
         connect: {
-          id: ctx.response.req.session.userId
+          id: ctx.request.userId
         }
       }
     };
@@ -111,7 +111,7 @@ const Mutations = {
       ` { id title user { id } }`
     );
     // 2. Test si on est le créateur de l'article
-    const ownsArticle = article.user.id === ctx.response.req.session.userId;
+    const ownsArticle = article.user.id === ctx.request.userId;
     const hasPermission = ctx.request.user.permissions.some(p =>
       ["ADMIN", "ARTICLEDELETE"].includes(p)
     );
@@ -138,7 +138,12 @@ const Mutations = {
       },
       info
     );
-    ctx.response.req.session.userId = user.id;
+    const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
+    // We set the jwt as a cookie on the response
+    ctx.response.cookie("token", token, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 365 // 1 year cookie
+    });
     return user;
   },
   /* ------------------------------------------
@@ -153,15 +158,19 @@ const Mutations = {
     if (!valid) {
       throw new Error("Mot de passe incorrect");
     }
-    ctx.response.req.session.userId = user.id;
-
+    const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
+    // 4. Set the cookie with the token
+    ctx.response.cookie("token", token, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 365
+    });
     return user;
   },
   /* ------------------------------------------
     ------- SIGN OUT --------------------------
     ---------------------------------------------*/
   signout(parent, args, ctx, info) {
-    ctx.response.req.session.destroy();
+    ctx.response.clearCookie("token");
     return { message: "Au revoir !" };
   },
   /* ------------------------------------------
@@ -233,13 +242,12 @@ const Mutations = {
   ---------------------------------------*/
   async updatePermissions(parent, args, ctx, info) {
     // 1. Test si on est authentifié
-    if (!ctx.response.req.session.userId)
-      throw new Error("Vous devez être connecté");
+    if (!ctx.request.userId) throw new Error("Vous devez être connecté");
     // 2. Récupère l'utilisateur courant
     const currentUser = await ctx.db.query.user(
       {
         where: {
-          id: ctx.response.req.session.userId
+          id: ctx.request.userId
         }
       },
       `{id, permissions, email, name, surname permissions }`
