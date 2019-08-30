@@ -1,4 +1,3 @@
-import React, { Component } from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import PropTypes from "prop-types";
@@ -15,17 +14,11 @@ const CURRENT_USER_QUERY = gql`
   }
 `;
 
-class User extends Component {
-  render() {
-    return (
-      <Query
-        {...this.props} query={CURRENT_USER_QUERY} fetchPolicy="network-only"
-      >
-        {payload => this.props.children(payload)}
-      </Query>
-    );
-  }
-}
+const User = props => (
+  <Query {...props} query={CURRENT_USER_QUERY} fetchPolicy="no-cache">
+    {payload => props.children(payload)}
+  </Query>
+);
 
 User.propTypes = {
   children: PropTypes.func.isRequired

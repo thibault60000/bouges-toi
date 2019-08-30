@@ -45,7 +45,6 @@ type Category {
   id: ID! @id
   title: String!
   description: String!
-  categoryNumber: Int
 }
 
 type Rubrique {

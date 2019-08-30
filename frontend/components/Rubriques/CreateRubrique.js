@@ -6,16 +6,9 @@ import Error from "../Error";
 import Router from "next/router";
 
 const CREATE_RUBRIQUE_MUTATION = gql`
-  mutation CREATE_RUBRIQUE_MUTATION(
-    $title: String!
-    $image: String
-  ) {
-    createRubrique(
-      title: $title
-      image: $image
-    ) {
+  mutation CREATE_RUBRIQUE_MUTATION($title: String!, $image: String) {
+    createRubrique(title: $title, image: $image) {
       id
-      title
     }
   }
 `;
@@ -23,25 +16,31 @@ export class CreateRubrique extends Component {
   state = {
     title: "",
     image: "",
+    imageLoading: false
   };
 
   // Upload
   uploadImage = async e => {
+    this.setState({ imageLoading: true});
     const images = e.target.files;
     const data = new FormData();
-    data.append('file', images[0]);
-    data.append('upload_preset', 'tutorial');
-    const response = await fetch('https://api.cloudinary.com/v1_1/dgn9blq0o/image/upload', {
-      method: 'POST',
-      body: data
-    });
+    data.append("file", images[0]);
+    data.append("upload_preset", "tutorial");
+    const response = await fetch(
+      "https://api.cloudinary.com/v1_1/dgn9blq0o/image/upload",
+      {
+        method: "POST",
+        body: data
+      }
+    );
     const image = await response.json();
     this.setState({
-      image: image.secure_url
-    })
+      image: image.secure_url,
+      imageLoading: false
+    });
   };
 
-  // Handle Change 
+  // Handle Change
   handleChange = e => {
     const { name, type, value } = e.target;
     const v = type === "number" ? parseFloat(value) : value;
@@ -50,7 +49,7 @@ export class CreateRubrique extends Component {
 
   render() {
     return (
-      <Mutation mutation={CREATE_RUBRIQUE_MUTATION} variables={this.state} >
+      <Mutation mutation={CREATE_RUBRIQUE_MUTATION} variables={this.state}>
         {(createRubrique, { data, loading, error }) => (
           <StyledForm
             disabled={loading}
@@ -59,12 +58,12 @@ export class CreateRubrique extends Component {
               e.preventDefault();
               const response = await createRubrique();
               Router.push({
-                pathname: '/rubriques/rubrique',
-                query: { id: response.data.createRubrique.id}
+                pathname: "rubriques/rubrique",
+                query: { id: response.data.createRubrique.id }
               });
             }}
           >
-             <Error error={error} />
+            <Error error={error} />
             <fieldset>
               {/* Image */}
               <label htmlFor="image">
@@ -77,8 +76,12 @@ export class CreateRubrique extends Component {
                   placeholder="Selectionnez votre image"
                   onChange={this.uploadImage}
                 />
-                {this.state.image && <img width="200" src={this.state.image} alt="UploadedImage" /> }
-
+                { !this.state.image && this.state.imageLoading && (
+                    <p> Chargement de l'image </p>
+                ) }
+                {this.state.image && (
+                  <img width="200" src={this.state.image} alt="UploadedImage" />
+                )}
               </label>
               {/* Titre */}
               <label htmlFor="title">
