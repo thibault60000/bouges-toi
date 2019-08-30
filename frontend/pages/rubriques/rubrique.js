@@ -1,5 +1,5 @@
 import React from 'react';
-import ReadRubrique from "../../components/Rubrique/ReadRubrique";
+import ReadRubrique from "../../components/Rubriques/ReadRubrique";
 
 const Rubrique = props => {
     return (

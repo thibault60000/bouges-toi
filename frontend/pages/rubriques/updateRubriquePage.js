@@ -1,5 +1,5 @@
 import React from "react";
-import UpdateRubrique from "../../components/Articles/UpdateRubrique";
+import UpdateRubrique from "../../components/Rubriques/UpdateRubrique";
 
 const UpdateRubriquePage = ({ query }) => (
     <div>
