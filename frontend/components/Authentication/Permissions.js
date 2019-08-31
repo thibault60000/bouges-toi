@@ -25,7 +25,7 @@ const permissionsList = [
   "ARTICLEUPDATE",
   "ARTICLEDELETE",
   "PERMISSIONUPDATE",
-  "PRENIUM"
+  "PREMIUM"
 ];
 
 const UPDATE_PERMISSIONS_MUTATION = gql`

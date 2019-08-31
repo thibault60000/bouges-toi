@@ -25,6 +25,15 @@ const Admin = props => (
                   <a> Gestion des droits </a>
               </Link>
           </li>
+          <li>
+              <h3> Offres premiums </h3>
+              <Link href="/premiumOffers/createPremiumOfferPage">
+                  <a> Créer une offre premium </a>
+              </Link>
+              <Link href="/premiumOffers/premiumOffersPage">
+                  <a> Voir les offres premium </a>
+              </Link>
+          </li>
       </ul>
   </div>
 );

@@ -4,7 +4,7 @@ import Rubriques from "../../components/Rubriques/Rubriques";
 const RubriquesPage = props => {
     return (
         <div>
-            <Rubriques page={parseFloat(props.query.page) || 1} />
+            <Rubriques />
         </div>
     );
 }
