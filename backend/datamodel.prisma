@@ -23,7 +23,6 @@ type User {
   resetToken: String
   resetTokenExpiry: Float
   permissions: [Permission] @scalarList(strategy:RELATION)
-
 }
 
 type Article {
@@ -33,7 +32,6 @@ type Article {
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
   image: String
-  articleNumber: Int
   userNumber: Int
   maxUserNumber: Int
   greatImage: String
@@ -57,4 +55,12 @@ type Rubrique {
 type RubriqueNumber {
   id: ID! @id
   number: Int
+}
+
+type PremiumOffer {
+  id: ID! @id
+  title: String!
+  description: String!
+  price: Int!
+  user: User!
 }

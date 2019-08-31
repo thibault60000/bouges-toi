@@ -1,11 +1,15 @@
 # source: https://eu1.prisma.sh/thibault-jeanpierre/backend-tutoriel/dev
-# timestamp: Fri Aug 30 2019 08:00:21 GMT+0200 (GMT+02:00)
+# timestamp: Sat Aug 31 2019 15:06:46 GMT+0200 (GMT+02:00)
 
 type AggregateArticle {
   count: Int!
 }
 
 type AggregateCategory {
+  count: Int!
+}
+
+type AggregatePremiumOffer {
   count: Int!
 }
 
@@ -28,7 +32,6 @@ type Article implements Node {
   createdAt: DateTime!
   updatedAt: DateTime!
   image: String
-  articleNumber: Int
   userNumber: Int
   maxUserNumber: Int
   greatImage: String
@@ -51,7 +54,6 @@ input ArticleCreateInput {
   title: String!
   description: String!
   image: String
-  articleNumber: Int
   userNumber: Int
   maxUserNumber: Int
   greatImage: String
@@ -81,8 +83,6 @@ enum ArticleOrderByInput {
   updatedAt_DESC
   image_ASC
   image_DESC
-  articleNumber_ASC
-  articleNumber_DESC
   userNumber_ASC
   userNumber_DESC
   maxUserNumber_ASC
@@ -100,7 +100,6 @@ type ArticlePreviousValues {
   createdAt: DateTime!
   updatedAt: DateTime!
   image: String
-  articleNumber: Int
   userNumber: Int
   maxUserNumber: Int
   greatImage: String
@@ -148,7 +147,6 @@ input ArticleUpdateInput {
   title: String
   description: String
   image: String
-  articleNumber: Int
   userNumber: Int
   maxUserNumber: Int
   greatImage: String
@@ -160,7 +158,6 @@ input ArticleUpdateManyMutationInput {
   title: String
   description: String
   image: String
-  articleNumber: Int
   userNumber: Int
   maxUserNumber: Int
   greatImage: String
@@ -380,28 +377,6 @@ input ArticleWhereInput {
 
   """All values not ending with the given string."""
   image_not_ends_with: String
-  articleNumber: Int
-
-  """All values that are not equal to given value."""
-  articleNumber_not: Int
-
-  """All values that are contained in given list."""
-  articleNumber_in: [Int!]
-
-  """All values that are not contained in given list."""
-  articleNumber_not_in: [Int!]
-
-  """All values less than the given value."""
-  articleNumber_lt: Int
-
-  """All values less than or equal the given value."""
-  articleNumber_lte: Int
-
-  """All values greater than the given value."""
-  articleNumber_gt: Int
-
-  """All values greater than or equal the given value."""
-  articleNumber_gte: Int
   userNumber: Int
 
   """All values that are not equal to given value."""
@@ -524,7 +499,6 @@ type Category implements Node {
   id: ID!
   title: String!
   description: String!
-  categoryNumber: Int
 }
 
 """A connection to a list of items."""
@@ -541,7 +515,6 @@ input CategoryCreateInput {
   id: ID
   title: String!
   description: String!
-  categoryNumber: Int
 }
 
 """An edge in a connection."""
@@ -560,15 +533,12 @@ enum CategoryOrderByInput {
   title_DESC
   description_ASC
   description_DESC
-  categoryNumber_ASC
-  categoryNumber_DESC
 }
 
 type CategoryPreviousValues {
   id: ID!
   title: String!
   description: String!
-  categoryNumber: Int
 }
 
 type CategorySubscriptionPayload {
@@ -611,13 +581,11 @@ input CategorySubscriptionWhereInput {
 input CategoryUpdateInput {
   title: String
   description: String
-  categoryNumber: Int
 }
 
 input CategoryUpdateManyMutationInput {
   title: String
   description: String
-  categoryNumber: Int
 }
 
 input CategoryWhereInput {
@@ -749,28 +717,6 @@ input CategoryWhereInput {
 
   """All values not ending with the given string."""
   description_not_ends_with: String
-  categoryNumber: Int
-
-  """All values that are not equal to given value."""
-  categoryNumber_not: Int
-
-  """All values that are contained in given list."""
-  categoryNumber_in: [Int!]
-
-  """All values that are not contained in given list."""
-  categoryNumber_not_in: [Int!]
-
-  """All values less than the given value."""
-  categoryNumber_lt: Int
-
-  """All values less than or equal the given value."""
-  categoryNumber_lte: Int
-
-  """All values greater than the given value."""
-  categoryNumber_gt: Int
-
-  """All values greater than or equal the given value."""
-  categoryNumber_gte: Int
 }
 
 input CategoryWhereUniqueInput {
@@ -790,31 +736,37 @@ type Mutation {
   createCategory(data: CategoryCreateInput!): Category!
   createRubrique(data: RubriqueCreateInput!): Rubrique!
   createRubriqueNumber(data: RubriqueNumberCreateInput!): RubriqueNumber!
+  createPremiumOffer(data: PremiumOfferCreateInput!): PremiumOffer!
   createUser(data: UserCreateInput!): User!
   updateArticle(data: ArticleUpdateInput!, where: ArticleWhereUniqueInput!): Article
   updateCategory(data: CategoryUpdateInput!, where: CategoryWhereUniqueInput!): Category
   updateRubrique(data: RubriqueUpdateInput!, where: RubriqueWhereUniqueInput!): Rubrique
   updateRubriqueNumber(data: RubriqueNumberUpdateInput!, where: RubriqueNumberWhereUniqueInput!): RubriqueNumber
+  updatePremiumOffer(data: PremiumOfferUpdateInput!, where: PremiumOfferWhereUniqueInput!): PremiumOffer
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   deleteArticle(where: ArticleWhereUniqueInput!): Article
   deleteCategory(where: CategoryWhereUniqueInput!): Category
   deleteRubrique(where: RubriqueWhereUniqueInput!): Rubrique
   deleteRubriqueNumber(where: RubriqueNumberWhereUniqueInput!): RubriqueNumber
+  deletePremiumOffer(where: PremiumOfferWhereUniqueInput!): PremiumOffer
   deleteUser(where: UserWhereUniqueInput!): User
   upsertArticle(where: ArticleWhereUniqueInput!, create: ArticleCreateInput!, update: ArticleUpdateInput!): Article!
   upsertCategory(where: CategoryWhereUniqueInput!, create: CategoryCreateInput!, update: CategoryUpdateInput!): Category!
   upsertRubrique(where: RubriqueWhereUniqueInput!, create: RubriqueCreateInput!, update: RubriqueUpdateInput!): Rubrique!
   upsertRubriqueNumber(where: RubriqueNumberWhereUniqueInput!, create: RubriqueNumberCreateInput!, update: RubriqueNumberUpdateInput!): RubriqueNumber!
+  upsertPremiumOffer(where: PremiumOfferWhereUniqueInput!, create: PremiumOfferCreateInput!, update: PremiumOfferUpdateInput!): PremiumOffer!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   updateManyArticles(data: ArticleUpdateManyMutationInput!, where: ArticleWhereInput): BatchPayload!
   updateManyCategories(data: CategoryUpdateManyMutationInput!, where: CategoryWhereInput): BatchPayload!
   updateManyRubriques(data: RubriqueUpdateManyMutationInput!, where: RubriqueWhereInput): BatchPayload!
   updateManyRubriqueNumbers(data: RubriqueNumberUpdateManyMutationInput!, where: RubriqueNumberWhereInput): BatchPayload!
+  updateManyPremiumOffers(data: PremiumOfferUpdateManyMutationInput!, where: PremiumOfferWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   deleteManyArticles(where: ArticleWhereInput): BatchPayload!
   deleteManyCategories(where: CategoryWhereInput): BatchPayload!
   deleteManyRubriques(where: RubriqueWhereInput): BatchPayload!
   deleteManyRubriqueNumbers(where: RubriqueNumberWhereInput): BatchPayload!
+  deleteManyPremiumOffers(where: PremiumOfferWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
 }
 
@@ -861,21 +813,285 @@ enum Permission {
   PRENIUM
 }
 
+type PremiumOffer implements Node {
+  id: ID!
+  title: String!
+  description: String!
+  price: Int!
+  user: User!
+}
+
+"""A connection to a list of items."""
+type PremiumOfferConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [PremiumOfferEdge]!
+  aggregate: AggregatePremiumOffer!
+}
+
+input PremiumOfferCreateInput {
+  id: ID
+  title: String!
+  description: String!
+  price: Int!
+  user: UserCreateOneInput!
+}
+
+"""An edge in a connection."""
+type PremiumOfferEdge {
+  """The item at the end of the edge."""
+  node: PremiumOffer!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum PremiumOfferOrderByInput {
+  id_ASC
+  id_DESC
+  title_ASC
+  title_DESC
+  description_ASC
+  description_DESC
+  price_ASC
+  price_DESC
+}
+
+type PremiumOfferPreviousValues {
+  id: ID!
+  title: String!
+  description: String!
+  price: Int!
+}
+
+type PremiumOfferSubscriptionPayload {
+  mutation: MutationType!
+  node: PremiumOffer
+  updatedFields: [String!]
+  previousValues: PremiumOfferPreviousValues
+}
+
+input PremiumOfferSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PremiumOfferSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PremiumOfferSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PremiumOfferSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: PremiumOfferWhereInput
+}
+
+input PremiumOfferUpdateInput {
+  title: String
+  description: String
+  price: Int
+  user: UserUpdateOneRequiredInput
+}
+
+input PremiumOfferUpdateManyMutationInput {
+  title: String
+  description: String
+  price: Int
+}
+
+input PremiumOfferWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PremiumOfferWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PremiumOfferWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PremiumOfferWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  title: String
+
+  """All values that are not equal to given value."""
+  title_not: String
+
+  """All values that are contained in given list."""
+  title_in: [String!]
+
+  """All values that are not contained in given list."""
+  title_not_in: [String!]
+
+  """All values less than the given value."""
+  title_lt: String
+
+  """All values less than or equal the given value."""
+  title_lte: String
+
+  """All values greater than the given value."""
+  title_gt: String
+
+  """All values greater than or equal the given value."""
+  title_gte: String
+
+  """All values containing the given string."""
+  title_contains: String
+
+  """All values not containing the given string."""
+  title_not_contains: String
+
+  """All values starting with the given string."""
+  title_starts_with: String
+
+  """All values not starting with the given string."""
+  title_not_starts_with: String
+
+  """All values ending with the given string."""
+  title_ends_with: String
+
+  """All values not ending with the given string."""
+  title_not_ends_with: String
+  description: String
+
+  """All values that are not equal to given value."""
+  description_not: String
+
+  """All values that are contained in given list."""
+  description_in: [String!]
+
+  """All values that are not contained in given list."""
+  description_not_in: [String!]
+
+  """All values less than the given value."""
+  description_lt: String
+
+  """All values less than or equal the given value."""
+  description_lte: String
+
+  """All values greater than the given value."""
+  description_gt: String
+
+  """All values greater than or equal the given value."""
+  description_gte: String
+
+  """All values containing the given string."""
+  description_contains: String
+
+  """All values not containing the given string."""
+  description_not_contains: String
+
+  """All values starting with the given string."""
+  description_starts_with: String
+
+  """All values not starting with the given string."""
+  description_not_starts_with: String
+
+  """All values ending with the given string."""
+  description_ends_with: String
+
+  """All values not ending with the given string."""
+  description_not_ends_with: String
+  price: Int
+
+  """All values that are not equal to given value."""
+  price_not: Int
+
+  """All values that are contained in given list."""
+  price_in: [Int!]
+
+  """All values that are not contained in given list."""
+  price_not_in: [Int!]
+
+  """All values less than the given value."""
+  price_lt: Int
+
+  """All values less than or equal the given value."""
+  price_lte: Int
+
+  """All values greater than the given value."""
+  price_gt: Int
+
+  """All values greater than or equal the given value."""
+  price_gte: Int
+  user: UserWhereInput
+}
+
+input PremiumOfferWhereUniqueInput {
+  id: ID
+}
+
 type Query {
   articles(where: ArticleWhereInput, orderBy: ArticleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Article]!
   categories(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Category]!
   rubriques(where: RubriqueWhereInput, orderBy: RubriqueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Rubrique]!
   rubriqueNumbers(where: RubriqueNumberWhereInput, orderBy: RubriqueNumberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RubriqueNumber]!
+  premiumOffers(where: PremiumOfferWhereInput, orderBy: PremiumOfferOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PremiumOffer]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   article(where: ArticleWhereUniqueInput!): Article
   category(where: CategoryWhereUniqueInput!): Category
   rubrique(where: RubriqueWhereUniqueInput!): Rubrique
   rubriqueNumber(where: RubriqueNumberWhereUniqueInput!): RubriqueNumber
+  premiumOffer(where: PremiumOfferWhereUniqueInput!): PremiumOffer
   user(where: UserWhereUniqueInput!): User
   articlesConnection(where: ArticleWhereInput, orderBy: ArticleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ArticleConnection!
   categoriesConnection(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CategoryConnection!
   rubriquesConnection(where: RubriqueWhereInput, orderBy: RubriqueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RubriqueConnection!
   rubriqueNumbersConnection(where: RubriqueNumberWhereInput, orderBy: RubriqueNumberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RubriqueNumberConnection!
+  premiumOffersConnection(where: PremiumOfferWhereInput, orderBy: PremiumOfferOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PremiumOfferConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
 
   """Fetches an object given its ID"""
@@ -1285,6 +1501,7 @@ type Subscription {
   category(where: CategorySubscriptionWhereInput): CategorySubscriptionPayload
   rubrique(where: RubriqueSubscriptionWhereInput): RubriqueSubscriptionPayload
   rubriqueNumber(where: RubriqueNumberSubscriptionWhereInput): RubriqueNumberSubscriptionPayload
+  premiumOffer(where: PremiumOfferSubscriptionWhereInput): PremiumOfferSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 

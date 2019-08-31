@@ -19,6 +19,10 @@ type Mutation {
   CREATE RUBRIQUE
   """
   createRubrique(title: String!, image: String): Article!
+   """
+  CREATE PREMIMUM OFFER
+  """
+  createPremiumOffer(title: String!, description: String!, price: Int!): PremiumOffer!
   """
   UPDATE ARTICLE
   """

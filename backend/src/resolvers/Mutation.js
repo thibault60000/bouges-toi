@@ -38,6 +38,37 @@ const Mutations = {
     return article;
   },
   /* ------------------------------------------
+    ------- CREATE PREMIUM OFFEr --------------
+    ---------------------------------------------*/
+  async createPremiumOffer(parent, args, ctx, info) {
+    // 1. Test si le user est connecté
+    if (!ctx.request.userId) {
+      throw new Error("Vous devez être connecté");
+    }
+    // 2. Test si on a les droits de création
+    const hasPermission = ctx.request.user.permissions.some(p =>
+      ["ADMIN"].includes(p)
+    );
+    if (!hasPermission)
+      throw new Error("Vous n'êtes pas autorisé à faire ça ! ");
+    // 3. Créer l'article
+    const offer = await ctx.db.mutation.createPremiumOffer(
+      {
+        data: {
+          user: {
+            connect: {
+              id: ctx.request.userId
+            }
+          },
+          ...args
+        }
+      },
+      info
+    );
+
+    return offer;
+  },
+  /* ------------------------------------------
     ------- CREATE RUBRIQUE ----------------------
     ---------------------------------------------*/
   async createRubrique(parent, args, ctx, info) {
