@@ -3,6 +3,7 @@ import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import styled from "styled-components";
 import Link from "next/link";
+import Rubrique from "./Rubrique";
 
 const RUBRIQUES_QUERY = gql`
   query RUBRIQUES_QUERY {
@@ -17,13 +18,27 @@ const RUBRIQUES_QUERY = gql`
   }
 `;
 
+const StyledRubriquesContainer = styled.div`
+  text-align: center;
+`;
+const StyledRubriquesList = styled.ul`
+  display: grid;
+  max-width: 1200px;
+  margin: 0 auto;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 40px;
+  li {
+    list-style: none;
+  }
+`;
+
 class Rubriques extends Component {
   render() {
     return (
-      <div>
+      <StyledRubriquesContainer>
         <h2> Gestion des rubriques </h2>
         <Link href="/rubriques/createRubriquePage">
-          <button> Créer une rubrique </button>
+          <button>  + Créer une rubrique </button>
         </Link>
         <h3> Liste des rubriques </h3>
         <Query query={RUBRIQUES_QUERY}>
@@ -31,29 +46,15 @@ class Rubriques extends Component {
             if (loading) return <p> Chargement ... </p>;
             if (error) return <p> Erreur : {error.message} </p>;
             return (
-              <ul>
+              <StyledRubriquesList>
                 {data.rubriques.map(rubrique => (
-                  <li key={rubrique.id}>
-                    <img
-                      width="80px"
-                      src={rubrique.image}
-                      alt={rubrique.title}
-                    />
-                    <Link
-                      href={{
-                        pathname: `/rubriques/rubrique`,
-                        query: rubrique.id
-                      }}
-                    >
-                      <a>{rubrique.title}</a>
-                    </Link>
-                  </li>
+                  <Rubrique rubrique={rubrique} key={rubrique.id} />
                 ))}
-              </ul>
+              </StyledRubriquesList>
             );
           }}
         </Query>
-      </div>
+      </StyledRubriquesContainer>
     );
   }
 }

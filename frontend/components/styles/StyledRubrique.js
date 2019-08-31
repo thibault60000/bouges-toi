@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const rubrique = styled.li`
+const StyledRubrique = styled.li`
     background: white;
     display: flex;
     flex-direction: column;
@@ -10,7 +10,7 @@ const rubrique = styled.li`
     box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.08);
     img {
         width: 100%;
-        height: 250px;
+        height: 175px;
         object-fit: cover;
     }
     p {
@@ -44,4 +44,4 @@ const rubrique = styled.li`
 
 
 
-export default rubrique;
+export default StyledRubrique;
