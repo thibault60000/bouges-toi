@@ -33,12 +33,18 @@ export class CreateArticle extends Component {
     greatImage: "",
     price: 0,
     nbPersons: 2,
+    loadigImg: false,
     begin_date: moment(new Date(Date.now())).format("YYYY-MM-DD"),
-    end_date: moment(new Date(Date.now())).add(1, 'days').format("YYYY-MM-DD")
+    end_date: moment(new Date(Date.now()))
+      .add(1, "days")
+      .format("YYYY-MM-DD")
   };
 
   // Upload
   uploadImage = async e => {
+    this.setState({
+      loadigImg: true
+    });
     const images = e.target.files;
     const data = new FormData();
     data.append("file", images[0]);
@@ -53,7 +59,8 @@ export class CreateArticle extends Component {
     const image = await response.json();
     this.setState({
       image: image.secure_url,
-      greatImage: image.eager[0].secure_url
+      greatImage: image.eager[0].secure_url,
+      loadigImg: false
     });
   };
 
@@ -61,11 +68,26 @@ export class CreateArticle extends Component {
   handleChange = e => {
     const { name, type, value } = e.target;
     const v = type === "number" ? parseFloat(value) : value;
-    this.setState({ [name]: v });
+    // If Date
+    if (type === "date") {
+      const getCurrentDate = this.state[name];
+      this.setState({ [name]: value }, () => {
+        // debut<jour ou fin<debut
+        if (
+          this.state.begin_date > this.state.end_date ||
+          this.state.begin_date <
+            moment(new Date(Date.now())).format("YYYY-MM-DD")
+        ) {
+          alert("La date de fin doit être supérieure à la date de début");
+          this.setState({ [name]: getCurrentDate });
+        }
+      });
+    } else {
+      this.setState({ [name]: v });
+    }
   };
 
   render() {
-    console.log(moment(new Date(Date.now())).format("YYYY-MM-DD"));
     return (
       <Mutation mutation={CREATE_ARTICLE_MUTATION} variables={this.state}>
         {(createArticle, { data, loading, error }) => (
@@ -94,6 +116,9 @@ export class CreateArticle extends Component {
                   placeholder="Selectionnez votre image"
                   onChange={this.uploadImage}
                 />
+                {!this.state.image && this.state.loadigImg && (
+                  <span> Chargement de l'image en cours </span>
+                )}
                 {this.state.image && (
                   <img width="200" src={this.state.image} alt="UploadedImage" />
                 )}
@@ -112,28 +137,28 @@ export class CreateArticle extends Component {
                 />
               </label>
               {/* Date de début */}
-              <label htmlFor="dateFrom">
+              <label htmlFor="begin_date">
                 Date de début
                 <input
                   type="date"
                   value={this.state.begin_date}
                   onChange={this.handleChange}
-                  id="dateFrom"
-                  name="dateFrom"
+                  id="begin_date"
+                  name="begin_date"
                   min="2018-01-01"
                   max="2050-12-31"
                   required
                 />
               </label>
               {/* Date de Fin */}
-              <label htmlFor="DateTo">
+              <label htmlFor="end_date">
                 Date de fin
                 <input
                   type="date"
                   value={this.state.end_date}
                   onChange={this.handleChange}
-                  id="DateTo"
-                  name="DateTo"
+                  id="end_date"
+                  name="end_date"
                   min="2018-01-01"
                   max="2050-12-31"
                   required
@@ -168,6 +193,7 @@ export class CreateArticle extends Component {
               </label>
               {/* Prix */}
               <label htmlFor="price">
+                Prix
                 <input
                   type="number"
                   value={this.state.price}
