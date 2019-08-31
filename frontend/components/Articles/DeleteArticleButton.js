@@ -24,7 +24,7 @@ class DeleteArticle extends Component {
       alert(err.message);
     });
     Router.push({
-      pathname: "articles/articles",
+      pathname: "/articles/articles",
       query: { page: 1 }
     });
   };

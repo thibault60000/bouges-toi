@@ -307,7 +307,7 @@ const Mutations = {
     // 1. Vérifier si on est connecté
     const { userId } = ctx.request;
     if (!userId) throw new Error("Vous devez être connecté !");
-    // 2. Récupérer le panier actuel de l'utilisateur
+    // 2. Récupérer les éléments du panier actuel de l'utilisateur
     const [existingCartItem] = await ctx.db.query.cartItems({
       where: {
         user: { id: userId },
@@ -321,7 +321,7 @@ const Mutations = {
           id: args.id
         }
       });
-      if (premiumOffer.maxQuantity !== 1) {
+      if (premiumOffer.multiple === true) {
         return ctx.db.mutation.updateCartItem(
           {
             where: { id: existingCartItem.id },
@@ -330,6 +330,7 @@ const Mutations = {
           info
         );
       }
+      throw new Error("Vous avez deja ajouter cet article a votre panier et il n'est possible d'en ajouter qu'un seul");
     }
     // 4. S'il n'est pas dans le panier, on l'ajoute pour ce user
     return ctx.db.mutation.createCartItem(

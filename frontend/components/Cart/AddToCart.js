@@ -1,6 +1,8 @@
 import React from "react";
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
+import { CURRENT_USER_QUERY } from "../Authentication/User";
+import Error from "../Error";
 
 const ADD_TO_CART_MUTATION = gql`
   mutation ADD_TO_CART_MUTATION($id: ID!) {
@@ -20,8 +22,13 @@ class AddToCart extends React.Component {
         variables={{
           id
         }}
+        refetchQueries={[{ query: CURRENT_USER_QUERY }]}
       >
-        {addToCart => <button onClick={addToCart}> Ajouter au panier </button>}
+        {(addToCart, { data, loading, error }) => {
+          if (error) alert(error.message.split(": ")[1]);
+          return <button disabled={loading} onClick={addToCart}> 
+            { loading ? 'Ajout en cours' : 'Ajouter au panier' } </button>;
+        }}
       </Mutation>
     );
   }

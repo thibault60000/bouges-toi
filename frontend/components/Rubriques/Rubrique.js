@@ -21,7 +21,7 @@ export class Rubrique extends Component {
           {/* Titre  */}
           <Link
             href={{
-              pathname: "rubriques/rubrique",
+              pathname: "/rubriques/rubrique",
               query: { id: rubrique.id }
             }}
           >
@@ -32,7 +32,7 @@ export class Rubrique extends Component {
         <div className="actionButtons">
           <Link
             href={{
-              pathname: "rubriques/updateRubriquePage",
+              pathname: "/rubriques/updateRubriquePage",
               query: { id: rubrique.id }
             }}
           >

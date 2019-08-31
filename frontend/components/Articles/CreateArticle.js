@@ -98,7 +98,7 @@ export class CreateArticle extends Component {
               e.preventDefault();
               const response = await createArticle();
               Router.push({
-                pathname: "articles/article",
+                pathname: "/articles/article",
                 query: { id: response.data.createArticle.id }
               });
             }}

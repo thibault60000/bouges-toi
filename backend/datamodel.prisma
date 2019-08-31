@@ -70,5 +70,5 @@ type PremiumOffer {
   description: String!
   price: Int!
   user: User!
-  maxQuantity: Int @default(value: 1)
+  multiple: Boolean @default(value: false)
 }

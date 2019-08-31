@@ -61,7 +61,6 @@ export class UpdateArticle extends Component {
   // Update Article
   updateArticle = async (e, mutation, article) => {
     e.preventDefault();
-    console.log("Article", article);
     const { id } = article;  
     const user = article.user.id;  
     await mutation({

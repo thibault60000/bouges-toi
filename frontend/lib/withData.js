@@ -35,7 +35,7 @@ function createClient({ component }) {
         }
       },
       defaults: {
-        cartOpen: true
+        cartOpen: false
       }
     }
   });

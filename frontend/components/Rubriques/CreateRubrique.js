@@ -58,7 +58,7 @@ export class CreateRubrique extends Component {
               e.preventDefault();
               const response = await createRubrique();
               Router.push({
-                pathname: "rubriques/rubrique",
+                pathname: "/rubriques/rubrique",
                 query: { id: response.data.createRubrique.id }
               });
             }}

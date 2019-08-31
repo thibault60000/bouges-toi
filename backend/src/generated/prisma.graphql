@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/thibault-jeanpierre/backend-tutoriel/dev
-# timestamp: Sat Aug 31 2019 18:42:53 GMT+0200 (GMT+02:00)
+# timestamp: Sat Aug 31 2019 20:53:52 GMT+0200 (GMT+02:00)
 
 type AggregateArticle {
   count: Int!
@@ -1121,7 +1121,7 @@ type PremiumOffer implements Node {
   description: String!
   price: Int!
   user: User!
-  maxQuantity: Int
+  multiple: Boolean
 }
 
 """A connection to a list of items."""
@@ -1139,7 +1139,7 @@ input PremiumOfferCreateInput {
   title: String!
   description: String!
   price: Int!
-  maxQuantity: Int
+  multiple: Boolean
   user: UserCreateOneInput!
 }
 
@@ -1166,8 +1166,8 @@ enum PremiumOfferOrderByInput {
   description_DESC
   price_ASC
   price_DESC
-  maxQuantity_ASC
-  maxQuantity_DESC
+  multiple_ASC
+  multiple_DESC
 }
 
 type PremiumOfferPreviousValues {
@@ -1175,7 +1175,7 @@ type PremiumOfferPreviousValues {
   title: String!
   description: String!
   price: Int!
-  maxQuantity: Int
+  multiple: Boolean
 }
 
 type PremiumOfferSubscriptionPayload {
@@ -1219,7 +1219,7 @@ input PremiumOfferUpdateDataInput {
   title: String
   description: String
   price: Int
-  maxQuantity: Int
+  multiple: Boolean
   user: UserUpdateOneRequiredInput
 }
 
@@ -1227,7 +1227,7 @@ input PremiumOfferUpdateInput {
   title: String
   description: String
   price: Int
-  maxQuantity: Int
+  multiple: Boolean
   user: UserUpdateOneRequiredInput
 }
 
@@ -1235,7 +1235,7 @@ input PremiumOfferUpdateManyMutationInput {
   title: String
   description: String
   price: Int
-  maxQuantity: Int
+  multiple: Boolean
 }
 
 input PremiumOfferUpdateOneRequiredInput {
@@ -1401,28 +1401,10 @@ input PremiumOfferWhereInput {
 
   """All values greater than or equal the given value."""
   price_gte: Int
-  maxQuantity: Int
+  multiple: Boolean
 
   """All values that are not equal to given value."""
-  maxQuantity_not: Int
-
-  """All values that are contained in given list."""
-  maxQuantity_in: [Int!]
-
-  """All values that are not contained in given list."""
-  maxQuantity_not_in: [Int!]
-
-  """All values less than the given value."""
-  maxQuantity_lt: Int
-
-  """All values less than or equal the given value."""
-  maxQuantity_lte: Int
-
-  """All values greater than the given value."""
-  maxQuantity_gt: Int
-
-  """All values greater than or equal the given value."""
-  maxQuantity_gte: Int
+  multiple_not: Boolean
   user: UserWhereInput
 }
 
