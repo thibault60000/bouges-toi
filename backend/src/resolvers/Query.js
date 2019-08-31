@@ -6,6 +6,8 @@ const Query = {
   articlesConnection: forwardTo("db"),
   rubrique: forwardTo("db"),
   rubriques: forwardTo("db"),
+  premiumOffer: forwardTo("db"),
+  premiumOffers: forwardTo("db"),
   me(parent, args, ctx, info) {
     console.log("request", ctx.request);
     // check if there is a current user ID
@@ -14,7 +16,7 @@ const Query = {
     }
     return ctx.db.query.user(
       {
-        where: { id: ctx.request.userId },
+        where: { id: ctx.request.userId }
       },
       info
     );

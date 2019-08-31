@@ -19,10 +19,14 @@ type Mutation {
   CREATE RUBRIQUE
   """
   createRubrique(title: String!, image: String): Article!
-   """
+  """
   CREATE PREMIMUM OFFER
   """
-  createPremiumOffer(title: String!, description: String!, price: Int!): PremiumOffer!
+  createPremiumOffer(
+    title: String!
+    description: String!
+    price: Int!
+  ): PremiumOffer!
   """
   UPDATE ARTICLE
   """
@@ -77,6 +81,11 @@ type Query {
   """
   rubrique(where: RubriqueWhereUniqueInput!): Rubrique
   rubriques(where: RubriqueWhereInput): [Rubrique]!
+  """
+  PREMIUM OFFERS
+  """
+  premiumOffer(where: PremiumOfferWhereUniqueInput!): PremiumOffer
+  premiumOffers(where: PremiumOfferWhereInput): [PremiumOffer]!
   """
   Authentification
   """
