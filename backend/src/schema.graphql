@@ -6,6 +6,10 @@ type SuccessMessage {
 
 type Mutation {
   """
+  CART
+  """
+  addToCart(id: ID!): CartItem
+  """
   CREATE ARTICLE
   """
   createArticle(
@@ -26,6 +30,7 @@ type Mutation {
     title: String!
     description: String!
     price: Int!
+    maxQuantity: Int
   ): PremiumOffer!
   """
   UPDATE ARTICLE
@@ -102,4 +107,5 @@ type User {
   name: String!
   surname: String!
   permissions: [Permission!]!
+  cart: [CartItem!]!
 }

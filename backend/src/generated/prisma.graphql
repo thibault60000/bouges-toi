@@ -1,7 +1,11 @@
 # source: https://eu1.prisma.sh/thibault-jeanpierre/backend-tutoriel/dev
-# timestamp: Sat Aug 31 2019 15:06:46 GMT+0200 (GMT+02:00)
+# timestamp: Sat Aug 31 2019 18:42:53 GMT+0200 (GMT+02:00)
 
 type AggregateArticle {
+  count: Int!
+}
+
+type AggregateCartItem {
   count: Int!
 }
 
@@ -495,6 +499,298 @@ type BatchPayload {
   count: Long!
 }
 
+type CartItem implements Node {
+  id: ID!
+  quantity: Int!
+  premiumOffer: PremiumOffer!
+  user: User!
+}
+
+"""A connection to a list of items."""
+type CartItemConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [CartItemEdge]!
+  aggregate: AggregateCartItem!
+}
+
+input CartItemCreateInput {
+  id: ID
+  quantity: Int
+  premiumOffer: PremiumOfferCreateOneInput!
+  user: UserCreateOneWithoutCartInput!
+}
+
+input CartItemCreateManyWithoutUserInput {
+  create: [CartItemCreateWithoutUserInput!]
+  connect: [CartItemWhereUniqueInput!]
+}
+
+input CartItemCreateWithoutUserInput {
+  id: ID
+  quantity: Int
+  premiumOffer: PremiumOfferCreateOneInput!
+}
+
+"""An edge in a connection."""
+type CartItemEdge {
+  """The item at the end of the edge."""
+  node: CartItem!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum CartItemOrderByInput {
+  id_ASC
+  id_DESC
+  quantity_ASC
+  quantity_DESC
+}
+
+type CartItemPreviousValues {
+  id: ID!
+  quantity: Int!
+}
+
+input CartItemScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CartItemScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CartItemScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CartItemScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  quantity: Int
+
+  """All values that are not equal to given value."""
+  quantity_not: Int
+
+  """All values that are contained in given list."""
+  quantity_in: [Int!]
+
+  """All values that are not contained in given list."""
+  quantity_not_in: [Int!]
+
+  """All values less than the given value."""
+  quantity_lt: Int
+
+  """All values less than or equal the given value."""
+  quantity_lte: Int
+
+  """All values greater than the given value."""
+  quantity_gt: Int
+
+  """All values greater than or equal the given value."""
+  quantity_gte: Int
+}
+
+type CartItemSubscriptionPayload {
+  mutation: MutationType!
+  node: CartItem
+  updatedFields: [String!]
+  previousValues: CartItemPreviousValues
+}
+
+input CartItemSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CartItemSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CartItemSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CartItemSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: CartItemWhereInput
+}
+
+input CartItemUpdateInput {
+  quantity: Int
+  premiumOffer: PremiumOfferUpdateOneRequiredInput
+  user: UserUpdateOneRequiredWithoutCartInput
+}
+
+input CartItemUpdateManyDataInput {
+  quantity: Int
+}
+
+input CartItemUpdateManyMutationInput {
+  quantity: Int
+}
+
+input CartItemUpdateManyWithoutUserInput {
+  create: [CartItemCreateWithoutUserInput!]
+  connect: [CartItemWhereUniqueInput!]
+  set: [CartItemWhereUniqueInput!]
+  disconnect: [CartItemWhereUniqueInput!]
+  delete: [CartItemWhereUniqueInput!]
+  update: [CartItemUpdateWithWhereUniqueWithoutUserInput!]
+  updateMany: [CartItemUpdateManyWithWhereNestedInput!]
+  deleteMany: [CartItemScalarWhereInput!]
+  upsert: [CartItemUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input CartItemUpdateManyWithWhereNestedInput {
+  where: CartItemScalarWhereInput!
+  data: CartItemUpdateManyDataInput!
+}
+
+input CartItemUpdateWithoutUserDataInput {
+  quantity: Int
+  premiumOffer: PremiumOfferUpdateOneRequiredInput
+}
+
+input CartItemUpdateWithWhereUniqueWithoutUserInput {
+  where: CartItemWhereUniqueInput!
+  data: CartItemUpdateWithoutUserDataInput!
+}
+
+input CartItemUpsertWithWhereUniqueWithoutUserInput {
+  where: CartItemWhereUniqueInput!
+  update: CartItemUpdateWithoutUserDataInput!
+  create: CartItemCreateWithoutUserInput!
+}
+
+input CartItemWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CartItemWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CartItemWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CartItemWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  quantity: Int
+
+  """All values that are not equal to given value."""
+  quantity_not: Int
+
+  """All values that are contained in given list."""
+  quantity_in: [Int!]
+
+  """All values that are not contained in given list."""
+  quantity_not_in: [Int!]
+
+  """All values less than the given value."""
+  quantity_lt: Int
+
+  """All values less than or equal the given value."""
+  quantity_lte: Int
+
+  """All values greater than the given value."""
+  quantity_gt: Int
+
+  """All values greater than or equal the given value."""
+  quantity_gte: Int
+  premiumOffer: PremiumOfferWhereInput
+  user: UserWhereInput
+}
+
+input CartItemWhereUniqueInput {
+  id: ID
+}
+
 type Category implements Node {
   id: ID!
   title: String!
@@ -732,36 +1028,42 @@ Long can represent values between -(2^63) and 2^63 - 1.
 scalar Long
 
 type Mutation {
+  createCartItem(data: CartItemCreateInput!): CartItem!
   createArticle(data: ArticleCreateInput!): Article!
   createCategory(data: CategoryCreateInput!): Category!
   createRubrique(data: RubriqueCreateInput!): Rubrique!
   createRubriqueNumber(data: RubriqueNumberCreateInput!): RubriqueNumber!
   createPremiumOffer(data: PremiumOfferCreateInput!): PremiumOffer!
   createUser(data: UserCreateInput!): User!
+  updateCartItem(data: CartItemUpdateInput!, where: CartItemWhereUniqueInput!): CartItem
   updateArticle(data: ArticleUpdateInput!, where: ArticleWhereUniqueInput!): Article
   updateCategory(data: CategoryUpdateInput!, where: CategoryWhereUniqueInput!): Category
   updateRubrique(data: RubriqueUpdateInput!, where: RubriqueWhereUniqueInput!): Rubrique
   updateRubriqueNumber(data: RubriqueNumberUpdateInput!, where: RubriqueNumberWhereUniqueInput!): RubriqueNumber
   updatePremiumOffer(data: PremiumOfferUpdateInput!, where: PremiumOfferWhereUniqueInput!): PremiumOffer
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  deleteCartItem(where: CartItemWhereUniqueInput!): CartItem
   deleteArticle(where: ArticleWhereUniqueInput!): Article
   deleteCategory(where: CategoryWhereUniqueInput!): Category
   deleteRubrique(where: RubriqueWhereUniqueInput!): Rubrique
   deleteRubriqueNumber(where: RubriqueNumberWhereUniqueInput!): RubriqueNumber
   deletePremiumOffer(where: PremiumOfferWhereUniqueInput!): PremiumOffer
   deleteUser(where: UserWhereUniqueInput!): User
+  upsertCartItem(where: CartItemWhereUniqueInput!, create: CartItemCreateInput!, update: CartItemUpdateInput!): CartItem!
   upsertArticle(where: ArticleWhereUniqueInput!, create: ArticleCreateInput!, update: ArticleUpdateInput!): Article!
   upsertCategory(where: CategoryWhereUniqueInput!, create: CategoryCreateInput!, update: CategoryUpdateInput!): Category!
   upsertRubrique(where: RubriqueWhereUniqueInput!, create: RubriqueCreateInput!, update: RubriqueUpdateInput!): Rubrique!
   upsertRubriqueNumber(where: RubriqueNumberWhereUniqueInput!, create: RubriqueNumberCreateInput!, update: RubriqueNumberUpdateInput!): RubriqueNumber!
   upsertPremiumOffer(where: PremiumOfferWhereUniqueInput!, create: PremiumOfferCreateInput!, update: PremiumOfferUpdateInput!): PremiumOffer!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  updateManyCartItems(data: CartItemUpdateManyMutationInput!, where: CartItemWhereInput): BatchPayload!
   updateManyArticles(data: ArticleUpdateManyMutationInput!, where: ArticleWhereInput): BatchPayload!
   updateManyCategories(data: CategoryUpdateManyMutationInput!, where: CategoryWhereInput): BatchPayload!
   updateManyRubriques(data: RubriqueUpdateManyMutationInput!, where: RubriqueWhereInput): BatchPayload!
   updateManyRubriqueNumbers(data: RubriqueNumberUpdateManyMutationInput!, where: RubriqueNumberWhereInput): BatchPayload!
   updateManyPremiumOffers(data: PremiumOfferUpdateManyMutationInput!, where: PremiumOfferWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  deleteManyCartItems(where: CartItemWhereInput): BatchPayload!
   deleteManyArticles(where: ArticleWhereInput): BatchPayload!
   deleteManyCategories(where: CategoryWhereInput): BatchPayload!
   deleteManyRubriques(where: RubriqueWhereInput): BatchPayload!
@@ -810,7 +1112,7 @@ enum Permission {
   CATEGORYUPDATE
   CATEGORYDELETE
   PERMISSIONUPDATE
-  PRENIUM
+  PREMIUM
 }
 
 type PremiumOffer implements Node {
@@ -819,6 +1121,7 @@ type PremiumOffer implements Node {
   description: String!
   price: Int!
   user: User!
+  maxQuantity: Int
 }
 
 """A connection to a list of items."""
@@ -836,7 +1139,13 @@ input PremiumOfferCreateInput {
   title: String!
   description: String!
   price: Int!
+  maxQuantity: Int
   user: UserCreateOneInput!
+}
+
+input PremiumOfferCreateOneInput {
+  create: PremiumOfferCreateInput
+  connect: PremiumOfferWhereUniqueInput
 }
 
 """An edge in a connection."""
@@ -857,6 +1166,8 @@ enum PremiumOfferOrderByInput {
   description_DESC
   price_ASC
   price_DESC
+  maxQuantity_ASC
+  maxQuantity_DESC
 }
 
 type PremiumOfferPreviousValues {
@@ -864,6 +1175,7 @@ type PremiumOfferPreviousValues {
   title: String!
   description: String!
   price: Int!
+  maxQuantity: Int
 }
 
 type PremiumOfferSubscriptionPayload {
@@ -903,10 +1215,19 @@ input PremiumOfferSubscriptionWhereInput {
   node: PremiumOfferWhereInput
 }
 
+input PremiumOfferUpdateDataInput {
+  title: String
+  description: String
+  price: Int
+  maxQuantity: Int
+  user: UserUpdateOneRequiredInput
+}
+
 input PremiumOfferUpdateInput {
   title: String
   description: String
   price: Int
+  maxQuantity: Int
   user: UserUpdateOneRequiredInput
 }
 
@@ -914,6 +1235,19 @@ input PremiumOfferUpdateManyMutationInput {
   title: String
   description: String
   price: Int
+  maxQuantity: Int
+}
+
+input PremiumOfferUpdateOneRequiredInput {
+  create: PremiumOfferCreateInput
+  connect: PremiumOfferWhereUniqueInput
+  update: PremiumOfferUpdateDataInput
+  upsert: PremiumOfferUpsertNestedInput
+}
+
+input PremiumOfferUpsertNestedInput {
+  update: PremiumOfferUpdateDataInput!
+  create: PremiumOfferCreateInput!
 }
 
 input PremiumOfferWhereInput {
@@ -1067,6 +1401,28 @@ input PremiumOfferWhereInput {
 
   """All values greater than or equal the given value."""
   price_gte: Int
+  maxQuantity: Int
+
+  """All values that are not equal to given value."""
+  maxQuantity_not: Int
+
+  """All values that are contained in given list."""
+  maxQuantity_in: [Int!]
+
+  """All values that are not contained in given list."""
+  maxQuantity_not_in: [Int!]
+
+  """All values less than the given value."""
+  maxQuantity_lt: Int
+
+  """All values less than or equal the given value."""
+  maxQuantity_lte: Int
+
+  """All values greater than the given value."""
+  maxQuantity_gt: Int
+
+  """All values greater than or equal the given value."""
+  maxQuantity_gte: Int
   user: UserWhereInput
 }
 
@@ -1075,18 +1431,21 @@ input PremiumOfferWhereUniqueInput {
 }
 
 type Query {
+  cartItems(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CartItem]!
   articles(where: ArticleWhereInput, orderBy: ArticleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Article]!
   categories(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Category]!
   rubriques(where: RubriqueWhereInput, orderBy: RubriqueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Rubrique]!
   rubriqueNumbers(where: RubriqueNumberWhereInput, orderBy: RubriqueNumberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RubriqueNumber]!
   premiumOffers(where: PremiumOfferWhereInput, orderBy: PremiumOfferOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PremiumOffer]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  cartItem(where: CartItemWhereUniqueInput!): CartItem
   article(where: ArticleWhereUniqueInput!): Article
   category(where: CategoryWhereUniqueInput!): Category
   rubrique(where: RubriqueWhereUniqueInput!): Rubrique
   rubriqueNumber(where: RubriqueNumberWhereUniqueInput!): RubriqueNumber
   premiumOffer(where: PremiumOfferWhereUniqueInput!): PremiumOffer
   user(where: UserWhereUniqueInput!): User
+  cartItemsConnection(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CartItemConnection!
   articlesConnection(where: ArticleWhereInput, orderBy: ArticleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ArticleConnection!
   categoriesConnection(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CategoryConnection!
   rubriquesConnection(where: RubriqueWhereInput, orderBy: RubriqueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RubriqueConnection!
@@ -1497,6 +1856,7 @@ input RubriqueWhereUniqueInput {
 }
 
 type Subscription {
+  cartItem(where: CartItemSubscriptionWhereInput): CartItemSubscriptionPayload
   article(where: ArticleSubscriptionWhereInput): ArticleSubscriptionPayload
   category(where: CategorySubscriptionWhereInput): CategorySubscriptionPayload
   rubrique(where: RubriqueSubscriptionWhereInput): RubriqueSubscriptionPayload
@@ -1514,6 +1874,7 @@ type User implements Node {
   resetToken: String
   resetTokenExpiry: Float
   permissions: [Permission!]!
+  cart(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CartItem!]
 }
 
 """A connection to a list of items."""
@@ -1535,6 +1896,7 @@ input UserCreateInput {
   resetToken: String
   resetTokenExpiry: Float
   permissions: UserCreatepermissionsInput
+  cart: CartItemCreateManyWithoutUserInput
 }
 
 input UserCreateOneInput {
@@ -1542,8 +1904,24 @@ input UserCreateOneInput {
   connect: UserWhereUniqueInput
 }
 
+input UserCreateOneWithoutCartInput {
+  create: UserCreateWithoutCartInput
+  connect: UserWhereUniqueInput
+}
+
 input UserCreatepermissionsInput {
   set: [Permission!]
+}
+
+input UserCreateWithoutCartInput {
+  id: ID
+  name: String!
+  surname: String!
+  email: String!
+  password: String!
+  resetToken: String
+  resetTokenExpiry: Float
+  permissions: UserCreatepermissionsInput
 }
 
 """An edge in a connection."""
@@ -1628,6 +2006,7 @@ input UserUpdateDataInput {
   resetToken: String
   resetTokenExpiry: Float
   permissions: UserUpdatepermissionsInput
+  cart: CartItemUpdateManyWithoutUserInput
 }
 
 input UserUpdateInput {
@@ -1638,6 +2017,7 @@ input UserUpdateInput {
   resetToken: String
   resetTokenExpiry: Float
   permissions: UserUpdatepermissionsInput
+  cart: CartItemUpdateManyWithoutUserInput
 }
 
 input UserUpdateManyMutationInput {
@@ -1657,13 +2037,35 @@ input UserUpdateOneRequiredInput {
   upsert: UserUpsertNestedInput
 }
 
+input UserUpdateOneRequiredWithoutCartInput {
+  create: UserCreateWithoutCartInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutCartDataInput
+  upsert: UserUpsertWithoutCartInput
+}
+
 input UserUpdatepermissionsInput {
   set: [Permission!]
+}
+
+input UserUpdateWithoutCartDataInput {
+  name: String
+  surname: String
+  email: String
+  password: String
+  resetToken: String
+  resetTokenExpiry: Float
+  permissions: UserUpdatepermissionsInput
 }
 
 input UserUpsertNestedInput {
   update: UserUpdateDataInput!
   create: UserCreateInput!
+}
+
+input UserUpsertWithoutCartInput {
+  update: UserUpdateWithoutCartDataInput!
+  create: UserCreateWithoutCartInput!
 }
 
 input UserWhereInput {
@@ -1937,6 +2339,9 @@ input UserWhereInput {
 
   """All values greater than or equal the given value."""
   resetTokenExpiry_gte: Float
+  cart_every: CartItemWhereInput
+  cart_some: CartItemWhereInput
+  cart_none: CartItemWhereInput
 }
 
 input UserWhereUniqueInput {

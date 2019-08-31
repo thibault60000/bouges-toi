@@ -299,6 +299,52 @@ const Mutations = {
       },
       info
     );
+  },
+  /* ------------------------------------
+  ------ ADD TO CART  --------------------
+  ---------------------------------------*/
+  async addToCart(parent, args, ctx, info) {
+    // 1. Vérifier si on est connecté
+    const { userId } = ctx.request;
+    if (!userId) throw new Error("Vous devez être connecté !");
+    // 2. Récupérer le panier actuel de l'utilisateur
+    const [existingCartItem] = await ctx.db.query.cartItems({
+      where: {
+        user: { id: userId },
+        premiumOffer: { id: args.id }
+      }
+    });
+    // 3. Test si l'élément est deja dans le panier, si c'est le cas on incrémente
+    if (existingCartItem) {
+      const premiumOffer = await ctx.db.query.premiumOffer({
+        where: {
+          id: args.id
+        }
+      });
+      if (premiumOffer.maxQuantity !== 1) {
+        return ctx.db.mutation.updateCartItem(
+          {
+            where: { id: existingCartItem.id },
+            data: { quantity: existingCartItem.quantity + 1 }
+          },
+          info
+        );
+      }
+    }
+    // 4. S'il n'est pas dans le panier, on l'ajoute pour ce user
+    return ctx.db.mutation.createCartItem(
+      {
+        data: {
+          user: {
+            connect: { id: userId }
+          },
+          premiumOffer: {
+            connect: { id: args.id }
+          }
+        }
+      },
+      info
+    );
   }
 };
 

@@ -11,9 +11,15 @@ enum Permission {
   CATEGORYUPDATE
   CATEGORYDELETE
   PERMISSIONUPDATE
-  PRENIUM
+  PREMIUM
 }
 
+type CartItem {
+  id: ID! @id
+  quantity: Int! @default(value: 1)
+  premiumOffer: PremiumOffer!
+  user: User!
+}
 type User {
   id: ID! @id
   name: String!
@@ -23,6 +29,7 @@ type User {
   resetToken: String
   resetTokenExpiry: Float
   permissions: [Permission] @scalarList(strategy:RELATION)
+  cart: [CartItem!]!
 }
 
 type Article {
@@ -63,4 +70,5 @@ type PremiumOffer {
   description: String!
   price: Int!
   user: User!
+  maxQuantity: Int @default(value: 1)
 }
