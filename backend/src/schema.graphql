@@ -72,6 +72,7 @@ type Query {
   RUBRIQUES
   """
   rubrique(where: RubriqueWhereUniqueInput!): Rubrique
+  rubriques(where: RubriqueWhereInput): [Rubrique]!
   """
   Authentification
   """

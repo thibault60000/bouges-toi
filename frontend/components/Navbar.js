@@ -10,6 +10,11 @@ const Navbar = () => (
         <Link href="/">
           <a> Accueil </a>
         </Link>
+        {me && me.permissions.includes("ADMIN") && (
+          <Link href="/adminPage">
+            <a> Admin </a>
+          </Link>
+        )}
         {me && (
           <>
             <Link href="articles/createArticlePage">
@@ -27,11 +32,13 @@ const Navbar = () => (
             <Signout />
           </>
         )}
+        
         {!me && (
           <Link href="/login">
             <a> Inscription </a>
           </Link>
         )}
+        
       </StyledNavbar>
     )}
   </User>

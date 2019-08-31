@@ -5,6 +5,7 @@ const Query = {
   article: forwardTo("db"),
   articlesConnection: forwardTo("db"),
   rubrique: forwardTo("db"),
+  rubriques: forwardTo("db"),
   me(parent, args, ctx, info) {
     console.log("request", ctx.request);
     // check if there is a current user ID
