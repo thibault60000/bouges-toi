@@ -82,6 +82,7 @@ Convertit une fonction callback en une fonction basée sur une Promise.
 
 ### Prisma Server
  - MySQL
+
  - Schéma en DEV : Prisma Admin: https://eu1.prisma.sh/thibault-jeanpierre/bouges-toi/dev/_admin
  - Service : bouges-toi  |   Stage : dev
  - Hobby Dev: 10 000 lignes
@@ -91,6 +92,9 @@ Convertit une fonction callback en une fonction basée sur une Promise.
 
 ### Yoga Server
  - Mutation and Query Resolvers
+
+ 1./ POUR DEPLOYER SUR HEROKU 
+
  - Installation du CLI de Heroku : https://cli-assets.heroku.com/heroku-x64.exe
  - heroku login
  - Créer le serveur : heroku apps:create bougestoi-yoga-prod
@@ -101,7 +105,14 @@ Convertit une fonction callback en une fonction basée sur une Promise.
  - debug : heroku logs --tail --app bougestoi-yoga-prod
  - Aller sur le serveur Heroku => Settings => Config vars et copier les variables d'environnement
 
+ 2./ POUR DEPLOYER SUR NOW : 
+
+ npm install -g now
+ cd backend
+ now
 
 
 ### React App
  - Next.js
+
+ - Ajouter une URL prodEndpoint dans le HOC "withData.js" et ajouter le yoga server de prod dans le fichier config.js
