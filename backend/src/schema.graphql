@@ -73,4 +73,5 @@ type User {
   surname: String!
   permissions: [Permission!]!
   cart: [CartItem!]!
+  orders: [OrderItem]
 }

@@ -116,3 +116,10 @@ Convertit une fonction callback en une fonction basée sur une Promise.
  - Next.js
 
  - Ajouter une URL prodEndpoint dans le HOC "withData.js" et ajouter le yoga server de prod dans le fichier config.js
+ - git remote -v pour voir les remotes
+ - heroku apps:create bougestoi-next-prod (nouveau git repo)
+ - git remote add heroku-frontend https://git.heroku.com/bougestoi-next-prod.git
+ - git remote -v
+ - git add et commit
+ - Ajouter la commande next build et le $PORT sur la commande npm run start
+ - git subtree push --prefix frontend heroku-frontend master
