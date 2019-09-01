@@ -55,16 +55,17 @@ class Orders extends Component {
                     >
                       <a>
                         <div className="order-meta">
+                          { console.log(order) }
                           <p>
                             {order.items &&
                               order.items.reduce(
                                 (a, b) => a + b.quantity,
                                 0
-                              )}{" "}
-                            Elements
+                              )} offres preniums
+                            
                           </p>
-                          <p> {order.items && order.items.length} Produits </p>
-                          <p> {order.createdAt} </p>
+                          <p> Parmi {order.items && order.items.length} éléments  </p>
+                          <p> { moment(order.createdAt).calendar() } </p>
                         </div>
                         {/*  <div className="images">
                             { order.items && order.items.map(item => (

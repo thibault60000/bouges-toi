@@ -69,7 +69,7 @@ const Query = {
       where: {
         user: { id: userId }
       }
-    });
+    }, info);
   }
 };
 

@@ -71,7 +71,7 @@ class Order extends Component {
               {/*  Liste d'éléments dans la commande  */}
               <div className="items">
                 {order.items.map(item => (
-                  <div className="order-item">
+                  <div className="order-item" key={item.id}>
                     {/* <img src={item.image} title={item.title} /> */}
                     <div className="order-item-details">
                       <h3> {item.title} </h3>
