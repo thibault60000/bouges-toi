@@ -1,5 +1,6 @@
 import React from "react";
 import { Query, Mutation } from "react-apollo";
+import { adopt } from "react-adopt";
 import gql from "graphql-tag";
 import User from "../Authentication/User";
 import StyledCart from "../styles/StyledCart";
@@ -19,43 +20,49 @@ const TOGGLE_CART_MUTATION = gql`
   }
 `;
 
+// Adopt
+const Composed = adopt({
+  user: ({ render }) => <User>{render}</User>,
+  toggleCart: ({ render }) => (
+    <Mutation mutation={TOGGLE_CART_MUTATION}>{render}</Mutation>
+  ),
+  localState: ({ render }) => <Query query={LOCAL_STATE_QUERY}>{render}</Query>
+});
+
+// Cart Component
 const Cart = () => {
   return (
-    <User>
-      {({ data: { me } }) => {
+    <Composed>
+      {({ user, toggleCart, localState }) => {
+        /* Test si user authentifié */
+        const me = user.data.me;
         if (!me) return null;
         console.log(me);
         return (
-          <Mutation mutation={TOGGLE_CART_MUTATION}>
-            {toggleCart => (
-              <Query query={LOCAL_STATE_QUERY}>
-                {({ data }) => (
-                  <StyledCart open={data.cartOpen}>
-                    <header>
-                      <button onClick={toggleCart}> &times; </button>
-                      <h3> Panier de {me.name} </h3>
-                      <p>
-                        Vous avez {me.cart.length} élément
-                        {me.cart.length !== 1 && "s"} dans votre panier{" "}
-                      </p>
-                    </header>
-                    <ul>
-                      {me.cart.map(cartItem => (
-                        <CartItem key={cartItem.id} cartItem={cartItem} />
-                      ))}
-                    </ul>
-                    <footer>
-                      <p> { formatMoney(calcTotalPrice(me.cart)) } </p>
-                      <button> Passer au paiement </button>
-                    </footer>
-                  </StyledCart>
-                )}
-              </Query>
-            )}
-          </Mutation>
+          /* Récupère l'état du panier avec une Query Local @client */
+          <StyledCart open={localState.data.cartOpen}>
+            <header>
+              {/* Toggle l'état du panier avec une mutation locale @client  */}
+              <button onClick={toggleCart}> &times; </button>
+              <h3> Panier de {me.name} </h3>
+              <p>
+                Vous avez {me.cart.length} élément
+                {me.cart.length !== 1 && "s"} dans votre panier
+              </p>
+            </header>
+            <ul>
+              {me.cart.map(cartItem => (
+                <CartItem key={cartItem.id} cartItem={cartItem} />
+              ))}
+            </ul>
+            <footer>
+              <p> {formatMoney(calcTotalPrice(me.cart))} </p>
+              <button> Passer au paiement </button>
+            </footer>
+          </StyledCart>
         );
       }}
-    </User>
+    </Composed>
   );
 };
 
