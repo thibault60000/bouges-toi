@@ -24,14 +24,16 @@ const CREATE_ORDER_MUTATION = gql`
   }
 `;
 
+// Total Items
 function totalItems(cart) {
   return cart.reduce((tally, cartItem) => tally + cartItem.quantity, 0);
 }
+
+// Take My Money Component
 class TakeMyMoney extends React.Component {
   // OnToken
   onToken = async (res, createOrder) => {
     NProgress.start();
-    // 1. Appeler manuellement la mutation avec le Token Stripe
     const order = await createOrder({
       variables: {
         token: res.id

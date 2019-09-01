@@ -38,7 +38,6 @@ const Cart = () => {
         /* Test si user authentifié */
         const me = user.data.me;
         if (!me) return null;
-        console.log(me);
         return (
           /* Récupère l'état du panier avec une Query Local @client */
           <StyledCart open={localState.data.cartOpen}>

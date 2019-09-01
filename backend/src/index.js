@@ -41,6 +41,6 @@ server.express.use((req, res, next) => {
       },
     },
     deets => {
-      console.log(`Server is now running on port http://localhost:${deets.port}`);
+      console.log(`Serveur démarré : http://localhost:${deets.port}`);
     }
   );

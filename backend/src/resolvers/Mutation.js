@@ -419,7 +419,6 @@ const Mutations = {
       currency: "EUR",
       source: args.token
     });
-    console.log(charge);
     // 4. Convertir les cartItems en orderItems
     const orderItems = user.cart.map(cartItem => {
       const orderItem = {

@@ -58,6 +58,18 @@ const Query = {
       throw new Error("Vous n'avez pas le droit de voir cette commande");
     // 4. Retourne la commande
     return order;
+  },
+  /* ----------------------------------
+  -------- RECUPERE MES COMMANDEs -----
+  -------------------------------------*/
+  async orders(parent, args, ctx, info) {
+    const { userId } = ctx.request;
+    if (!userId) throw new Error("Vous devez être connecté!");
+    return ctx.db.query.orders({
+      where: {
+        user: { id: userId }
+      }
+    });
   }
 };
 

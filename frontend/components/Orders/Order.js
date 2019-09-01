@@ -77,7 +77,6 @@ class Order extends Component {
                       <h3> {item.title} </h3>
                       <p>Quantité : {item.quantité}</p>
                       <p> Unité : {formatMoney(item.price)} </p>
-
                       <p>
                         Sous total : {formatMoney(
                           item.price * item.quantity

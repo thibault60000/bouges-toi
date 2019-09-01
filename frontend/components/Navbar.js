@@ -33,7 +33,7 @@ const Navbar = () => (
             <Link href="/premiumOffers/premiumOffersPage">
               <a> Offres payantes </a>
             </Link>
-            <Link href="/moncompte">
+            <Link href="/orders/orders">
               <a> Mon Compte </a>
             </Link>
             <Mutation mutation={TOGGLE_CART_MUTATION}>
