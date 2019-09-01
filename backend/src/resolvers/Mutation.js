@@ -4,6 +4,7 @@ const { randomBytes } = require("crypto");
 const { promisify } = require("util");
 const { transport, email } = require("../mail");
 const { hasPermission } = require("../utils");
+const stripe = require("../stripe");
 
 const Mutations = {
   /* ------------------------------------------
@@ -377,6 +378,55 @@ const Mutations = {
       },
       info
     );
+  },
+  /* ------------------------------------
+  ------  CREATE ORDER ------------------
+  ---------------------------------------*/
+  async createOrder(parent, args, ctx, info) {
+    // 1. Récupère le user courant et vérifier qu'il est connecté
+    const { userId } = ctx.request;
+    if (!userId)
+      throw new Error("Vous devez être connecté pour finir la commande");
+    // TODO : Ajouter image dans la query du premium offer
+    const user = await ctx.db.query.user(
+      { where: { id: userId } },
+      `{ 
+        id 
+        name 
+        surname 
+        email 
+        cart { 
+          id 
+          quantity 
+          premiumOffer { 
+            title 
+            price 
+            id 
+            description 
+          }
+        }
+      }`
+    );
+    // 2. Recalculer le prix total
+    const amount = user.cart.reduce(
+      (tally, cartItem) =>
+        tally + cartItem.premiumOffer.price * cartItem.quantity,
+      0
+    );
+    // 3. Créer la Stripe Charge
+    const charge = await stripe.charges.create({
+      amount,
+      currency: "EUR",
+      source: args.token
+    })
+    console.log(charge);
+    // 4. Convertir les cartItems en orderItems
+
+    // 5. Créer la commande
+
+    // 6. Vider le panier de l'utilisateur, supprimer les cartItems
+
+    // 7. Retourne la commande au client
   }
 };
 
