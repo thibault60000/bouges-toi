@@ -5,14 +5,8 @@ type SuccessMessage {
 }
 
 type Mutation {
-  """
-  CART
-  """
   addToCart(id: ID!): CartItem
   removeFromCart(id: ID!): CartItem
-  """
-  CREATE ARTICLE
-  """
   createArticle(
     title: String!
     description: String!
@@ -20,22 +14,13 @@ type Mutation {
     greatImage: String
     price: Int!
   ): Article!
-  """
-  CREATE RUBRIQUE
-  """
   createRubrique(title: String!, image: String): Article!
-  """
-  CREATE PREMIMUM OFFER
-  """
   createPremiumOffer(
     title: String!
     description: String!
     price: Int!
     maxQuantity: Int
   ): PremiumOffer!
-  """
-  UPDATE ARTICLE
-  """
   updateArticle(
     id: ID!
     title: String
@@ -43,13 +28,7 @@ type Mutation {
     price: Int
     user: String
   ): Article!
-  """
-  DELETE ARTICLE
-  """
   deleteArticle(id: ID!): Article
-  """
-  USER AUTHENTIFICATION
-  """
   signup(
     email: String!
     password: String!
@@ -64,16 +43,10 @@ type Mutation {
     password: String!
     confirmPassword: String!
   ): User
-  """
-  USER
-  """
   updatePermissions(permissions: [Permission], userId: ID!): User
 }
 
 type Query {
-  """
-  ARTICLES
-  """
   articles(
     where: ArticleWhereInput
     orderBy: ArticleOrderByInput
@@ -82,23 +55,11 @@ type Query {
   ): [Article!]!
   article(where: ArticleWhereUniqueInput!): Article
   articlesConnection(where: ArticleWhereInput): ArticleConnection!
-  """
-  RUBRIQUES
-  """
   rubrique(where: RubriqueWhereUniqueInput!): Rubrique
   rubriques(where: RubriqueWhereInput): [Rubrique]!
-  """
-  PREMIUM OFFERS
-  """
   premiumOffer(where: PremiumOfferWhereUniqueInput!): PremiumOffer
   premiumOffers(where: PremiumOfferWhereInput): [PremiumOffer]!
-  """
-  Authentification
-  """
   me: User
-  """
-  Users
-  """
   users: [User]!
 }
 
