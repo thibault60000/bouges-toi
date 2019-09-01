@@ -92,7 +92,16 @@ Convertit une fonction callback en une fonction basée sur une Promise.
 ### Yoga Server
  - Mutation and Query Resolvers
  - Installation du CLI de Heroku : https://cli-assets.heroku.com/heroku-x64.exe
- - créer le serveur : heroku apps:create bougestoi-yoga-prod
+ - heroku login
+ - Créer le serveur : heroku apps:create bougestoi-yoga-prod
+ - Taper git remove -v pour voir les deux remotes "heroku"
+ - Il faut créer des sub-remotes pour le front et le back
+ - Pour le back : git remote add heroku-backend https://git.heroku.com/bougestoi-yoga-prod.git
+ - Push le subremote : git subtree push --prefix backend heroku-backend master
+ - debug : heroku logs --tail --app bougestoi-yoga-prod
+ - Aller sur le serveur Heroku => Settings => Config vars et copier les variables d'environnement
+
+
 
 ### React App
  - Next.js
