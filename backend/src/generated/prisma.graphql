@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/thibault-jeanpierre/backend-tutoriel/dev
-# timestamp: Sun Sep 01 2019 14:42:59 GMT+0200 (GMT+02:00)
+# timestamp: Sun Sep 01 2019 15:41:51 GMT+0200 (GMT+02:00)
 
 type AggregateArticle {
   count: Int!
@@ -1143,8 +1143,6 @@ type OrderItem implements Node {
   id: ID!
   title: String!
   description: String!
-  image: String!
-  greatImage: String!
   price: Int!
   quantity: Int!
   user: User
@@ -1164,8 +1162,6 @@ input OrderItemCreateInput {
   id: ID
   title: String!
   description: String!
-  image: String!
-  greatImage: String!
   price: Int!
   quantity: Int
   user: UserCreateOneInput
@@ -1192,10 +1188,6 @@ enum OrderItemOrderByInput {
   title_DESC
   description_ASC
   description_DESC
-  image_ASC
-  image_DESC
-  greatImage_ASC
-  greatImage_DESC
   price_ASC
   price_DESC
   quantity_ASC
@@ -1206,8 +1198,6 @@ type OrderItemPreviousValues {
   id: ID!
   title: String!
   description: String!
-  image: String!
-  greatImage: String!
   price: Int!
   quantity: Int!
 }
@@ -1341,86 +1331,6 @@ input OrderItemScalarWhereInput {
 
   """All values not ending with the given string."""
   description_not_ends_with: String
-  image: String
-
-  """All values that are not equal to given value."""
-  image_not: String
-
-  """All values that are contained in given list."""
-  image_in: [String!]
-
-  """All values that are not contained in given list."""
-  image_not_in: [String!]
-
-  """All values less than the given value."""
-  image_lt: String
-
-  """All values less than or equal the given value."""
-  image_lte: String
-
-  """All values greater than the given value."""
-  image_gt: String
-
-  """All values greater than or equal the given value."""
-  image_gte: String
-
-  """All values containing the given string."""
-  image_contains: String
-
-  """All values not containing the given string."""
-  image_not_contains: String
-
-  """All values starting with the given string."""
-  image_starts_with: String
-
-  """All values not starting with the given string."""
-  image_not_starts_with: String
-
-  """All values ending with the given string."""
-  image_ends_with: String
-
-  """All values not ending with the given string."""
-  image_not_ends_with: String
-  greatImage: String
-
-  """All values that are not equal to given value."""
-  greatImage_not: String
-
-  """All values that are contained in given list."""
-  greatImage_in: [String!]
-
-  """All values that are not contained in given list."""
-  greatImage_not_in: [String!]
-
-  """All values less than the given value."""
-  greatImage_lt: String
-
-  """All values less than or equal the given value."""
-  greatImage_lte: String
-
-  """All values greater than the given value."""
-  greatImage_gt: String
-
-  """All values greater than or equal the given value."""
-  greatImage_gte: String
-
-  """All values containing the given string."""
-  greatImage_contains: String
-
-  """All values not containing the given string."""
-  greatImage_not_contains: String
-
-  """All values starting with the given string."""
-  greatImage_starts_with: String
-
-  """All values not starting with the given string."""
-  greatImage_not_starts_with: String
-
-  """All values ending with the given string."""
-  greatImage_ends_with: String
-
-  """All values not ending with the given string."""
-  greatImage_not_ends_with: String
   price: Int
 
   """All values that are not equal to given value."""
@@ -1507,8 +1417,6 @@ input OrderItemSubscriptionWhereInput {
 input OrderItemUpdateDataInput {
   title: String
   description: String
-  image: String
-  greatImage: String
   price: Int
   quantity: Int
   user: UserUpdateOneInput
@@ -1517,8 +1425,6 @@ input OrderItemUpdateDataInput {
 input OrderItemUpdateInput {
   title: String
   description: String
-  image: String
-  greatImage: String
   price: Int
   quantity: Int
   user: UserUpdateOneInput
@@ -1527,8 +1433,6 @@ input OrderItemUpdateInput {
 input OrderItemUpdateManyDataInput {
   title: String
   description: String
-  image: String
-  greatImage: String
   price: Int
   quantity: Int
 }
@@ -1548,8 +1452,6 @@ input OrderItemUpdateManyInput {
 input OrderItemUpdateManyMutationInput {
   title: String
   description: String
-  image: String
-  greatImage: String
   price: Int
   quantity: Int
 }
@@ -1699,86 +1601,6 @@ input OrderItemWhereInput {
 
   """All values not ending with the given string."""
   description_not_ends_with: String
-  image: String
-
-  """All values that are not equal to given value."""
-  image_not: String
-
-  """All values that are contained in given list."""
-  image_in: [String!]
-
-  """All values that are not contained in given list."""
-  image_not_in: [String!]
-
-  """All values less than the given value."""
-  image_lt: String
-
-  """All values less than or equal the given value."""
-  image_lte: String
-
-  """All values greater than the given value."""
-  image_gt: String
-
-  """All values greater than or equal the given value."""
-  image_gte: String
-
-  """All values containing the given string."""
-  image_contains: String
-
-  """All values not containing the given string."""
-  image_not_contains: String
-
-  """All values starting with the given string."""
-  image_starts_with: String
-
-  """All values not starting with the given string."""
-  image_not_starts_with: String
-
-  """All values ending with the given string."""
-  image_ends_with: String
-
-  """All values not ending with the given string."""
-  image_not_ends_with: String
-  greatImage: String
-
-  """All values that are not equal to given value."""
-  greatImage_not: String
-
-  """All values that are contained in given list."""
-  greatImage_in: [String!]
-
-  """All values that are not contained in given list."""
-  greatImage_not_in: [String!]
-
-  """All values less than the given value."""
-  greatImage_lt: String
-
-  """All values less than or equal the given value."""
-  greatImage_lte: String
-
-  """All values greater than the given value."""
-  greatImage_gt: String
-
-  """All values greater than or equal the given value."""
-  greatImage_gte: String
-
-  """All values containing the given string."""
-  greatImage_contains: String
-
-  """All values not containing the given string."""
-  greatImage_not_contains: String
-
-  """All values starting with the given string."""
-  greatImage_starts_with: String
-
-  """All values not starting with the given string."""
-  greatImage_not_starts_with: String
-
-  """All values ending with the given string."""
-  greatImage_ends_with: String
-
-  """All values not ending with the given string."""
-  greatImage_not_ends_with: String
   price: Int
 
   """All values that are not equal to given value."""

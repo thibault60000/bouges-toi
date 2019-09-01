@@ -29,15 +29,16 @@ function totalItems(cart) {
 }
 class TakeMyMoney extends React.Component {
   // OnToken
-  onToken = (res, createOrder) => {
+  onToken = async (res, createOrder) => {
     // 1. Appeler manuellement la mutation avec le Token Stripe
-    createOrder({
+    const order = await createOrder({
       variables: {
         token: res.id
       }
     }).catch(err => {
       alert(err.message);
     });
+    console.log(order);
   };
 
   // Render
@@ -56,7 +57,7 @@ class TakeMyMoney extends React.Component {
                 description={`Commande de ${totalItems(
                   me.cart
                 )} offres premium`}
-                /* image={me.cart[0].premiumOffer && me.cart[0].premiumOffer.image} */
+                /* image={me.cart?length && me.cart[0].premiumOffer && me.cart[0].premiumOffer.image} */
                 stripeKey="pk_test_EBtdxMcleU7Ct1ZMs4u6rkUL00b88XL7EX"
                 currency="EUR"
                 email={me.email}

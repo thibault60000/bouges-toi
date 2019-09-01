@@ -418,15 +418,40 @@ const Mutations = {
       amount,
       currency: "EUR",
       source: args.token
-    })
+    });
     console.log(charge);
     // 4. Convertir les cartItems en orderItems
-
+    const orderItems = user.cart.map(cartItem => {
+      const orderItem = {
+        ...cartItem.premiumOffer,
+        quantity: cartItem.quantity,
+        user: {
+          connect: {
+            id: userId
+          }
+        }
+      };
+      delete orderItem.id;
+      return orderItem;
+    });
     // 5. Créer la commande
-
+    const order = await ctx.db.mutation.createOrder({
+      data: {
+        total: charge.amount,
+        charge: charge.id,
+        items: { create: orderItems },
+        user: { connect: { id: userId } }
+      }
+    });
     // 6. Vider le panier de l'utilisateur, supprimer les cartItems
-
+    const cartItemsIds = user.cart.map(cartItem => cartItem.id);
+    await ctx.db.mutation.deleteManyCartItems({
+      where: {
+        id_in: cartItemsIds
+      }
+    });
     // 7. Retourne la commande au client
+    return order;
   }
 };
 

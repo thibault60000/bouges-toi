@@ -25,8 +25,6 @@ type OrderItem {
   id: ID! @id
   title: String!
   description: String!
-  image: String!
-  greatImage: String!
   price: Int!
   quantity: Int! @default(value: 1)
   user: User
