@@ -5,6 +5,7 @@ import { TOGGLE_CART_MUTATION } from "./Cart/Cart";
 import StyledNavbar from "./styles/StyledNavbar";
 import User from "./Authentication/User";
 import Signout from "./Authentication/Signout";
+import CartCount from "./Cart/CartCount";
 
 const Navbar = () => (
   <User>
@@ -36,7 +37,7 @@ const Navbar = () => (
               <a> Mon Compte </a>
             </Link>
             <Mutation mutation={TOGGLE_CART_MUTATION}>
-              {toggleCart => <button onClick={toggleCart}> Mon panier</button>}
+              {toggleCart => <button onClick={toggleCart}> Mon panier <CartCount count={me.cart.reduce((tally, cartItem) => tally + cartItem.quantity, 0)} /> </button>}
             </Mutation>
 
             <Signout />

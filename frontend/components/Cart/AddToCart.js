@@ -22,6 +22,13 @@ class AddToCart extends React.Component {
         variables={{
           id
         }}
+        optimisticResponse={{
+          __typename: "Mutation",
+          addToCart: {
+            __typename: "CartItem",
+            id: this.props.id
+          }
+        }}
         refetchQueries={[{ query: CURRENT_USER_QUERY }]}
       >
         {(addToCart, { data, loading, error }) => {

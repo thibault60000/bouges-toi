@@ -330,7 +330,9 @@ const Mutations = {
           info
         );
       }
-      throw new Error("Vous avez deja ajouter cet article a votre panier et il n'est possible d'en ajouter qu'un seul");
+      throw new Error(
+        "Vous avez deja ajouter cet article a votre panier et il n'est possible d'en ajouter qu'un seul"
+      );
     }
     // 4. S'il n'est pas dans le panier, on l'ajoute pour ce user
     return ctx.db.mutation.createCartItem(
@@ -342,6 +344,35 @@ const Mutations = {
           premiumOffer: {
             connect: { id: args.id }
           }
+        }
+      },
+      info
+    );
+  },
+  /* ------------------------------------
+  ------ REMOVE FROM CART ---------------
+  ---------------------------------------*/
+  async removeFromCart(parent, args, ctx, info) {
+    // 1. Récupérer le CartItem
+    const cartItem = await ctx.db.query.cartItem(
+      {
+        where: {
+          id: args.id
+        }
+      },
+      `{ id, user { id }}`
+    );
+    // 2. Test si on récupère bien un élément dans le panier
+    if (!cartItem) throw new Error("Pas d'élément du panier trouvé !");
+    // 2. Test si c'est bien notre cart item
+    if (cartItem.user.id !== ctx.request.userId) {
+      throw new Error("Ce n'est pas votre panier !");
+    }
+    // 3. Supprimer le cartItem
+    return ctx.db.mutation.deleteCartItem(
+      {
+        where: {
+          id: args.id
         }
       },
       info

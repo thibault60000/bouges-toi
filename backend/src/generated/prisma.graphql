@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/thibault-jeanpierre/backend-tutoriel/dev
-# timestamp: Sat Aug 31 2019 20:53:52 GMT+0200 (GMT+02:00)
+# timestamp: Sun Sep 01 2019 10:40:17 GMT+0200 (GMT+02:00)
 
 type AggregateArticle {
   count: Int!
@@ -502,7 +502,7 @@ type BatchPayload {
 type CartItem implements Node {
   id: ID!
   quantity: Int!
-  premiumOffer: PremiumOffer!
+  premiumOffer: PremiumOffer
   user: User!
 }
 
@@ -519,7 +519,7 @@ type CartItemConnection {
 input CartItemCreateInput {
   id: ID
   quantity: Int
-  premiumOffer: PremiumOfferCreateOneInput!
+  premiumOffer: PremiumOfferCreateOneInput
   user: UserCreateOneWithoutCartInput!
 }
 
@@ -531,7 +531,7 @@ input CartItemCreateManyWithoutUserInput {
 input CartItemCreateWithoutUserInput {
   id: ID
   quantity: Int
-  premiumOffer: PremiumOfferCreateOneInput!
+  premiumOffer: PremiumOfferCreateOneInput
 }
 
 """An edge in a connection."""
@@ -667,7 +667,7 @@ input CartItemSubscriptionWhereInput {
 
 input CartItemUpdateInput {
   quantity: Int
-  premiumOffer: PremiumOfferUpdateOneRequiredInput
+  premiumOffer: PremiumOfferUpdateOneInput
   user: UserUpdateOneRequiredWithoutCartInput
 }
 
@@ -698,7 +698,7 @@ input CartItemUpdateManyWithWhereNestedInput {
 
 input CartItemUpdateWithoutUserDataInput {
   quantity: Int
-  premiumOffer: PremiumOfferUpdateOneRequiredInput
+  premiumOffer: PremiumOfferUpdateOneInput
 }
 
 input CartItemUpdateWithWhereUniqueWithoutUserInput {
@@ -1238,9 +1238,11 @@ input PremiumOfferUpdateManyMutationInput {
   multiple: Boolean
 }
 
-input PremiumOfferUpdateOneRequiredInput {
+input PremiumOfferUpdateOneInput {
   create: PremiumOfferCreateInput
   connect: PremiumOfferWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
   update: PremiumOfferUpdateDataInput
   upsert: PremiumOfferUpsertNestedInput
 }

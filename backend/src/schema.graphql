@@ -9,6 +9,7 @@ type Mutation {
   CART
   """
   addToCart(id: ID!): CartItem
+  removeFromCart(id: ID!): CartItem
   """
   CREATE ARTICLE
   """

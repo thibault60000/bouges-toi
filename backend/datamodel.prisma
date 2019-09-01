@@ -17,7 +17,7 @@ enum Permission {
 type CartItem {
   id: ID! @id
   quantity: Int! @default(value: 1)
-  premiumOffer: PremiumOffer!
+  premiumOffer: PremiumOffer
   user: User!
 }
 type User {

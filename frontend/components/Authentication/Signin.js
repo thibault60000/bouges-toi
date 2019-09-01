@@ -4,6 +4,7 @@ import gql from "graphql-tag";
 import Error from "../Error";
 import StyledForm from "../styles/StyledForm";
 import { CURRENT_USER_QUERY } from "./User";
+import Router from "next/router";
 
 const SIGNIN_MUTATION = gql`
   mutation SIGNIN_MUTATION($email: String!, $password: String!) {
@@ -41,6 +42,9 @@ class Signin extends Component {
               e.preventDefault();
               const response = await signin();
               this.setState({ email: "", password: "" });
+              Router.push({
+                pathname: "/",
+              });
             }}
           >
             <fieldset disabled={loading} aria-busy={loading}>
