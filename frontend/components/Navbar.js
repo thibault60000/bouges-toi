@@ -10,7 +10,7 @@ import CartCount from "./Cart/CartCount";
 const Navbar = () => (
   <User>
     {({ data: { me } }) => (
-      <StyledNavbar>
+      console.log(me) && <StyledNavbar>
         <Link href="/">
           <a> Accueil </a>
         </Link>
