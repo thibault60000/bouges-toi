@@ -77,3 +77,14 @@ Le module de cryptage fournit des fonctionnalités cryptographiques comprenant u
 
 ### PROMISIFY
 Convertit une fonction callback en une fonction basée sur une Promise.
+
+## DEPLOIEMENT
+
+### Prisma Server
+ - MySQL
+
+### Yoga Server
+ - Mutation and Query Resolvers
+
+### React App
+ - Next.js
