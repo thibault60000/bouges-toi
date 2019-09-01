@@ -26,7 +26,8 @@ class AddToCart extends React.Component {
           __typename: "Mutation",
           addToCart: {
             __typename: "CartItem",
-            id: this.props.id
+            id: this.props.id,
+            quantity: 1
           }
         }}
         refetchQueries={[{ query: CURRENT_USER_QUERY }]}

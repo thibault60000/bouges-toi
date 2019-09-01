@@ -8,8 +8,11 @@ const Query = {
   rubriques: forwardTo("db"),
   premiumOffer: forwardTo("db"),
   premiumOffers: forwardTo("db"),
+  /* ---------------------------------
+  ---- RECUPERER USER AUTHENTIFIE ----
+  ------------------------------------*/
   me(parent, args, ctx, info) {
-    // check if there is a current user ID
+    // Test si on est un utilisateur authentifié
     if (!ctx.request.userId) {
       return null;
     }
@@ -20,6 +23,9 @@ const Query = {
       info
     );
   },
+  /* ---------------------------------
+  ---- RECUPERER TOUS LES USERS ------
+  ------------------------------------*/
   async users(parent, args, ctx, info) {
     // 1. Test si on est connecté
     if (!ctx.request.userId) throw new Error("Vous devez être connecté");
@@ -27,6 +33,31 @@ const Query = {
     hasPermission(ctx.request.user, ["ADMIN", "PERMISSIONUPDATE"]);
     // 3. Récupérer les utilisateurs
     return ctx.db.query.users({}, info);
+  },
+  /* ----------------------------------
+  -------- RECUPERE UNE COMMANDE ------
+  -------------------------------------*/
+  async order(parent, args, ctx, info) {
+    // 1. Test si on est connecté
+    if (!ctx.request.userId) throw new Error("Vous n'êtes pas connecté!");
+    // 2. Récupère l'utilisateur courant
+    const order = await ctx.db.query.order(
+      {
+        where: {
+          id: args.id
+        }
+      },
+      info
+    );
+    // 3. Test si on a les permissions de voir cette commande
+    const ownsOrder = order.user.id === ctx.request.userId;
+    const hasPermissionToSeeOrder = ctx.request.user.permissions.includes(
+      "ADMIN"
+    );
+    if (!ownsOrder || !hasPermissionToSeeOrder)
+      throw new Error("Vous n'avez pas le droit de voir cette commande");
+    // 4. Retourne la commande
+    return order;
   }
 };
 
