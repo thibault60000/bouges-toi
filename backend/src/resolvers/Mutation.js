@@ -179,6 +179,35 @@ const Mutations = {
     return user;
   },
   /* ------------------------------------------
+  -------- FACEBOOK LOGIN ---------------------
+  ---------------------------------------------*/
+  async facebookLogin(parent, args, ctx, info) {
+    const emailLowered = args.email.toLowerCase();
+    const passwordEncrypted = await bcrypt.hash(args.userID, 10);
+    const nameBegin = args.name ? args.name.split(" ")[0] : "";
+    const surnameEnd = args.name ? args.name.split(" ")[1] : "";
+    const user = await ctx.db.mutation.createUser(
+      {
+        data: {
+          name: nameBegin,
+          surname: surnameEnd,
+          email: emailLowered,
+          password: passwordEncrypted,
+          permissions: {
+            set: ["USER"]
+          }
+        }
+      },
+      info
+    );
+    const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
+    ctx.response.cookie("token", token, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 365 // 1 year cookie
+    });
+    return user;
+  },
+  /* ------------------------------------------
     ------- USER SIGN IN ------------------------
     ---------------------------------------------*/
   async signin(parent, { email, password }, ctx, info) {

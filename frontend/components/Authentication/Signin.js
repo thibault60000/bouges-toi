@@ -5,6 +5,7 @@ import Error from "../Error";
 import StyledForm from "../styles/StyledForm";
 import { CURRENT_USER_QUERY } from "./User";
 import Router from "next/router";
+import FacebookSignUpButton from "./FacebookSignUpButton";
 
 const SIGNIN_MUTATION = gql`
   mutation SIGNIN_MUTATION($email: String!, $password: String!) {
@@ -51,6 +52,7 @@ class Signin extends Component {
               <h2> Connexion </h2>
 
               <Error error={error} />
+              <FacebookSignUpButton />
               {/* Email */}
               <label htmlFor="email">
                 Email
