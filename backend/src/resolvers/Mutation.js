@@ -164,7 +164,7 @@ const Mutations = {
           ...args,
           password,
           permissions: {
-            set: ["USER"]
+            set: ["USER", "CREATEARTICLE", "UPDATEARTICLE", "DELETEARTICLE"]
           }
         }
       },

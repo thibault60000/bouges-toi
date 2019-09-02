@@ -1,3 +1,0 @@
-# Course React Apollo
-
-frontend

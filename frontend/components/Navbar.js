@@ -10,7 +10,7 @@ import CartCount from "./Cart/CartCount";
 const Navbar = () => (
   <User>
     {({ data: { me } }) => (
-      console.log(me) && <StyledNavbar>
+      <StyledNavbar>
         <Link href="/">
           <a> Accueil </a>
         </Link>
@@ -27,15 +27,15 @@ const Navbar = () => (
             <Link href="/articles/articles">
               <a> Articles </a>
             </Link>
-            <Link href="/commandes">
+            {/* <Link href="/commandes">
               <a> Commandes </a>
-            </Link>
+            </Link> */}
             <Link href="/premiumOffers/premiumOffersPage">
               <a> Offres payantes </a>
             </Link>
-            <Link href="/orders/orders">
+            {/* <Link href="/orders/orders">
               <a> Mon Compte </a>
-            </Link>
+            </Link> */}
             <Mutation mutation={TOGGLE_CART_MUTATION}>
               {toggleCart => <button onClick={toggleCart}> Mon panier <CartCount count={me.cart.reduce((tally, cartItem) => tally + cartItem.quantity, 0)} /> </button>}
             </Mutation>
