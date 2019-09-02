@@ -3,7 +3,7 @@ import ApolloClient from "apollo-boost";
 import { endpoint, prodEndpoint } from "../config";
 import { LOCAL_STATE_QUERY } from "../components/Cart/Cart";
 
-function createClient({ component }) {
+function createClient({ headers }) {
   return new ApolloClient({
     uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint,
     request: operation => {
@@ -11,7 +11,7 @@ function createClient({ component }) {
         fetchOptions: {
           credentials: "include"
         },
-        component
+        headers
       });
     },
     // Local Data
