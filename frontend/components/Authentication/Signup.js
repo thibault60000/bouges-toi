@@ -5,6 +5,7 @@ import Error from "../Error";
 import StyledForm from "../styles/StyledForm";
 import { CURRENT_USER_QUERY } from "./User";
 import FacebookSignUpButton from "./FacebookSignUpButton";
+import GoogleSignUpButton from "./GoogleSignUpButton";
 
 const SIGNUP_MUTATION = gql`
   mutation SIGNUP_MUTATION(
@@ -57,7 +58,7 @@ class Signup extends Component {
               <Error error={error} />
 
               <FacebookSignUpButton />
-
+              <GoogleSignUpButton />
               {/* Email */}
               <label htmlFor="email">
                 Email

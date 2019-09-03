@@ -39,8 +39,8 @@ bougestoi.contact@gmail.com
 ### GOOGLE (gmail/auth/youtube)
 bougestoi.contact@gmail.com
 - Mail Client : thibault60000@gmail.com 
-- ID Client : 1027038815922-b0pga4mcgrnqre0s83k6m0irj7rh38e9.apps.googleusercontent.com
-- Secret n932qSuRfnjar9nLlaie6KJ5
+- ID Client : 490758671748-e7t4bs8rbisrr6kk2crfdurqsfjtees8.apps.googleusercontent.com
+- Secret 7XjMhs4TqkRIIKH8okz02dYu
 
 ### KICKSTARTER
 
