@@ -5,6 +5,7 @@ import StyledForm from "../styles/StyledForm";
 import Error from "../Error";
 import Router from "next/router";
 import moment from "moment";
+import Communes from "./Communes";
 
 const CREATE_ARTICLE_MUTATION = gql`
   mutation CREATE_ARTICLE_MUTATION(
@@ -104,6 +105,7 @@ export class CreateArticle extends Component {
             }}
           >
             <Error error={error} />
+            <Communes />
             <fieldset>
               {/* Image */}
               <label htmlFor="image">
