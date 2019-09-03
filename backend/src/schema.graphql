@@ -37,7 +37,8 @@ type Mutation {
   ): User!
   signin(email: String!, password: String!): User!
   signout: SuccessMessage
-  facebookLogin(accessToken: String!, email: String!, name: String!, picture: String, userID: String!): User!
+  facebookSignin(accessToken: String!, email: String!, name: String!, picture: String, userID: String!): User!
+  facebookSignup(accessToken: String!, email: String!, name: String!, picture: String, userID: String!): User!
   requestReset(email: String!): SuccessMessage
   resetPassword(
     resetToken: String!

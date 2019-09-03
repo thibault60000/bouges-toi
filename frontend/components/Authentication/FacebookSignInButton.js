@@ -4,17 +4,16 @@ import gql from "graphql-tag";
 import { ApolloConsumer } from "react-apollo";
 import { CURRENT_USER_QUERY } from "./User";
 import Router from "next/router";
-import NProgress from "nprogress";
 
-const FACEBOOK_SIGNUP_QUERY = gql`
-  mutation FACEBOOK_SIGNUP_QUERY(
+const FACEBOOK_SIGNIN_QUERY = gql`
+  mutation FACEBOOK_SIGNIN_QUERY(
     $accessToken: String!
     $email: String!
     $name: String!
     $picture: String
     $userID: String!
   ) {
-    facebookSignup(
+    facebookSignin(
       accessToken: $accessToken
       email: $email
       name: $name
@@ -29,27 +28,16 @@ const FACEBOOK_SIGNUP_QUERY = gql`
   }
 `;
 
-class FacebookSignUpButton extends React.Component {
-  state = {
-    loading: false
-  };
+class FacebookSignInButton extends React.Component {
   render() {
     const responseFacebook = async (response, client) => {
-      NProgress.start();
-      this.setState({ loading: true });
       const { accessToken, email, name, userID } = response;
-      const picture =
-        response.picture && response.picture.data
-          ? response.picture.data.url
-          : "";
-      const res = await client
-        .mutate({
-          mutation: FACEBOOK_SIGNUP_QUERY,
-          variables: { accessToken, email, name, picture, userID },
-          refetchQueries: [{ query: CURRENT_USER_QUERY }]
-        })
-        .catch(err => alert(err.message && err.message.replace("GraphQL error: ", "")));
-      this.setState({ loading: false });
+      const picture = response.picture.data ? response.picture.data.url : "";
+      const res = await client.mutate({
+        mutation: FACEBOOK_SIGNIN_QUERY,
+        variables: { accessToken, email, name, picture, userID },
+        refetchQueries: [{ query: CURRENT_USER_QUERY }]
+      });
       Router.push({
         pathname: "/"
       });
@@ -64,7 +52,7 @@ class FacebookSignUpButton extends React.Component {
               autoLoad={false}
               fields="name,email,picture"
               callback={response => responseFacebook(response, client)}
-              textButton="S'inscrire avec Facebook"
+              textButton="Se connecter avec Facebook"
             />
           )}
         </ApolloConsumer>
@@ -73,4 +61,4 @@ class FacebookSignUpButton extends React.Component {
   }
 }
 
-export default FacebookSignUpButton;
+export default FacebookSignInButton;

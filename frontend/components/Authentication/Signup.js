@@ -4,6 +4,7 @@ import gql from "graphql-tag";
 import Error from "../Error";
 import StyledForm from "../styles/StyledForm";
 import { CURRENT_USER_QUERY } from "./User";
+import FacebookSignUpButton from "./FacebookSignUpButton";
 
 const SIGNUP_MUTATION = gql`
   mutation SIGNUP_MUTATION(
@@ -54,6 +55,9 @@ class Signup extends Component {
               <h2> Inscription </h2>
 
               <Error error={error} />
+
+              <FacebookSignUpButton />
+
               {/* Email */}
               <label htmlFor="email">
                 Email

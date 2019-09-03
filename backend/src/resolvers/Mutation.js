@@ -179,31 +179,56 @@ const Mutations = {
     return user;
   },
   /* ------------------------------------------
-  -------- FACEBOOK LOGIN ---------------------
+  -------- FACEBOOK Signup ---------------------
   ---------------------------------------------*/
-  async facebookLogin(parent, args, ctx, info) {
+  async facebookSignup(parent, args, ctx, info) {
     const emailLowered = args.email.toLowerCase();
     const passwordEncrypted = await bcrypt.hash(args.userID, 10);
     const nameBegin = args.name ? args.name.split(" ")[0] : "";
     const surnameEnd = args.name ? args.name.split(" ")[1] : "";
-    const user = await ctx.db.mutation.createUser(
-      {
-        data: {
-          name: nameBegin,
-          surname: surnameEnd,
-          email: emailLowered,
-          password: passwordEncrypted,
-          permissions: {
-            set: ["USER"]
+    const user = await ctx.db.mutation
+      .createUser(
+        {
+          data: {
+            name: nameBegin,
+            surname: surnameEnd,
+            email: emailLowered,
+            password: passwordEncrypted,
+            permissions: {
+              set: ["USER"]
+            }
           }
-        }
-      },
-      info
-    );
+        },
+        info
+      )
+      .catch(err => {
+        throw new Error("Ce compte existe deja ou n'est pas valide. Un compte par adresse mail");
+      });
     const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
     ctx.response.cookie("token", token, {
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 365 // 1 year cookie
+    });
+    return user;
+  },
+  /* ------------------------------------------
+  -------- FACEBOOK Signin ---------------------
+  ---------------------------------------------*/
+  async facebookSignin(parent, args, ctx, info) {
+    const emailLowered = args.email.toLowerCase();
+    const passwordEncrypted = await bcrypt.hash(args.userID, 10);
+    const nameBegin = args.name ? args.name.split(" ")[0] : "";
+    const surnameEnd = args.name ? args.name.split(" ")[1] : "";
+
+    const user = await ctx.db.query.user({ where: { email: emailLowered } });
+    if (!user) {
+      throw new Error("Aucun utilisateur pour cet email");
+    }
+    const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
+    // 4. Set the cookie with the token
+    ctx.response.cookie("token", token, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 365
     });
     return user;
   },
