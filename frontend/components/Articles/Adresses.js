@@ -3,6 +3,8 @@ import axios from "axios";
 import Autosuggest from "react-autosuggest";
 import styled from "styled-components";
 import debounce from "lodash.debounce";
+import { API_ADRESSES } from "../../config";
+
 // DOC : https://github.com/moroshko/react-autosuggest#installation
 // DOC : https://adresse.data.gouv.fr/api
 
@@ -34,8 +36,7 @@ export default class Adresses extends Component {
     });
     if (this.state.adresses.some(p => p.properties.label === newValue))
       this.props.parentCallback(newValue);
-    else
-        this.props.parentCallback("");
+    else this.props.parentCallback("");
   };
   onSuggestionsClearRequested = () => {
     this.setState({
@@ -58,7 +59,7 @@ export default class Adresses extends Component {
       else adresse += `+${v}`;
     });
     return axios
-      .get(`https://api-adresse.data.gouv.fr/search/?q=${adresse}`)
+      .get(`${API_ADRESSES}q=${adresse}`)
       .then(response => response.data.features);
   };
 

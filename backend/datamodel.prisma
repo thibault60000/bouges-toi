@@ -59,9 +59,11 @@ type Article {
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
   image: String
-  userNumber: Int
   maxUserNumber: Int
   greatImage: String
+  street: String
+  begin_date: DateTime
+  end_date: DateTime
   price: Int!
   user: User!
 }

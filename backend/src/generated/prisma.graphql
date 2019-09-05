@@ -1,5 +1,5 @@
-# source: https://eu1.prisma.sh/thibault-jeanpierre/backend-tutoriel/dev
-# timestamp: Sun Sep 01 2019 16:19:54 GMT+0200 (GMT+02:00)
+# source: https://bougestoi-prod-e68ef68b68.herokuapp.com/backend/prod
+# timestamp: Thu Sep 05 2019 22:08:48 GMT+0200 (GMT+02:00)
 
 type AggregateArticle {
   count: Int!
@@ -44,9 +44,11 @@ type Article implements Node {
   createdAt: DateTime!
   updatedAt: DateTime!
   image: String
-  userNumber: Int
   maxUserNumber: Int
   greatImage: String
+  street: String
+  begin_date: DateTime
+  end_date: DateTime
   price: Int!
   user: User!
 }
@@ -66,9 +68,11 @@ input ArticleCreateInput {
   title: String!
   description: String!
   image: String
-  userNumber: Int
   maxUserNumber: Int
   greatImage: String
+  street: String
+  begin_date: DateTime
+  end_date: DateTime
   price: Int!
   user: UserCreateOneInput!
 }
@@ -95,12 +99,16 @@ enum ArticleOrderByInput {
   updatedAt_DESC
   image_ASC
   image_DESC
-  userNumber_ASC
-  userNumber_DESC
   maxUserNumber_ASC
   maxUserNumber_DESC
   greatImage_ASC
   greatImage_DESC
+  street_ASC
+  street_DESC
+  begin_date_ASC
+  begin_date_DESC
+  end_date_ASC
+  end_date_DESC
   price_ASC
   price_DESC
 }
@@ -112,9 +120,11 @@ type ArticlePreviousValues {
   createdAt: DateTime!
   updatedAt: DateTime!
   image: String
-  userNumber: Int
   maxUserNumber: Int
   greatImage: String
+  street: String
+  begin_date: DateTime
+  end_date: DateTime
   price: Int!
 }
 
@@ -135,7 +145,9 @@ input ArticleSubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [ArticleSubscriptionWhereInput!]
 
-  """The subscription event gets dispatched when it's listed in mutation_in"""
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
   mutation_in: [MutationType!]
 
   """
@@ -159,9 +171,11 @@ input ArticleUpdateInput {
   title: String
   description: String
   image: String
-  userNumber: Int
   maxUserNumber: Int
   greatImage: String
+  street: String
+  begin_date: DateTime
+  end_date: DateTime
   price: Int
   user: UserUpdateOneRequiredInput
 }
@@ -170,9 +184,11 @@ input ArticleUpdateManyMutationInput {
   title: String
   description: String
   image: String
-  userNumber: Int
   maxUserNumber: Int
   greatImage: String
+  street: String
+  begin_date: DateTime
+  end_date: DateTime
   price: Int
 }
 
@@ -389,28 +405,6 @@ input ArticleWhereInput {
 
   """All values not ending with the given string."""
   image_not_ends_with: String
-  userNumber: Int
-
-  """All values that are not equal to given value."""
-  userNumber_not: Int
-
-  """All values that are contained in given list."""
-  userNumber_in: [Int!]
-
-  """All values that are not contained in given list."""
-  userNumber_not_in: [Int!]
-
-  """All values less than the given value."""
-  userNumber_lt: Int
-
-  """All values less than or equal the given value."""
-  userNumber_lte: Int
-
-  """All values greater than the given value."""
-  userNumber_gt: Int
-
-  """All values greater than or equal the given value."""
-  userNumber_gte: Int
   maxUserNumber: Int
 
   """All values that are not equal to given value."""
@@ -473,6 +467,90 @@ input ArticleWhereInput {
 
   """All values not ending with the given string."""
   greatImage_not_ends_with: String
+  street: String
+
+  """All values that are not equal to given value."""
+  street_not: String
+
+  """All values that are contained in given list."""
+  street_in: [String!]
+
+  """All values that are not contained in given list."""
+  street_not_in: [String!]
+
+  """All values less than the given value."""
+  street_lt: String
+
+  """All values less than or equal the given value."""
+  street_lte: String
+
+  """All values greater than the given value."""
+  street_gt: String
+
+  """All values greater than or equal the given value."""
+  street_gte: String
+
+  """All values containing the given string."""
+  street_contains: String
+
+  """All values not containing the given string."""
+  street_not_contains: String
+
+  """All values starting with the given string."""
+  street_starts_with: String
+
+  """All values not starting with the given string."""
+  street_not_starts_with: String
+
+  """All values ending with the given string."""
+  street_ends_with: String
+
+  """All values not ending with the given string."""
+  street_not_ends_with: String
+  begin_date: DateTime
+
+  """All values that are not equal to given value."""
+  begin_date_not: DateTime
+
+  """All values that are contained in given list."""
+  begin_date_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  begin_date_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  begin_date_lt: DateTime
+
+  """All values less than or equal the given value."""
+  begin_date_lte: DateTime
+
+  """All values greater than the given value."""
+  begin_date_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  begin_date_gte: DateTime
+  end_date: DateTime
+
+  """All values that are not equal to given value."""
+  end_date_not: DateTime
+
+  """All values that are contained in given list."""
+  end_date_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  end_date_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  end_date_lt: DateTime
+
+  """All values less than or equal the given value."""
+  end_date_lte: DateTime
+
+  """All values greater than the given value."""
+  end_date_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  end_date_gte: DateTime
   price: Int
 
   """All values that are not equal to given value."""
@@ -653,7 +731,9 @@ input CartItemSubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [CartItemSubscriptionWhereInput!]
 
-  """The subscription event gets dispatched when it's listed in mutation_in"""
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
   mutation_in: [MutationType!]
 
   """
@@ -862,7 +942,9 @@ input CategorySubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [CategorySubscriptionWhereInput!]
 
-  """The subscription event gets dispatched when it's listed in mutation_in"""
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
   mutation_in: [MutationType!]
 
   """
@@ -1396,7 +1478,9 @@ input OrderItemSubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [OrderItemSubscriptionWhereInput!]
 
-  """The subscription event gets dispatched when it's listed in mutation_in"""
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
   mutation_in: [MutationType!]
 
   """
@@ -1692,7 +1776,9 @@ input OrderSubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [OrderSubscriptionWhereInput!]
 
-  """The subscription event gets dispatched when it's listed in mutation_in"""
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
   mutation_in: [MutationType!]
 
   """
@@ -2000,7 +2086,9 @@ input PremiumOfferSubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [PremiumOfferSubscriptionWhereInput!]
 
-  """The subscription event gets dispatched when it's listed in mutation_in"""
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
   mutation_in: [MutationType!]
 
   """
@@ -2346,7 +2434,9 @@ input RubriqueNumberSubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [RubriqueNumberSubscriptionWhereInput!]
 
-  """The subscription event gets dispatched when it's listed in mutation_in"""
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
   mutation_in: [MutationType!]
 
   """
@@ -2483,7 +2573,9 @@ input RubriqueSubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [RubriqueSubscriptionWhereInput!]
 
-  """The subscription event gets dispatched when it's listed in mutation_in"""
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
   mutation_in: [MutationType!]
 
   """
@@ -2775,7 +2867,9 @@ input UserSubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [UserSubscriptionWhereInput!]
 
-  """The subscription event gets dispatched when it's listed in mutation_in"""
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
   mutation_in: [MutationType!]
 
   """

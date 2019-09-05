@@ -6,6 +6,7 @@ import Error from "../Error";
 import Router from "next/router";
 import moment from "moment";
 import Adresses from "./Adresses";
+import { CLOUDINARY_URL_UPLOAD } from "../../config";
 
 const CREATE_ARTICLE_MUTATION = gql`
   mutation CREATE_ARTICLE_MUTATION(
@@ -14,6 +15,10 @@ const CREATE_ARTICLE_MUTATION = gql`
     $image: String
     $greatImage: String
     $price: Int!
+    $maxUserNumber: Int
+    $begin_date: DateTime
+    $end_date: DateTime
+    $street: String
   ) {
     createArticle(
       title: $title
@@ -21,6 +26,10 @@ const CREATE_ARTICLE_MUTATION = gql`
       image: $image
       greatImage: $greatImage
       price: $price
+      maxUserNumber: $maxUserNumber
+      begin_date: $begin_date
+      end_date: $end_date
+      street: $street
     ) {
       id
     }
@@ -43,7 +52,6 @@ export class CreateArticle extends Component {
   };
 
   callbackAdressesFunction = adresse => {
-    console.log("test", adresse);
     this.setState({ adresse });
   };
 
@@ -56,13 +64,10 @@ export class CreateArticle extends Component {
     const data = new FormData();
     data.append("file", images[0]);
     data.append("upload_preset", "tutorial");
-    const response = await fetch(
-      "https://api.cloudinary.com/v1_1/dgn9blq0o/image/upload",
-      {
-        method: "POST",
-        body: data
-      }
-    );
+    const response = await fetch(CLOUDINARY_URL_UPLOAD, {
+      method: "POST",
+      body: data
+    });
     const image = await response.json();
     this.setState({
       image: image.secure_url,
@@ -96,7 +101,14 @@ export class CreateArticle extends Component {
 
   render() {
     return (
-      <Mutation mutation={CREATE_ARTICLE_MUTATION} variables={this.state}>
+      <Mutation
+        mutation={CREATE_ARTICLE_MUTATION}
+        variables={{
+          ...this.state,
+          maxUserNumber: this.state.nbPersons,
+          street: this.state.adresse
+        }}
+      >
         {(createArticle, { data, loading, error }) => (
           <StyledForm
             disabled={loading}
@@ -112,12 +124,11 @@ export class CreateArticle extends Component {
           >
             <Error error={error} />
 
-
-            <Adresses parentCallback={this.callbackAdressesFunction} />
-            test : 
-            { this.state.adresse }
+            <div>
+              <Adresses parentCallback={this.callbackAdressesFunction} />
+              <span> {this.state.adresse !== "" && "V"}</span>
+            </div>
             <fieldset>
-
               {/* Image */}
               <label htmlFor="image">
                 Image

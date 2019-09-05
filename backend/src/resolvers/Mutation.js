@@ -11,6 +11,7 @@ const Mutations = {
     ------- CREATE ARTICLE ----------------------
     ---------------------------------------------*/
   async createArticle(parent, args, ctx, info) {
+    console.log("AAAAAAAAAAAAAAAAAARGS", args);
     // 1. Test si le user est connecté
     if (!ctx.request.userId) {
       throw new Error("Vous devez être connecté");
@@ -202,7 +203,9 @@ const Mutations = {
         info
       )
       .catch(err => {
-        throw new Error("Ce compte existe deja ou n'est pas valide. Un compte par adresse mail");
+        throw new Error(
+          "Ce compte existe deja ou n'est pas valide. Un compte par adresse mail"
+        );
       });
     const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
     ctx.response.cookie("token", token, {
