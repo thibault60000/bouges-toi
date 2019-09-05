@@ -5,7 +5,7 @@ import StyledForm from "../styles/StyledForm";
 import Error from "../Error";
 import Router from "next/router";
 import moment from "moment";
-import Communes from "./Communes";
+import Adresses from "./Adresses";
 
 const CREATE_ARTICLE_MUTATION = gql`
   mutation CREATE_ARTICLE_MUTATION(
@@ -28,7 +28,7 @@ const CREATE_ARTICLE_MUTATION = gql`
 `;
 export class CreateArticle extends Component {
   state = {
-    commune: "",
+    adresse: "",
     title: "",
     description: "",
     image: "",
@@ -42,8 +42,9 @@ export class CreateArticle extends Component {
       .format("YYYY-MM-DD")
   };
 
-  callbackCommunesFunction = commune => {
-    this.setState({ commune });
+  callbackAdressesFunction = adresse => {
+    console.log("test", adresse);
+    this.setState({ adresse });
   };
 
   // Upload
@@ -110,9 +111,13 @@ export class CreateArticle extends Component {
             }}
           >
             <Error error={error} />
-            <Communes parentCallback={this.callbackCommunesFunction} />
-            { this.state.commune }
+
+
+            <Adresses parentCallback={this.callbackAdressesFunction} />
+            test : 
+            { this.state.adresse }
             <fieldset>
+
               {/* Image */}
               <label htmlFor="image">
                 Image
