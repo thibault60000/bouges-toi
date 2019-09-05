@@ -31,6 +31,8 @@ export default class Communes extends Component {
     this.setState({
       value: newValue
     });
+    if (this.state.communes.some(p => p.nom === newValue))
+      this.props.parentCallback(newValue);
   };
   onSuggestionsClearRequested = () => {
     this.setState({

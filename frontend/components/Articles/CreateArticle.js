@@ -28,6 +28,7 @@ const CREATE_ARTICLE_MUTATION = gql`
 `;
 export class CreateArticle extends Component {
   state = {
+    commune: "",
     title: "",
     description: "",
     image: "",
@@ -39,6 +40,10 @@ export class CreateArticle extends Component {
     end_date: moment(new Date(Date.now()))
       .add(1, "days")
       .format("YYYY-MM-DD")
+  };
+
+  callbackCommunesFunction = commune => {
+    this.setState({ commune });
   };
 
   // Upload
@@ -105,7 +110,8 @@ export class CreateArticle extends Component {
             }}
           >
             <Error error={error} />
-            <Communes />
+            <Communes parentCallback={this.callbackCommunesFunction} />
+            { this.state.commune }
             <fieldset>
               {/* Image */}
               <label htmlFor="image">
