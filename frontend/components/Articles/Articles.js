@@ -14,6 +14,20 @@ const ARTICLES_QUERY = gql`
       description
       image
       price
+      nbPersons
+      adresse
+      begin_date
+      end_date
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        surname
+      }
+      users {
+        id
+      }
     }
   }
 `;

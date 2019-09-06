@@ -50,6 +50,8 @@ type User {
   resetTokenExpiry: Float
   permissions: [Permission] @scalarList(strategy:RELATION)
   cart: [CartItem!]!
+  articles: [Article!]! @relation(name: "Creator")
+  memberOf: [Article!]! @relation(name: "UserOf")
 }
 
 type Article {
@@ -58,14 +60,17 @@ type Article {
   description: String!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
-  image: String
-  maxUserNumber: Int
-  greatImage: String
-  street: String
-  begin_date: DateTime
-  end_date: DateTime
+  rubrique: String!
+  category: String!
+  image: String!
+  nbPersons: Int!
+  greatImage: String!
+  adresse: String!
+  begin_date: DateTime!
+  end_date: DateTime!
   price: Int!
-  user: User!
+  user: User! @relation(name: "Creator")
+  users: [User!]! @relation(name: "UserOf")
 }
 
 type Category {

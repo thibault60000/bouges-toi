@@ -1,35 +1,85 @@
 import React, { Component } from "react";
-import { Mutation } from "react-apollo";
+import { Mutation, Query } from "react-apollo";
 import gql from "graphql-tag";
+import styled from "styled-components";
+import Router from "next/router";
+
 import StyledForm from "../styles/StyledForm";
 import Error from "../Error";
-import Router from "next/router";
 import moment from "moment";
 import Adresses from "./Adresses";
 import { CLOUDINARY_URL_UPLOAD } from "../../config";
+
+const StyledRadioRubriques = styled.div`
+    display: grid;
+    grid-template-columns: 100px auto;
+    grid-gap: 3rem;
+    height: 18rem;
+
+  input[type="radio"] {
+    position: asbolute;
+    left: -9999px;
+    opacity: 0;
+  }
+  label {
+    height: 10rem;
+    width: 10rem;
+    background-size: cover;
+    position: relative;
+    cursor: pointer;
+  }
+  label span {
+    display: block;
+    position: absolute;
+    top: 11.8rem;
+    line-height: 1.3rem;
+    overflow: hidden;
+    font-size: 1.3rem;
+    text-align: center;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    text-overflow: ellipsis;
+  }
+  input[type="radio"]:checked + label {
+    border: 3px solid #673ab7;
+    color: #673ab7;
+    border-radius: 5px;
+  }
+`;
+
+const RUBRIQUES_QUERY = gql`
+  query RUBRIQUES_QUERY {
+    rubriques {
+      id
+      title
+      image
+    }
+  }
+`;
 
 const CREATE_ARTICLE_MUTATION = gql`
   mutation CREATE_ARTICLE_MUTATION(
     $title: String!
     $description: String!
-    $image: String
-    $greatImage: String
+    $image: String!
+    $nbPersons: Int!
+    $greatImage: String!
+    $adresse: String!
+    $begin_date: DateTime!
+    $end_date: DateTime!
     $price: Int!
-    $maxUserNumber: Int
-    $begin_date: DateTime
-    $end_date: DateTime
-    $street: String
   ) {
     createArticle(
       title: $title
       description: $description
       image: $image
+      nbPersons: $nbPersons
       greatImage: $greatImage
-      price: $price
-      maxUserNumber: $maxUserNumber
+      adresse: $adresse
       begin_date: $begin_date
       end_date: $end_date
-      street: $street
+      price: $price
     ) {
       id
     }
@@ -104,9 +154,7 @@ export class CreateArticle extends Component {
       <Mutation
         mutation={CREATE_ARTICLE_MUTATION}
         variables={{
-          ...this.state,
-          maxUserNumber: this.state.nbPersons,
-          street: this.state.adresse
+          ...this.state
         }}
       >
         {(createArticle, { data, loading, error }) => (
@@ -129,6 +177,36 @@ export class CreateArticle extends Component {
               <span> {this.state.adresse !== "" && "V"}</span>
             </div>
             <fieldset>
+            <label> Rubrique </label> 
+              {/* RUBRIQUES */}
+              <Query query={RUBRIQUES_QUERY}>
+                {({ data, loading }) => {
+                  if (loading) return <p>Chargement...</p>;
+                  return (
+                    <StyledRadioRubriques>
+                     
+                      {data.rubriques.map(rubrique => (
+                        <p key={rubrique.id}>
+                          <input
+                            type="radio"
+                            id={`radioBtn${rubrique.id}`}
+                            name="radioBtnRubrique"
+                            value={rubrique.title}
+                          />
+                          <label
+                            htmlFor={`radioBtn${rubrique.id}`}
+                            style={{
+                              backgroundImage: `url('${rubrique.image}')`
+                            }}
+                          >
+                            <span>{rubrique.title}</span>
+                          </label>
+                        </p>
+                      ))}
+                    </StyledRadioRubriques>
+                  );
+                }}
+              </Query>
               {/* Image */}
               <label htmlFor="image">
                 Image

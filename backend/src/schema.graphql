@@ -8,15 +8,15 @@ type Mutation {
   addToCart(id: ID!): CartItem
   removeFromCart(id: ID!): CartItem
   createArticle(
-    title: String!
-    description: String!
-    image: String
-    maxUserNumber: Int
-    greatImage: String
-    street: String
-    begin_date: DateTime
-    end_date: DateTime
-    price: Int!
+  title: String!
+  description: String!
+  image: String!
+  nbPersons: Int!
+  greatImage: String!
+  adresse: String!
+  begin_date: DateTime!
+  end_date: DateTime!
+  price: Int!
   ): Article!
   createRubrique(title: String!, image: String): Article!
   createPremiumOffer(

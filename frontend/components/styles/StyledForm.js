@@ -15,7 +15,7 @@ const StyledForm = styled.form`
             opacity: 0.3
         }
     }
-    input:not([type='date']),
+    input:not([type='date']):not([type='radio']),
     textarea,
     select {
         display:block;
@@ -39,6 +39,7 @@ const StyledForm = styled.form`
         border: 0;
         border-radius: 2px;
     }
+
     label {
         display: block;
         width: 100%;

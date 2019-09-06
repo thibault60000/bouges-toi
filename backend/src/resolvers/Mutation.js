@@ -11,7 +11,6 @@ const Mutations = {
     ------- CREATE ARTICLE ----------------------
     ---------------------------------------------*/
   async createArticle(parent, args, ctx, info) {
-    console.log("AAAAAAAAAAAAAAAAAARGS", args);
     // 1. Test si le user est connecté
     if (!ctx.request.userId) {
       throw new Error("Vous devez être connecté");
@@ -27,6 +26,11 @@ const Mutations = {
       {
         data: {
           user: {
+            connect: {
+              id: ctx.request.userId
+            }
+          },
+          users: {
             connect: {
               id: ctx.request.userId
             }
