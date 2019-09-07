@@ -67,6 +67,7 @@ export class CreateArticle extends Component {
     image: "",
     rubrique: "",
     greatImage: "",
+    category: "",
     price: 0,
     nbPersons: 2,
     loadigImg: false,
@@ -74,6 +75,22 @@ export class CreateArticle extends Component {
     end_date: moment(new Date(Date.now()))
       .add(1, "days")
       .format("YYYY-MM-DD")
+  };
+
+  createConditions = () => {
+    return (
+      this.state.adresse !== "" &&
+      this.state.title !== "" &&
+      this.state.description !== "" &&
+      this.state.image !== "" &&
+      this.state.rubrique !== "" &&
+      this.state.greatImage !== "" &&
+      this.state.price.toString() !== "NaN" &&
+      this.state.nbPersons.toString() !== "NaN" &&
+      this.state.begin_date !== "" &&
+      this.state.end_date !== "" &&
+      this.state.category !== ""
+    );
   };
 
   callbackAdressesFunction = adresse => {
@@ -103,7 +120,6 @@ export class CreateArticle extends Component {
 
   // Handle Change
   handleChange = e => {
-    console.log(e);
     const { name, type, value } = e.target;
     const v = type === "number" ? parseFloat(value) : value;
     // If Date
@@ -126,11 +142,17 @@ export class CreateArticle extends Component {
   };
 
   handleRubriqueChange = e => {
-    console.log(e.target);
     this.setState({
       rubrique: e.target.id
     });
-    // Change Category list
+  };
+
+  handleCategoryChange = e => {
+    e.persist();
+    const category = e.target.value;
+    this.setState({
+      category
+    });
   };
 
   render() {
@@ -192,6 +214,7 @@ export class CreateArticle extends Component {
                   );
                 }}
               </Query>
+              {/* CATEGORIES */}
               <Query query={CATEGORIES_QUERY}>
                 {({ data, loading }) => {
                   if (loading) return <p>Chargement... </p>;
@@ -202,10 +225,7 @@ export class CreateArticle extends Component {
                     return (
                       <p> Selectionnez une rubrique puis une categorie </p>
                     );
-                  if (
-                    this.state.rubrique !== "" &&
-                    categoriesList.length === 0
-                  )
+                  if (this.state.rubrique !== "" && categoriesList.length === 0)
                     return (
                       <p>
                         Cette rubrique ne dispose d'aucune catégorie pour le
@@ -213,9 +233,18 @@ export class CreateArticle extends Component {
                       </p>
                     );
                   return (
-                    <select>
+                    <select
+                      onChange={this.handleCategoryChange}
+                      value={this.state.category}
+                    >
+                      <option key="categoryDefaultKey" value="">
+                        {" "}
+                        Selectionnez une catégorie{" "}
+                      </option>
                       {categoriesList.map(category => (
-                        <option key={category.id}> {category.title} </option>
+                        <option key={category.id} value={category.id}>
+                          {category.title}
+                        </option>
                       ))}
                     </select>
                   );
@@ -324,7 +353,24 @@ export class CreateArticle extends Component {
                 </span>
               </label>
               {/* Submit */}
-              <button type="submit"> Créer </button>
+              <button
+                type="submit"
+                disabled={
+                  this.state.adresse === "" ||
+                  this.state.title === "" ||
+                  this.state.description === "" ||
+                  this.state.image === "" ||
+                  this.state.rubrique === "" ||
+                  this.state.greatImage === "" ||
+                  this.state.price.toString() === "NaN" ||
+                  this.state.nbPersons.toString() === "NaN" ||
+                  this.state.begin_date === "" ||
+                  this.state.end_date === "" ||
+                  this.state.category === ""
+                }
+              >
+                Créer
+              </button>
             </fieldset>
           </StyledForm>
         )}
