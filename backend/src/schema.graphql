@@ -8,16 +8,17 @@ type Mutation {
   addToCart(id: ID!): CartItem
   removeFromCart(id: ID!): CartItem
   createArticle(
-  title: String!
-  description: String!
-  image: String!
-  nbPersons: Int!
-  greatImage: String!
-  adresse: String!
-  begin_date: DateTime!
-  end_date: DateTime!
-  price: Int!
+    title: String!
+    description: String!
+    image: String!
+    nbPersons: Int!
+    greatImage: String!
+    adresse: String!
+    begin_date: DateTime!
+    end_date: DateTime!
+    price: Int!
   ): Article!
+  createCategoryRubrique(title: String!, rubrique: String!): Category!
   createRubrique(title: String!, image: String): Article!
   createPremiumOffer(
     title: String!
@@ -72,6 +73,8 @@ type Query {
     skip: Int
     first: Int
   ): [Article!]!
+  category(where: CategoryWhereUniqueInput!): Category
+  categories(where: CategoryWhereInput): [Category]!
   article(where: ArticleWhereUniqueInput!): Article
   articlesConnection(where: ArticleWhereInput): ArticleConnection!
   rubrique(where: RubriqueWhereUniqueInput!): Rubrique

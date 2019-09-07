@@ -76,7 +76,7 @@ type Article {
 type Category {
   id: ID! @id
   title: String!
-  description: String!
+  rubrique: Rubrique!
 }
 
 type Rubrique {

@@ -8,6 +8,8 @@ const Query = {
   rubriques: forwardTo("db"),
   premiumOffer: forwardTo("db"),
   premiumOffers: forwardTo("db"),
+  category: forwardTo("db"),
+  categories: forwardTo("db"),
   /* ---------------------------------
   ---- RECUPERER USER AUTHENTIFIE ----
   ------------------------------------*/
@@ -65,11 +67,14 @@ const Query = {
   async orders(parent, args, ctx, info) {
     const { userId } = ctx.request;
     if (!userId) throw new Error("Vous devez être connecté!");
-    return ctx.db.query.orders({
-      where: {
-        user: { id: userId }
-      }
-    }, info);
+    return ctx.db.query.orders(
+      {
+        where: {
+          user: { id: userId }
+        }
+      },
+      info
+    );
   }
 };
 

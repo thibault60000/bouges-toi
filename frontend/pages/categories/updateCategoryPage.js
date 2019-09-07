@@ -1,11 +1,10 @@
-import React, { Component } from 'react'
+import React from "react";
+import UpdateCategory from "../../components/Categories/UpdateCategory";
 
-export default class updateCategoryPage extends Component {
-    render() {
-        return (
-            <div>
-                
-            </div>
-        )
-    }
-}
+const UpdateCategoryPage = ({ query }) => (
+  <div>
+    <UpdateCategory id={query.id} />
+  </div>
+);
+
+export default UpdateCategoryPage;

@@ -1,11 +1,12 @@
-import React, { Component } from 'react'
+import React from "react";
+import ReadCategory from "../../components/Categories/ReadCategory";
 
-export default class categoryPage extends Component {
-    render() {
-        return (
-            <div>
-                
-            </div>
-        )
-    }
-}
+const CategoryPage = props => {
+  return (
+    <div>
+      <ReadCategory id={props.query.id} />
+    </div>
+  );
+};
+
+export default CategoryPage;

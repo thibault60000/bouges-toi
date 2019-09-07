@@ -1,52 +1,14 @@
 import React, { Component } from "react";
 import { Mutation, Query } from "react-apollo";
 import gql from "graphql-tag";
-import styled from "styled-components";
 import Router from "next/router";
 
 import StyledForm from "../styles/StyledForm";
+import StyledRadioRubriques from "../styles/StyledRadioRubriques";
 import Error from "../Error";
 import moment from "moment";
 import Adresses from "./Adresses";
 import { CLOUDINARY_URL_UPLOAD } from "../../config";
-
-const StyledRadioRubriques = styled.div`
-  display: grid;
-  grid-template-columns: 100px auto;
-  grid-gap: 3rem;
-  height: 18rem;
-
-  input[type="radio"] {
-    position: asbolute;
-    left: -9999px;
-    opacity: 0;
-  }
-  label {
-    height: 10rem;
-    width: 10rem;
-    background-size: cover;
-    position: relative;
-    cursor: pointer;
-  }
-  label span {
-    display: block;
-    position: absolute;
-    top: 11.8rem;
-    line-height: 1.3rem;
-    overflow: hidden;
-    font-size: 1.3rem;
-    text-align: center;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    text-overflow: ellipsis;
-  }
-  input[type="radio"]:checked + label {
-    border: 3px solid #673ab7;
-    color: #673ab7;
-    border-radius: 5px;
-  }
-`;
 
 const RUBRIQUES_QUERY = gql`
   query RUBRIQUES_QUERY {
@@ -54,6 +16,18 @@ const RUBRIQUES_QUERY = gql`
       id
       title
       image
+    }
+  }
+`;
+
+const CATEGORIES_QUERY = gql`
+  query CATEGORIES_QUERY {
+    categories {
+      id
+      title
+      rubrique {
+        id
+      }
     }
   }
 `;
@@ -91,6 +65,7 @@ export class CreateArticle extends Component {
     title: "",
     description: "",
     image: "",
+    rubrique: "",
     greatImage: "",
     price: 0,
     nbPersons: 2,
@@ -149,6 +124,7 @@ export class CreateArticle extends Component {
       this.setState({ [name]: v });
     }
   };
+
   handleRubriqueChange = e => {
     console.log(e.target);
     this.setState({
@@ -211,9 +187,37 @@ export class CreateArticle extends Component {
                             <span>{rubrique.title}</span>
                           </label>
                         </p>
-                       
                       ))}
                     </StyledRadioRubriques>
+                  );
+                }}
+              </Query>
+              <Query query={CATEGORIES_QUERY}>
+                {({ data, loading }) => {
+                  if (loading) return <p>Chargement... </p>;
+                  const categoriesList = data.categories.filter(
+                    c => c.rubrique.id === this.state.rubrique
+                  );
+                  if (this.state.rubrique === "")
+                    return (
+                      <p> Selectionnez une rubrique puis une categorie </p>
+                    );
+                  if (
+                    this.state.rubrique !== "" &&
+                    categoriesList.length === 0
+                  )
+                    return (
+                      <p>
+                        Cette rubrique ne dispose d'aucune catégorie pour le
+                        moment
+                      </p>
+                    );
+                  return (
+                    <select>
+                      {categoriesList.map(category => (
+                        <option key={category.id}> {category.title} </option>
+                      ))}
+                    </select>
                   );
                 }}
               </Query>

@@ -1,11 +1,13 @@
-import React, { Component } from 'react'
+import React from "react";
+import CreateCategory from "../../components/Categories/CreateCategory";
+import PleaseSignIn from "../../components/Authentication/PleaseSignIn";
 
-export default class createCategoryPage extends Component {
-    render() {
-        return (
-            <div>
-                
-            </div>
-        )
-    }
-}
+const CreateCategoryPage = props => (
+  <div>
+    <PleaseSignIn>
+      <CreateCategory />
+    </PleaseSignIn>
+  </div>
+);
+
+export default CreateCategoryPage;

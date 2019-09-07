@@ -1,11 +1,16 @@
-import React, { Component } from 'react'
+import React from 'react';
+import Categories from "../../components/Categories/Categories";
+import Link from "next/link";
 
-export default class categoriesPage extends Component {
-    render() {
-        return (
-            <div>
-                
-            </div>
-        )
-    }
+const CategoriesPage = props => {
+    return (
+        <div>
+            <Link href="/categories/createCategoryPage">
+                <a> Créer une catégorie </a>
+            </Link>
+            <Categories />
+        </div>
+    );
 }
+
+export default CategoriesPage;

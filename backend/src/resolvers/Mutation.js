@@ -44,7 +44,38 @@ const Mutations = {
     return article;
   },
   /* ------------------------------------------
-    ------- CREATE PREMIUM OFFEr --------------
+    ------- CREATE CATEGORY ----------------------
+    ---------------------------------------------*/
+  async createCategoryRubrique(parent, { title, rubrique }, ctx, info) {
+    // 1. Test si le user est connecté
+    if (!ctx.request.userId) {
+      throw new Error("Vous devez être connecté");
+    }
+    // 2. Test si on a les droits de création
+    const hasPermission = ctx.request.user.permissions.some(p =>
+      ["ADMIN", "CATEGORYCREATE"].includes(p)
+    );
+    if (!hasPermission)
+      throw new Error("Vous n'êtes pas autorisé à faire ça ! ");
+    // 3. Créer l'category
+    const category = await ctx.db.mutation.createCategory(
+      {
+        data: {
+          rubrique: {
+            connect: {
+              id: rubrique
+            }
+          },
+          title
+        }
+      },
+      info
+    );
+
+    return category;
+  },
+  /* ------------------------------------------
+    ------- CREATE PREMIUM OFFER --------------
     ---------------------------------------------*/
   async createPremiumOffer(parent, args, ctx, info) {
     // 1. Test si le user est connecté
