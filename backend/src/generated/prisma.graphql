@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/thibault-jeanpierre/bouges-toi/dev
-# timestamp: Sat Sep 07 2019 15:27:58 GMT+0200 (GMT+02:00)
+# timestamp: Sat Sep 07 2019 21:36:03 GMT+0200 (GMT+02:00)
 
 type AggregateArticle {
   count: Int!
@@ -43,8 +43,8 @@ type Article implements Node {
   description: String!
   createdAt: DateTime!
   updatedAt: DateTime!
-  rubrique: String!
-  category: String!
+  rubrique: Rubrique!
+  category: Category!
   image: String!
   nbPersons: Int!
   greatImage: String!
@@ -70,8 +70,6 @@ input ArticleCreateInput {
   id: ID
   title: String!
   description: String!
-  rubrique: String!
-  category: String!
   image: String!
   nbPersons: Int!
   greatImage: String!
@@ -79,6 +77,8 @@ input ArticleCreateInput {
   begin_date: DateTime!
   end_date: DateTime!
   price: Int!
+  rubrique: RubriqueCreateOneInput!
+  category: CategoryCreateOneInput!
   user: UserCreateOneWithoutArticlesInput!
   users: UserCreateManyWithoutMemberOfInput
 }
@@ -97,8 +97,6 @@ input ArticleCreateWithoutUserInput {
   id: ID
   title: String!
   description: String!
-  rubrique: String!
-  category: String!
   image: String!
   nbPersons: Int!
   greatImage: String!
@@ -106,6 +104,8 @@ input ArticleCreateWithoutUserInput {
   begin_date: DateTime!
   end_date: DateTime!
   price: Int!
+  rubrique: RubriqueCreateOneInput!
+  category: CategoryCreateOneInput!
   users: UserCreateManyWithoutMemberOfInput
 }
 
@@ -113,8 +113,6 @@ input ArticleCreateWithoutUsersInput {
   id: ID
   title: String!
   description: String!
-  rubrique: String!
-  category: String!
   image: String!
   nbPersons: Int!
   greatImage: String!
@@ -122,6 +120,8 @@ input ArticleCreateWithoutUsersInput {
   begin_date: DateTime!
   end_date: DateTime!
   price: Int!
+  rubrique: RubriqueCreateOneInput!
+  category: CategoryCreateOneInput!
   user: UserCreateOneWithoutArticlesInput!
 }
 
@@ -145,10 +145,6 @@ enum ArticleOrderByInput {
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
-  rubrique_ASC
-  rubrique_DESC
-  category_ASC
-  category_DESC
   image_ASC
   image_DESC
   nbPersons_ASC
@@ -171,8 +167,6 @@ type ArticlePreviousValues {
   description: String!
   createdAt: DateTime!
   updatedAt: DateTime!
-  rubrique: String!
-  category: String!
   image: String!
   nbPersons: Int!
   greatImage: String!
@@ -355,86 +349,6 @@ input ArticleScalarWhereInput {
 
   """All values greater than or equal the given value."""
   updatedAt_gte: DateTime
-  rubrique: String
-
-  """All values that are not equal to given value."""
-  rubrique_not: String
-
-  """All values that are contained in given list."""
-  rubrique_in: [String!]
-
-  """All values that are not contained in given list."""
-  rubrique_not_in: [String!]
-
-  """All values less than the given value."""
-  rubrique_lt: String
-
-  """All values less than or equal the given value."""
-  rubrique_lte: String
-
-  """All values greater than the given value."""
-  rubrique_gt: String
-
-  """All values greater than or equal the given value."""
-  rubrique_gte: String
-
-  """All values containing the given string."""
-  rubrique_contains: String
-
-  """All values not containing the given string."""
-  rubrique_not_contains: String
-
-  """All values starting with the given string."""
-  rubrique_starts_with: String
-
-  """All values not starting with the given string."""
-  rubrique_not_starts_with: String
-
-  """All values ending with the given string."""
-  rubrique_ends_with: String
-
-  """All values not ending with the given string."""
-  rubrique_not_ends_with: String
-  category: String
-
-  """All values that are not equal to given value."""
-  category_not: String
-
-  """All values that are contained in given list."""
-  category_in: [String!]
-
-  """All values that are not contained in given list."""
-  category_not_in: [String!]
-
-  """All values less than the given value."""
-  category_lt: String
-
-  """All values less than or equal the given value."""
-  category_lte: String
-
-  """All values greater than the given value."""
-  category_gt: String
-
-  """All values greater than or equal the given value."""
-  category_gte: String
-
-  """All values containing the given string."""
-  category_contains: String
-
-  """All values not containing the given string."""
-  category_not_contains: String
-
-  """All values starting with the given string."""
-  category_starts_with: String
-
-  """All values not starting with the given string."""
-  category_not_starts_with: String
-
-  """All values ending with the given string."""
-  category_ends_with: String
-
-  """All values not ending with the given string."""
-  category_not_ends_with: String
   image: String
 
   """All values that are not equal to given value."""
@@ -687,8 +601,6 @@ input ArticleSubscriptionWhereInput {
 input ArticleUpdateInput {
   title: String
   description: String
-  rubrique: String
-  category: String
   image: String
   nbPersons: Int
   greatImage: String
@@ -696,6 +608,8 @@ input ArticleUpdateInput {
   begin_date: DateTime
   end_date: DateTime
   price: Int
+  rubrique: RubriqueUpdateOneRequiredInput
+  category: CategoryUpdateOneRequiredInput
   user: UserUpdateOneRequiredWithoutArticlesInput
   users: UserUpdateManyWithoutMemberOfInput
 }
@@ -703,8 +617,6 @@ input ArticleUpdateInput {
 input ArticleUpdateManyDataInput {
   title: String
   description: String
-  rubrique: String
-  category: String
   image: String
   nbPersons: Int
   greatImage: String
@@ -717,8 +629,6 @@ input ArticleUpdateManyDataInput {
 input ArticleUpdateManyMutationInput {
   title: String
   description: String
-  rubrique: String
-  category: String
   image: String
   nbPersons: Int
   greatImage: String
@@ -760,8 +670,6 @@ input ArticleUpdateManyWithWhereNestedInput {
 input ArticleUpdateWithoutUserDataInput {
   title: String
   description: String
-  rubrique: String
-  category: String
   image: String
   nbPersons: Int
   greatImage: String
@@ -769,14 +677,14 @@ input ArticleUpdateWithoutUserDataInput {
   begin_date: DateTime
   end_date: DateTime
   price: Int
+  rubrique: RubriqueUpdateOneRequiredInput
+  category: CategoryUpdateOneRequiredInput
   users: UserUpdateManyWithoutMemberOfInput
 }
 
 input ArticleUpdateWithoutUsersDataInput {
   title: String
   description: String
-  rubrique: String
-  category: String
   image: String
   nbPersons: Int
   greatImage: String
@@ -784,6 +692,8 @@ input ArticleUpdateWithoutUsersDataInput {
   begin_date: DateTime
   end_date: DateTime
   price: Int
+  rubrique: RubriqueUpdateOneRequiredInput
+  category: CategoryUpdateOneRequiredInput
   user: UserUpdateOneRequiredWithoutArticlesInput
 }
 
@@ -982,86 +892,6 @@ input ArticleWhereInput {
 
   """All values greater than or equal the given value."""
   updatedAt_gte: DateTime
-  rubrique: String
-
-  """All values that are not equal to given value."""
-  rubrique_not: String
-
-  """All values that are contained in given list."""
-  rubrique_in: [String!]
-
-  """All values that are not contained in given list."""
-  rubrique_not_in: [String!]
-
-  """All values less than the given value."""
-  rubrique_lt: String
-
-  """All values less than or equal the given value."""
-  rubrique_lte: String
-
-  """All values greater than the given value."""
-  rubrique_gt: String
-
-  """All values greater than or equal the given value."""
-  rubrique_gte: String
-
-  """All values containing the given string."""
-  rubrique_contains: String
-
-  """All values not containing the given string."""
-  rubrique_not_contains: String
-
-  """All values starting with the given string."""
-  rubrique_starts_with: String
-
-  """All values not starting with the given string."""
-  rubrique_not_starts_with: String
-
-  """All values ending with the given string."""
-  rubrique_ends_with: String
-
-  """All values not ending with the given string."""
-  rubrique_not_ends_with: String
-  category: String
-
-  """All values that are not equal to given value."""
-  category_not: String
-
-  """All values that are contained in given list."""
-  category_in: [String!]
-
-  """All values that are not contained in given list."""
-  category_not_in: [String!]
-
-  """All values less than the given value."""
-  category_lt: String
-
-  """All values less than or equal the given value."""
-  category_lte: String
-
-  """All values greater than the given value."""
-  category_gt: String
-
-  """All values greater than or equal the given value."""
-  category_gte: String
-
-  """All values containing the given string."""
-  category_contains: String
-
-  """All values not containing the given string."""
-  category_not_contains: String
-
-  """All values starting with the given string."""
-  category_starts_with: String
-
-  """All values not starting with the given string."""
-  category_not_starts_with: String
-
-  """All values ending with the given string."""
-  category_ends_with: String
-
-  """All values not ending with the given string."""
-  category_not_ends_with: String
   image: String
 
   """All values that are not equal to given value."""
@@ -1270,6 +1100,8 @@ input ArticleWhereInput {
 
   """All values greater than or equal the given value."""
   price_gte: Int
+  rubrique: RubriqueWhereInput
+  category: CategoryWhereInput
   user: UserWhereInput
   users_every: UserWhereInput
   users_some: UserWhereInput
@@ -1601,6 +1433,11 @@ input CategoryCreateInput {
   rubrique: RubriqueCreateOneInput!
 }
 
+input CategoryCreateOneInput {
+  create: CategoryCreateInput
+  connect: CategoryWhereUniqueInput
+}
+
 """An edge in a connection."""
 type CategoryEdge {
   """The item at the end of the edge."""
@@ -1661,6 +1498,11 @@ input CategorySubscriptionWhereInput {
   node: CategoryWhereInput
 }
 
+input CategoryUpdateDataInput {
+  title: String
+  rubrique: RubriqueUpdateOneRequiredInput
+}
+
 input CategoryUpdateInput {
   title: String
   rubrique: RubriqueUpdateOneRequiredInput
@@ -1668,6 +1510,18 @@ input CategoryUpdateInput {
 
 input CategoryUpdateManyMutationInput {
   title: String
+}
+
+input CategoryUpdateOneRequiredInput {
+  create: CategoryCreateInput
+  connect: CategoryWhereUniqueInput
+  update: CategoryUpdateDataInput
+  upsert: CategoryUpsertNestedInput
+}
+
+input CategoryUpsertNestedInput {
+  update: CategoryUpdateDataInput!
+  create: CategoryCreateInput!
 }
 
 input CategoryWhereInput {
@@ -1778,54 +1632,54 @@ type Mutation {
   createCartItem(data: CartItemCreateInput!): CartItem!
   createOrder(data: OrderCreateInput!): Order!
   createArticle(data: ArticleCreateInput!): Article!
-  createCategory(data: CategoryCreateInput!): Category!
   createRubriqueNumber(data: RubriqueNumberCreateInput!): RubriqueNumber!
   createPremiumOffer(data: PremiumOfferCreateInput!): PremiumOffer!
+  createCategory(data: CategoryCreateInput!): Category!
   createUser(data: UserCreateInput!): User!
   createOrderItem(data: OrderItemCreateInput!): OrderItem!
   createRubrique(data: RubriqueCreateInput!): Rubrique!
   updateCartItem(data: CartItemUpdateInput!, where: CartItemWhereUniqueInput!): CartItem
   updateOrder(data: OrderUpdateInput!, where: OrderWhereUniqueInput!): Order
   updateArticle(data: ArticleUpdateInput!, where: ArticleWhereUniqueInput!): Article
-  updateCategory(data: CategoryUpdateInput!, where: CategoryWhereUniqueInput!): Category
   updateRubriqueNumber(data: RubriqueNumberUpdateInput!, where: RubriqueNumberWhereUniqueInput!): RubriqueNumber
   updatePremiumOffer(data: PremiumOfferUpdateInput!, where: PremiumOfferWhereUniqueInput!): PremiumOffer
+  updateCategory(data: CategoryUpdateInput!, where: CategoryWhereUniqueInput!): Category
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateOrderItem(data: OrderItemUpdateInput!, where: OrderItemWhereUniqueInput!): OrderItem
   updateRubrique(data: RubriqueUpdateInput!, where: RubriqueWhereUniqueInput!): Rubrique
   deleteCartItem(where: CartItemWhereUniqueInput!): CartItem
   deleteOrder(where: OrderWhereUniqueInput!): Order
   deleteArticle(where: ArticleWhereUniqueInput!): Article
-  deleteCategory(where: CategoryWhereUniqueInput!): Category
   deleteRubriqueNumber(where: RubriqueNumberWhereUniqueInput!): RubriqueNumber
   deletePremiumOffer(where: PremiumOfferWhereUniqueInput!): PremiumOffer
+  deleteCategory(where: CategoryWhereUniqueInput!): Category
   deleteUser(where: UserWhereUniqueInput!): User
   deleteOrderItem(where: OrderItemWhereUniqueInput!): OrderItem
   deleteRubrique(where: RubriqueWhereUniqueInput!): Rubrique
   upsertCartItem(where: CartItemWhereUniqueInput!, create: CartItemCreateInput!, update: CartItemUpdateInput!): CartItem!
   upsertOrder(where: OrderWhereUniqueInput!, create: OrderCreateInput!, update: OrderUpdateInput!): Order!
   upsertArticle(where: ArticleWhereUniqueInput!, create: ArticleCreateInput!, update: ArticleUpdateInput!): Article!
-  upsertCategory(where: CategoryWhereUniqueInput!, create: CategoryCreateInput!, update: CategoryUpdateInput!): Category!
   upsertRubriqueNumber(where: RubriqueNumberWhereUniqueInput!, create: RubriqueNumberCreateInput!, update: RubriqueNumberUpdateInput!): RubriqueNumber!
   upsertPremiumOffer(where: PremiumOfferWhereUniqueInput!, create: PremiumOfferCreateInput!, update: PremiumOfferUpdateInput!): PremiumOffer!
+  upsertCategory(where: CategoryWhereUniqueInput!, create: CategoryCreateInput!, update: CategoryUpdateInput!): Category!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertOrderItem(where: OrderItemWhereUniqueInput!, create: OrderItemCreateInput!, update: OrderItemUpdateInput!): OrderItem!
   upsertRubrique(where: RubriqueWhereUniqueInput!, create: RubriqueCreateInput!, update: RubriqueUpdateInput!): Rubrique!
   updateManyCartItems(data: CartItemUpdateManyMutationInput!, where: CartItemWhereInput): BatchPayload!
   updateManyOrders(data: OrderUpdateManyMutationInput!, where: OrderWhereInput): BatchPayload!
   updateManyArticles(data: ArticleUpdateManyMutationInput!, where: ArticleWhereInput): BatchPayload!
-  updateManyCategories(data: CategoryUpdateManyMutationInput!, where: CategoryWhereInput): BatchPayload!
   updateManyRubriqueNumbers(data: RubriqueNumberUpdateManyMutationInput!, where: RubriqueNumberWhereInput): BatchPayload!
   updateManyPremiumOffers(data: PremiumOfferUpdateManyMutationInput!, where: PremiumOfferWhereInput): BatchPayload!
+  updateManyCategories(data: CategoryUpdateManyMutationInput!, where: CategoryWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   updateManyOrderItems(data: OrderItemUpdateManyMutationInput!, where: OrderItemWhereInput): BatchPayload!
   updateManyRubriques(data: RubriqueUpdateManyMutationInput!, where: RubriqueWhereInput): BatchPayload!
   deleteManyCartItems(where: CartItemWhereInput): BatchPayload!
   deleteManyOrders(where: OrderWhereInput): BatchPayload!
   deleteManyArticles(where: ArticleWhereInput): BatchPayload!
-  deleteManyCategories(where: CategoryWhereInput): BatchPayload!
   deleteManyRubriqueNumbers(where: RubriqueNumberWhereInput): BatchPayload!
   deleteManyPremiumOffers(where: PremiumOfferWhereInput): BatchPayload!
+  deleteManyCategories(where: CategoryWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyOrderItems(where: OrderItemWhereInput): BatchPayload!
   deleteManyRubriques(where: RubriqueWhereInput): BatchPayload!
@@ -2968,27 +2822,27 @@ type Query {
   cartItems(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CartItem]!
   orders(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Order]!
   articles(where: ArticleWhereInput, orderBy: ArticleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Article]!
-  categories(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Category]!
   rubriqueNumbers(where: RubriqueNumberWhereInput, orderBy: RubriqueNumberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RubriqueNumber]!
   premiumOffers(where: PremiumOfferWhereInput, orderBy: PremiumOfferOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PremiumOffer]!
+  categories(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Category]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   orderItems(where: OrderItemWhereInput, orderBy: OrderItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderItem]!
   rubriques(where: RubriqueWhereInput, orderBy: RubriqueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Rubrique]!
   cartItem(where: CartItemWhereUniqueInput!): CartItem
   order(where: OrderWhereUniqueInput!): Order
   article(where: ArticleWhereUniqueInput!): Article
-  category(where: CategoryWhereUniqueInput!): Category
   rubriqueNumber(where: RubriqueNumberWhereUniqueInput!): RubriqueNumber
   premiumOffer(where: PremiumOfferWhereUniqueInput!): PremiumOffer
+  category(where: CategoryWhereUniqueInput!): Category
   user(where: UserWhereUniqueInput!): User
   orderItem(where: OrderItemWhereUniqueInput!): OrderItem
   rubrique(where: RubriqueWhereUniqueInput!): Rubrique
   cartItemsConnection(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CartItemConnection!
   ordersConnection(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrderConnection!
   articlesConnection(where: ArticleWhereInput, orderBy: ArticleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ArticleConnection!
-  categoriesConnection(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CategoryConnection!
   rubriqueNumbersConnection(where: RubriqueNumberWhereInput, orderBy: RubriqueNumberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RubriqueNumberConnection!
   premiumOffersConnection(where: PremiumOfferWhereInput, orderBy: PremiumOfferOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PremiumOfferConnection!
+  categoriesConnection(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CategoryConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   orderItemsConnection(where: OrderItemWhereInput, orderBy: OrderItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrderItemConnection!
   rubriquesConnection(where: RubriqueWhereInput, orderBy: RubriqueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RubriqueConnection!
@@ -3426,9 +3280,9 @@ type Subscription {
   cartItem(where: CartItemSubscriptionWhereInput): CartItemSubscriptionPayload
   order(where: OrderSubscriptionWhereInput): OrderSubscriptionPayload
   article(where: ArticleSubscriptionWhereInput): ArticleSubscriptionPayload
-  category(where: CategorySubscriptionWhereInput): CategorySubscriptionPayload
   rubriqueNumber(where: RubriqueNumberSubscriptionWhereInput): RubriqueNumberSubscriptionPayload
   premiumOffer(where: PremiumOfferSubscriptionWhereInput): PremiumOfferSubscriptionPayload
+  category(where: CategorySubscriptionWhereInput): CategorySubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   orderItem(where: OrderItemSubscriptionWhereInput): OrderItemSubscriptionPayload
   rubrique(where: RubriqueSubscriptionWhereInput): RubriqueSubscriptionPayload

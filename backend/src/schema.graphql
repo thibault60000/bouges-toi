@@ -17,6 +17,8 @@ type Mutation {
     begin_date: DateTime!
     end_date: DateTime!
     price: Int!
+    rubrique: String!
+    category: String!
   ): Article!
   createCategoryRubrique(title: String!, rubrique: String!): Category!
   createRubrique(title: String!, image: String): Article!
