@@ -21,7 +21,7 @@ const Navbar = () => (
         )}
         {me && (
           <>
-            <Link href="articles/createArticlePage">
+            <Link href="/articles/createArticlePage">
               <a> Création </a>
             </Link>
             <Link href="/articles/articles">

@@ -11,10 +11,10 @@ import Adresses from "./Adresses";
 import { CLOUDINARY_URL_UPLOAD } from "../../config";
 
 const StyledRadioRubriques = styled.div`
-    display: grid;
-    grid-template-columns: 100px auto;
-    grid-gap: 3rem;
-    height: 18rem;
+  display: grid;
+  grid-template-columns: 100px auto;
+  grid-gap: 3rem;
+  height: 18rem;
 
   input[type="radio"] {
     position: asbolute;
@@ -128,6 +128,7 @@ export class CreateArticle extends Component {
 
   // Handle Change
   handleChange = e => {
+    console.log(e);
     const { name, type, value } = e.target;
     const v = type === "number" ? parseFloat(value) : value;
     // If Date
@@ -147,6 +148,13 @@ export class CreateArticle extends Component {
     } else {
       this.setState({ [name]: v });
     }
+  };
+  handleRubriqueChange = e => {
+    console.log(e.target);
+    this.setState({
+      rubrique: e.target.id
+    });
+    // Change Category list
   };
 
   render() {
@@ -177,24 +185,25 @@ export class CreateArticle extends Component {
               <span> {this.state.adresse !== "" && "V"}</span>
             </div>
             <fieldset>
-            <label> Rubrique </label> 
+              <label> Rubrique </label>
               {/* RUBRIQUES */}
               <Query query={RUBRIQUES_QUERY}>
                 {({ data, loading }) => {
                   if (loading) return <p>Chargement...</p>;
                   return (
                     <StyledRadioRubriques>
-                     
                       {data.rubriques.map(rubrique => (
                         <p key={rubrique.id}>
                           <input
                             type="radio"
-                            id={`radioBtn${rubrique.id}`}
+                            onChange={this.handleRubriqueChange}
+                            checked={this.state.rubrique === rubrique.id}
+                            id={`${rubrique.id}`}
                             name="radioBtnRubrique"
                             value={rubrique.title}
                           />
                           <label
-                            htmlFor={`radioBtn${rubrique.id}`}
+                            htmlFor={`${rubrique.id}`}
                             style={{
                               backgroundImage: `url('${rubrique.image}')`
                             }}
@@ -202,6 +211,7 @@ export class CreateArticle extends Component {
                             <span>{rubrique.title}</span>
                           </label>
                         </p>
+                       
                       ))}
                     </StyledRadioRubriques>
                   );

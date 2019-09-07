@@ -83,7 +83,7 @@ export default class Adresses extends Component {
   render() {
     const { value, suggestions } = this.state;
     const inputProps = {
-      placeholder: "Entrez le nom de la commune",
+      placeholder: "Entrez l'adresse ou la ville ",
       value,
       onChange: this.onChange
     };
