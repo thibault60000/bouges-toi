@@ -76,7 +76,7 @@ class AutoComplete extends React.Component {
                   <input
                     {...getInputProps({
                       type: "Search",
-                      placeholder: "Recherchez un article",
+                      placeholder: "Recherchez un évènement",
                       className: this.state.loading ? "loading" : "",
                       onChange: e => {
                         e.persist();

@@ -25,14 +25,14 @@ const StyledTitle = styled.h1`
   z-index: 2;
   a {
     padding: 0.3rem 0.6rem;
-    background: ${props => props.theme.primary};
+    background: ${props => props.theme.violet};
     text-transform: uppercase;
-    color: ${props => props.theme.textWhite} !important;
+    color: ${props => props.theme.whiteText} !important;
     text-decoration: none;
   }
   @media (max-width: 1200px) {
-    text-align: center;
-    margin: 0;
+    font-size: 2rem;
+  
   }
 `;
 
@@ -42,7 +42,6 @@ const StyledHeader = styled.header`
     grid-template-columns: auto 1fr;
     justify-content: space-between;
     align-items: stretch;
-    border-bottom: 5px dashed ${props => props.theme.primary};
     @media (max-width: 1200px) {
       grid-template-columns: 1fr;
       justify-content: center;
@@ -51,7 +50,6 @@ const StyledHeader = styled.header`
   .sub-navbar {
     display: grid;
     grid-template-columns: 1fr auto;
-    border-bottom: 1px solid lightgrey;
   }
 `;
 
@@ -61,14 +59,10 @@ const Header = () => (
     <div className="navbar">
       <StyledTitle>
         <Link href="/">
-          <a> Bouges toi ! </a>
+          <a> Bouge toi ! </a>
         </Link>
       </StyledTitle>
       <Navbar />
-    </div>
-    {/* Sous Menu */}
-    <div className="sub-navbar">
-      <Search />
     </div>
     {/* Panier */}
     <Cart />

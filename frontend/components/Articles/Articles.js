@@ -7,6 +7,8 @@ import styled from "styled-components";
 import Article from "./Article";
 import Pagination from "../Pagination";
 import { perPage } from "../../config";
+import Search from "../Search";
+
 // https://www.npmjs.com/package/react-scrollreveal
 const ARTICLES_QUERY = gql`
   query ARTICLES_QUERY($skip: Int = 0, $first: Int = ${perPage}) {
@@ -58,6 +60,7 @@ class Articles extends Component {
     return (
       <StyledArticlesContainer>
         {/* Title */}
+        <Search />
         <StyledPageSlogan> Liste des sorties en cours </StyledPageSlogan>
         {/* Pagination 1 */}
         <Pagination page={this.props.page} />

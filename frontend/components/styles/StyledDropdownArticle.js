@@ -38,10 +38,14 @@ const StyledDropdownArticleSearch = styled.div`
     padding: 10px;
     border: 0;
     font-size: 2rem;
+    border: 2px solid #454b73;
+    border-radius: 10rem;
+    color: #454b73;
     &.loading {
       animation: ${glow} 0.5s ease-in-out infinite alternate;
     }
   }
+  
 `;
 
 export {

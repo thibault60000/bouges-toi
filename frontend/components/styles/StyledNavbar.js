@@ -4,8 +4,10 @@ const StyledNavbar = styled.ul`
   margin: 0;
   padding: 0;
   display: flex;
-  font-size: 2rem;
+  font-size: 1.7rem;
   justify-self: end;
+  padding: 3.3rem 0;
+  margin-right: 2rem;
   button,
   a {
     display: flex;
@@ -19,32 +21,15 @@ const StyledNavbar = styled.ul`
     font-weight: bold;
     font-size: 1em;
     @media (max-width: 700px) {
-      font-size: 10px;
+      font-size: 1.5rem;
       padding: 0 10px;
     }
-    &:before {
-      content: "";
-      position: absolute;
-      transform: skew(-20deg);
-      top: 0;
-      bottom: 0;
-      width: 2px;
-      left: 0;
-      background-color: lightgray;
-      height: 100%;
-    }
-    &:after {
-      height: 2px;
-      background: ${props => props.theme.primary};
-      content: "";
-      width: 0;
-      position: absolute;
-      /* Transition: Translate 0.4 seconds */
-      transform: translate(-50%);
-      transition: width 0.4s;
-      transition-timing-function: cubic-bezier(1, -0.65, 0, 2.31);
-      left: 50%;
-      margin-top: 2rem;
+    &.authentication,
+    &.authentication {
+      background-color: #FF460F;
+      color: white;
+      border-radius: 2.4rem;
+      margin: 0 0.5rem;
     }
     &:hover,
     &:focus {
@@ -58,7 +43,6 @@ const StyledNavbar = styled.ul`
     width: 100%;
     font-size: 1.5rem;
     justify-content: center;
-    border-top: 1px solid lightgray;
   }
 `;
 
