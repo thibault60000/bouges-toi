@@ -37,7 +37,18 @@ const Navbar = () => (
               <a> Mon Compte </a>
             </Link> */}
             <Mutation mutation={TOGGLE_CART_MUTATION}>
-              {toggleCart => <button class="authentication" onClick={toggleCart}> Mon panier <CartCount count={me.cart.reduce((tally, cartItem) => tally + cartItem.quantity, 0)} /> </button>}
+              {toggleCart => (
+                <button className="authentication" onClick={toggleCart}>
+                  {" "}
+                  Mon panier{" "}
+                  <CartCount
+                    count={me.cart.reduce(
+                      (tally, cartItem) => tally + cartItem.quantity,
+                      0
+                    )}
+                  />{" "}
+                </button>
+              )}
             </Mutation>
 
             <Signout />

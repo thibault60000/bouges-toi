@@ -65,6 +65,7 @@ const StyledDropdownArticleSearch = styled.div`
     border-radius: 50%;
     color: white;
     font-size: 1.4rem;
+    text-align: center;
   }
 `;
 

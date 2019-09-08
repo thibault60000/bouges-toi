@@ -8,6 +8,8 @@ import Article from "./Article";
 import Pagination from "../Pagination";
 import { perPage } from "../../config";
 import Search from "../Search";
+import { Time } from "styled-icons/boxicons-solid/Time";
+import User from "../Authentication/User";
 
 // https://www.npmjs.com/package/react-scrollreveal
 const ARTICLES_QUERY = gql`
@@ -36,15 +38,15 @@ const ARTICLES_QUERY = gql`
   }
 `;
 
-const StyledArticlesContainer = styled.div`
-  text-align: center;
-`;
+const StyledArticlesContainer = styled.div``;
+
 const StyledArticlesList = styled.ul`
   display: grid;
   max-width: 1200px;
-  margin: 0 auto;
-  grid-template-columns: 1fr 1fr 1fr;
+  margin: 0;
+  grid-template-rows: repeat(6, 210px);
   grid-gap: 40px;
+  padding-left: 0.4rem !important;
   li {
     list-style: none;
   }
@@ -53,40 +55,52 @@ const StyledArticlesList = styled.ul`
 const StyledPageSlogan = styled.p`
   font-weight: bold;
   font-size: 2.5rem;
+  color: #4f5770;
+  margin: 3.5rem 0 0.5rem 0;
+`;
+
+const StyledTimeIcon = styled(Time)`
+  height: 2.5rem;
 `;
 
 class Articles extends Component {
   render() {
     return (
-      <StyledArticlesContainer>
-        {/* Title */}
-        <Search />
-        <StyledPageSlogan> Liste des sorties en cours </StyledPageSlogan>
-        {/* Pagination 1 */}
-        <Pagination page={this.props.page} />
-        {/* Query */}
-        <Query
-          query={ARTICLES_QUERY}
-          variables={{
-            skip: this.props.page * perPage - perPage
-          }}
-          fetchPolicy='network-only'
-        >
-          {({ data, error, loading }) => {
-            if (loading) return <p>Chargement</p>;
-            if (error) return <p> Erreur : {error.message}</p>;
-            return (
-              <StyledArticlesList>
-                {data.articles.map(article => (
-                  <Article article={article} key={article.id} />
-                ))}
-              </StyledArticlesList>
-            );
-          }}
-        </Query>
-        {/* Pagination 2*/}
-        <Pagination page={this.props.page} />
-      </StyledArticlesContainer>
+      <User>
+        {({ data: { me } }) => (
+          <StyledArticlesContainer>
+            {/* Title */}
+            <Search />
+            <StyledPageSlogan>
+              <StyledTimeIcon /> Les derniers évènements
+            </StyledPageSlogan>
+            {/* Pagination 1 */}
+            <Pagination page={this.props.page} />
+            {/* Query */}
+            <Query
+              query={ARTICLES_QUERY}
+              variables={{
+                skip: this.props.page * perPage - perPage
+              }}
+              fetchPolicy="network-only"
+            >
+              {({ data, error, loading }) => {
+                if (loading) return <p>Chargement</p>;
+                if (error) return <p> Erreur : {error.message}</p>;
+                return (
+                  <StyledArticlesList>
+                    {data.articles.map(article => (
+                      <Article me={me} article={article} key={article.id} />
+                    ))}
+                  </StyledArticlesList>
+                );
+              }}
+            </Query>
+            {/* Pagination 2*/}
+            <Pagination page={this.props.page} />
+          </StyledArticlesContainer>
+        )}
+      </User>
     );
   }
 }

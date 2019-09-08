@@ -3,7 +3,7 @@ import gql from "graphql-tag";
 import { Query } from "react-apollo";
 import Head from "next/head";
 import Link from "next/link";
-import StyledPagination from "./styles/StyledPagination";
+import StyledPagination, { StyledLeftArrow, StyledRightArrow, StyledFindInPage } from "./styles/StyledPagination";
 import Error from "./Error";
 import { perPage } from "../config";
 
@@ -32,7 +32,7 @@ class Pagination extends Component {
             <StyledPagination>
               <Head>
                 <title>
-                  Bouges toi ! - Sorties : Page {page} sur {pages}
+                  Bouge toi ! - Derniers évènements : Page {page} sur {pages}
                 </title>
               </Head>
               {/* Précédent */}
@@ -43,14 +43,14 @@ class Pagination extends Component {
                   query: { page: page - 1 }
                 }}
               >
-                <a className="previous" aria-disabled={page <= 1}> &#8678; Précédent </a>
+                <a className="previous" aria-disabled={page <= 1}> <StyledLeftArrow /> Précédent </a>
               </Link>
               {/* Page actuelle */}
-              <p>
+              <p className="pageNumber">
                 {this.props.page} sur {pages}
               </p>
               {/* Nombre d'articles */}
-              <p className="total">{count} articles au total </p>
+              <p className="total">{count} évènements au total </p>
               {/* Suivant */}
               <Link
                 prefetch
@@ -59,7 +59,7 @@ class Pagination extends Component {
                   query: { page: page + 1 }
                 }}
               >
-                <a className="next" aria-disabled={page >= pages}> Suivant &#8680; </a>
+                <a className="next" aria-disabled={page >= pages}> Suivant <StyledRightArrow /> </a>
               </Link>
             </StyledPagination>
           );
