@@ -89,6 +89,9 @@ Fausse CB : 4242 4242 4242 4242   02/22 222
 ### CRYPTO
 Le module de cryptage fournit des fonctionnalités cryptographiques comprenant un ensemble de wrappers pour les fonctions de hachage, HMAC, chiffrement, déchiffrement, signature et vérification d'OpenSSL.
 
+### STYLED 
+ - Styled Components : 
+ - Styled Icons : https://styled-icons.js.org/?s=search
 ### PROMISIFY
 Convertit une fonction callback en une fonction basée sur une Promise.
 

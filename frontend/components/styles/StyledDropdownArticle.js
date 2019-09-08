@@ -1,5 +1,9 @@
 import styled, { keyframes } from "styled-components";
+import { Search } from "styled-icons/boxicons-regular/Search";
 
+const StyledSearchIcon = styled(Search)`
+  width: 2rem;
+`;
 const StyledDropdownArticle = styled.div`
   position: absolute;
   width: 100%;
@@ -33,11 +37,15 @@ const glow = keyframes`
 
 const StyledDropdownArticleSearch = styled.div`
   position: relative;
+  max-width: 50%;
+  min-width: 550px;
+  div[role="combobox"] {
+    position: relative;
+  }
   input {
     width: 100%;
-    padding: 10px;
-    border: 0;
-    font-size: 2rem;
+    padding: 0.9rem 1.8rem;
+    font-size: 1.9rem;
     border: 2px solid #454b73;
     border-radius: 10rem;
     color: #454b73;
@@ -45,11 +53,24 @@ const StyledDropdownArticleSearch = styled.div`
       animation: ${glow} 0.5s ease-in-out infinite alternate;
     }
   }
-  
+  .inputIcon {
+    position: absolute;
+    display: block;
+    background-color: #454b73;
+    width: 3.6rem;
+    height: 3.6rem;
+    top: 0.4rem;
+    padding-top: 0.6rem;
+    right: 0.6rem;
+    border-radius: 50%;
+    color: white;
+    font-size: 1.4rem;
+  }
 `;
 
 export {
   StyledDropdownArticle,
   StyledDropdownArticleItem,
-  StyledDropdownArticleSearch
+  StyledDropdownArticleSearch,
+  StyledSearchIcon
 };

@@ -7,7 +7,8 @@ import debounce from "lodash.debounce";
 import {
   StyledDropdownArticle,
   StyledDropdownArticleItem,
-  StyledDropdownArticleSearch
+  StyledDropdownArticleSearch,
+  StyledSearchIcon
 } from "./styles/StyledDropdownArticle";
 
 const SEARCH_ARTICLES_QUERY = gql`
@@ -73,17 +74,23 @@ class AutoComplete extends React.Component {
             <div>
               <ApolloConsumer>
                 {client => (
-                  <input
-                    {...getInputProps({
-                      type: "Search",
-                      placeholder: "Recherchez un évènement",
-                      className: this.state.loading ? "loading" : "",
-                      onChange: e => {
-                        e.persist();
-                        this.onChange(e, client);
-                      }
-                    })}
-                  />
+                  <>
+                    <input
+                      {...getInputProps({
+                        type: "Search",
+                        placeholder: "Recherchez un évènement",
+                        className: this.state.loading ? "loading" : "",
+                        onChange: e => {
+                          e.persist();
+                          this.onChange(e, client);
+                        }
+                      })}
+                    />
+                    <span className="inputIcon">
+                      {" "}
+                      <StyledSearchIcon />{" "}
+                    </span>
+                  </>
                 )}
               </ApolloConsumer>
 
@@ -102,7 +109,7 @@ class AutoComplete extends React.Component {
                   ))}
                   {!this.state.articles.length && !this.state.loading && (
                     <StyledDropdownArticleItem>
-                      Aucun résultat pour:  <strong>{inputValue}</strong>
+                      Aucun résultat pour: <strong>{inputValue}</strong>
                     </StyledDropdownArticleItem>
                   )}
                 </StyledDropdownArticle>

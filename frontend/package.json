@@ -42,10 +42,12 @@
     "react-google-login": "^5.0.5",
     "react-google-maps-loader": "^4.2.5",
     "react-google-places-suggest": "^3.8.0",
+    "react-icons": "^2.2.7",
     "react-scrollreveal": "^1.2.0",
     "react-stripe-checkout": "^2.6.3",
     "react-transition-group": "^2.5.0",
     "styled-components": "^4.0.0",
+    "styled-icons": "^8.4.1",
     "waait": "^1.0.2"
   },
   "devDependencies": {
