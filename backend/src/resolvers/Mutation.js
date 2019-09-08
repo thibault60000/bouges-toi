@@ -226,16 +226,19 @@ const Mutations = {
   /* ------------------------------------------
     ------- USER SIGN UP ------------------------
     ---------------------------------------------*/
-  async signup(parent, args, ctx, info) {
-    args.email = args.email.toLowerCase();
-    const password = await bcrypt.hash(args.password, 10);
+  async signup(parent, { password, email, name, surname, picture }, ctx, info) {
+    email = email.toLowerCase();
+    const passwordCrypted = await bcrypt.hash(password, 10);
     const user = await ctx.db.mutation.createUser(
       {
         data: {
-          ...args,
-          password,
+          email,
+          name,
+          surname,
+          picture,
+          password: passwordCrypted,
           permissions: {
-            set: ["USER", "CREATEARTICLE", "UPDATEARTICLE", "DELETEARTICLE"]
+            set: ["USER", "ARTICLECREATE", "ARTICLEUPDATE", "ARTICLEDELETE"]
           }
         }
       },

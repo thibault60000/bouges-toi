@@ -50,6 +50,7 @@ type User {
   resetTokenExpiry: Float
   permissions: [Permission] @scalarList(strategy:RELATION)
   cart: [CartItem!]!
+  picture: String!
   articles: [Article!]! @relation(name: "Creator")
   memberOf: [Article!]! @relation(name: "UserOf")
 }

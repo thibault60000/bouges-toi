@@ -41,6 +41,7 @@ type Mutation {
     password: String!
     name: String!
     surname: String!
+    picture: String!
   ): User!
   signin(email: String!, password: String!): User!
   signout: SuccessMessage
@@ -94,6 +95,7 @@ type User {
   email: String!
   name: String!
   surname: String!
+  picture: String!
   permissions: [Permission!]!
   cart: [CartItem!]!
   orders: [OrderItem]

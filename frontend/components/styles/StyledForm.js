@@ -1,72 +1,166 @@
 import styled from "styled-components";
 
 const StyledForm = styled.form`
-    background: #FFC107;
-    box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.08);
-    padding: 0.2rem;
-    font-size: 1.5rem;
-    line-height: 1.5;
+  background: #454b73;
+  margin-top: 2rem;
+  border-radius: 5px;
+  box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.08);
+  padding: 0.2rem;
+  font-size: 1.5rem;
+  color: white;
+  line-height: 1.5;
+  font-weight: bold;
+  h3 {
+    font-weight: normal;
+    font-size: 3rem;
+    margin: 1.3rem 0;
+  }
+  fieldset {
+    border: 0;
+    margin: 0;
+    &[disabled] {
+      opacity: 0.3;
+    }
+  }
+  input:not([type="date"]):not([type="radio"]),
+  textarea,
+  select {
+    display: block;
+    width: 75%;
+    padding: 0.1rem 0.8rem;
+    font-size: 1.4rem;
+    margin-top: 0.3rem;
+    line-height: 2.5;
+    border: 0;
+    border-radius: 2px;
+    &:focus {
+      outline: 2;
+      border-color: black;
+    }
+  }
+  input[type="date"] {
+    display: block;
+    padding: 0.1rem 0.8rem;
+    font-size: 1.4rem;
+    line-height: 2;
+    border: 0;
+    border-radius: 2px;
+  }
+  input[type="file"] {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+  }
+  input[type="file"] + label {
+    color: white;
+    background-color: #75a500;
+    display: block;
+    padding: 0.4rem 0.6rem;
+    border-radius: 5px;
+    width: 250px;
+    text-align: center;
     font-weight: bold;
-    border: 5px solid white;
-    fieldset {
-        border: 0;
-        margin: 0;
-        &[disabled] {
-            opacity: 0.3
-        }
-    }
-    input:not([type='date']):not([type='radio']),
-    textarea,
-    select {
-        display:block;
-        width: 75%;
-        padding: 0.1rem 0.8rem;
-        font-size: 1.4rem;
-        margin-top: 0.7rem;
-        line-height: 2;
-        border: 0;
-        border-radius: 2px;
-        &:focus {
-            outline: 2;
-            border-color: black;
-        }
-    }
-    input[type="date"] {
-        display:block;
-        padding: 0.1rem 0.8rem;
-        font-size: 1.4rem;
-        line-height: 2;
-        border: 0;
-        border-radius: 2px;
+    margin: 2.3rem 0.9rem 1.6rem;
+  }
+  input[type="file"]:focus + label,
+  input[type="file"] + label:hover {
+    opacity: 0.8;
+    cursor: pointer;
+  }
+  @keyframes changeScaleAnimation {
+    from {
+      transform: scaleX(1.05);
     }
 
-    label {
-        display: block;
-        width: 100%;
-        margin-bottom: 1.3rem;
-        font-size: 1.8rem;
+    to {
+      transform: scaleX(0.95);
     }
-    button,
-    input[type="submit"] {
-        background: white;
-        color: #FFC107;
-        cursor: pointer;
-        font-weight: bold;
-        border: 0;
-        font-size: 1.8rem;
-        border-radius: 2px;
-        padding: 0.4rem 1rem;
-        &:hover {
-            opacity: 0.7;
-        }
+  }
+  .imgLoading {
+    color: #75a500;
+    font-family: "robotolight";
+    margin: 0 1.1rem 2.2rem;
+    display: block;
+    width: fit-content;
+    animation-duration: 1s;
+    animation-name: changeScaleAnimation;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+  }
+  .imgProfile {
+    border-radius: 50%;
+    margin: 0 1.4rem 2.1rem;
+    display: block;
+    width: 200px;
+    object-fit: cover;
+    border: 4px solid #75a500;
+  }
+  label {
+    font-family: "robotolight";
+    display: block;
+    font-weight: normal;
+    margin: 1rem;
+    width: 100%;
+    font-size: 1.8rem;
+  }
+  .socialNetwork {
+    display: block;
+    width: 40%;
+    border-radius: 5px;
+    margin: 0 1rem 2.8rem;
+  }
+  .facebookAuth .kep-login-facebook {
+    line-height: 1.9;
+    display: inline-block;
+    width: 300px;
+    border-radius: 3px;
+    font-family: "Robotolight";
+    margin: 1rem 0;
+    font-weight: normal;
+    text-transform: unset;
+    font-size: 1.5rem;
+    padding: 0.5rem 1rem;
+    &:hover {
+        opacity: 0.8;
     }
-    span.free {
-        font-size: 1.2rem;
-        margin-left: 0rem;
-        font-family: "robotolight";
-        font-style: italic;
-        color: #795548;      
+  }
+  .googleAuth > div > button {
+    width: 300px !important;
+    border-radius: 3px !important;
+    margin: 1rem 0 !important;
+    font-weight: normal !important;
+    font-size: 1.5rem !important;
+    padding: 0 1rem !important;
+    font-family: "Robotolight" !important;
+    line-height: 1.5rem !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+  input[type="submit"],
+  button[type="submit"] {
+    background: #ff460f;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    border: 0;
+    font-size: 1.8rem;
+    border-radius: 5px;
+    padding: 1rem 1.7rem;
+    margin: 2.2rem 1rem 1rem;
+    &:hover {
+      opacity: 0.7;
     }
+  }
+  span.free {
+    font-size: 1.2rem;
+    margin-left: 0rem;
+    font-family: "robotolight";
+    font-style: italic;
+    color: #795548;
+  }
 `;
 
 export default StyledForm;

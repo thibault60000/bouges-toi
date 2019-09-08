@@ -81,22 +81,7 @@ export class CreateArticle extends Component {
     category: "",
   };
 
-  createConditions = () => {
-    return (
-      this.state.adresse !== "" &&
-      this.state.title !== "" &&
-      this.state.description !== "" &&
-      this.state.image !== "" &&
-      this.state.rubrique !== "" &&
-      this.state.greatImage !== "" &&
-      this.state.price.toString() !== "NaN" &&
-      this.state.nbPersons.toString() !== "NaN" &&
-      this.state.begin_date !== "" &&
-      this.state.end_date !== "" &&
-      this.state.category !== ""
-    );
-  };
-
+  // Fill Adresse
   callbackAdressesFunction = adresse => {
     this.setState({ adresse });
   };
@@ -145,12 +130,14 @@ export class CreateArticle extends Component {
     }
   };
 
+  // Handle Rubrique
   handleRubriqueChange = e => {
     this.setState({
       rubrique: e.target.id
     });
   };
 
+  // HandleCategory
   handleCategoryChange = e => {
     e.persist();
     const category = e.target.value;

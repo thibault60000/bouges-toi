@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
+
 import Error from "../Error";
 import StyledForm from "../styles/StyledForm";
 import { CURRENT_USER_QUERY } from "./User";
 import FacebookSignUpButton from "./FacebookSignUpButton";
 import GoogleSignUpButton from "./GoogleSignUpButton";
+import { CLOUDINARY_URL_UPLOAD } from "../../config";
 
 const SIGNUP_MUTATION = gql`
   mutation SIGNUP_MUTATION(
@@ -13,12 +15,20 @@ const SIGNUP_MUTATION = gql`
     $name: String!
     $surname: String!
     $password: String!
+    $picture: String!
   ) {
-    signup(email: $email, name: $name, surname: $surname, password: $password) {
+    signup(
+      email: $email
+      name: $name
+      surname: $surname
+      password: $password
+      picture: $picture
+    ) {
       id
       email
       name
       surname
+      picture
     }
   }
 `;
@@ -27,7 +37,29 @@ class Signup extends Component {
     name: "",
     surname: "",
     email: "",
-    password: ""
+    password: "",
+    picture: "",
+    loadigImg: false
+  };
+
+  // Upload
+  uploadImage = async e => {
+    this.setState({
+      loadigImg: true
+    });
+    const images = e.target.files;
+    const data = new FormData();
+    data.append("file", images[0]);
+    data.append("upload_preset", "tutorial");
+    const response = await fetch(CLOUDINARY_URL_UPLOAD, {
+      method: "POST",
+      body: data
+    });
+    const image = await response.json();
+    this.setState({
+      picture: image.secure_url,
+      loadigImg: false
+    });
   };
 
   // Set State des Inputs
@@ -48,17 +80,26 @@ class Signup extends Component {
             method="post"
             onSubmit={async e => {
               e.preventDefault();
-              const response = await signup();
-              this.setState({ name: "", email: "", surname: "", password: "" });
+              await signup();
+              this.setState({
+                name: "",
+                email: "",
+                surname: "",
+                password: "",
+                picture: "",
+                loadingImg: false
+              });
             }}
           >
             <fieldset disabled={loading} aria-busy={loading}>
               <h2> Inscription </h2>
 
               <Error error={error} />
+              <div className="socialNetworks">
+                <span className="facebookAuth"><FacebookSignUpButton  /></span>
+                <span className="googleAuth"><GoogleSignUpButton /> </span>
+              </div>
 
-              <FacebookSignUpButton />
-              <GoogleSignUpButton />
               {/* Email */}
               <label htmlFor="email">
                 Email
@@ -103,7 +144,43 @@ class Signup extends Component {
                   onChange={this.saveToState}
                 />
               </label>
-              <button type="submit"> S'inscrire ! </button>
+              {/* Image */}
+              <input
+                type="file"
+                id="picture"
+                name="picture"
+                required
+                placeholder="Selectionnez votre image"
+                onChange={this.uploadImage}
+                disabled={this.state.picture && this.state.loadigImg}
+              />
+              <label htmlFor="picture"> Ajouter sa photo de profil</label>
+              {!this.state.picture && this.state.loadigImg && (
+                <span className="imgLoading">
+                  {" "}
+                  Chargement de l'image en cours{" "}
+                </span>
+              )}
+              {this.state.picture && (
+                <img
+                  className="imgProfile"
+                  src={this.state.picture}
+                  alt="UploadedImage"
+                />
+              )}
+
+              <button
+                type="submit"
+                disabled={
+                  this.state.name === "" ||
+                  this.state.surname === "" ||
+                  this.state.password === "" ||
+                  this.state.email === "" ||
+                  this.state.picture === ""
+                }
+              >
+                S'inscrire !
+              </button>
             </fieldset>
           </StyledForm>
         )}
