@@ -39,14 +39,13 @@ const Navbar = () => (
             <Mutation mutation={TOGGLE_CART_MUTATION}>
               {toggleCart => (
                 <button className="authentication" onClick={toggleCart}>
-                  {" "}
-                  Mon panier{" "}
+                  Mon panier
                   <CartCount
                     count={me.cart.reduce(
                       (tally, cartItem) => tally + cartItem.quantity,
                       0
                     )}
-                  />{" "}
+                  />
                 </button>
               )}
             </Mutation>
@@ -56,7 +55,7 @@ const Navbar = () => (
         )}
 
         {!me && (
-          <Link href="/login">
+          <Link href="/signup">
             <a className="authentication"> Inscription </a>
           </Link>
         )}
