@@ -43,6 +43,8 @@ const CREATE_ARTICLE_MUTATION = gql`
     $begin_date: DateTime!
     $end_date: DateTime!
     $price: Int!
+    $rubrique: String!
+    $category: String!
   ) {
     createArticle(
       title: $title
@@ -54,6 +56,8 @@ const CREATE_ARTICLE_MUTATION = gql`
       begin_date: $begin_date
       end_date: $end_date
       price: $price
+      rubrique: $rubrique
+      category: $category
     ) {
       id
     }
@@ -65,16 +69,16 @@ export class CreateArticle extends Component {
     title: "",
     description: "",
     image: "",
-    rubrique: "",
     greatImage: "",
-    category: "",
     price: 0,
     nbPersons: 2,
     loadigImg: false,
     begin_date: moment(new Date(Date.now())).format("YYYY-MM-DD"),
     end_date: moment(new Date(Date.now()))
-      .add(1, "days")
-      .format("YYYY-MM-DD")
+    .add(1, "days")
+    .format("YYYY-MM-DD"),
+    rubrique: "",
+    category: "",
   };
 
   createConditions = () => {

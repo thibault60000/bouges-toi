@@ -10,7 +10,20 @@ const theme = {
     text: '#494949',
     textWhite: '#fff',
     maxWidth: '1200px',
-    boxS: '0 10px 20px 0 rgba(0, 0, 0, 0.08)'
+    boxS: '0 10px 20px 0 rgba(0, 0, 0, 0.08)',
+    violet: "#454B73",
+    violetDark: "#21253F",
+    violetBlack: "#1C1F36",
+    whiteText: "#FFFFFF",
+    whiteVioletText: "#4C546D",
+    orange: "#FF460F",
+    jaune: "#FFC50D",
+    bleuClair: "#53D7E4",
+    bleu: "#3D4EDE",
+    vert: "#75A500",
+    darkText: "#4F5770"
+
+
 };
 
 const StyledPage = styled.div`

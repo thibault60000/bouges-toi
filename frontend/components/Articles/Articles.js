@@ -2,10 +2,12 @@ import React, { Component } from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import styled from "styled-components";
+/* import withScrollReveal from 'react-scrollreveal' */
+
 import Article from "./Article";
 import Pagination from "../Pagination";
 import { perPage } from "../../config";
-
+// https://www.npmjs.com/package/react-scrollreveal
 const ARTICLES_QUERY = gql`
   query ARTICLES_QUERY($skip: Int = 0, $first: Int = ${perPage}) {
     articles(first: $first, skip: $skip, orderBy: createdAt_DESC) {
