@@ -48,6 +48,8 @@
     "react-transition-group": "^2.5.0",
     "styled-components": "^4.0.0",
     "styled-icons": "^8.4.1",
+    "sweetalert2": "^8.17.1",
+    "sweetalert2-react-content": "^1.1.0",
     "waait": "^1.0.2"
   },
   "devDependencies": {

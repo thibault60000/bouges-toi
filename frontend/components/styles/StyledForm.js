@@ -97,6 +97,8 @@ const StyledForm = styled.form`
     width: 200px;
     object-fit: cover;
     border: 4px solid #75a500;
+    
+    height: 200px;
   }
   label {
     font-family: "robotolight";
@@ -139,10 +141,19 @@ const StyledForm = styled.form`
     box-shadow: none !important;
     border: none !important;
   }
+  @keyframes changeSkewAnimation {
+    from {
+      transform: skew(-3deg);
+    }
+
+    to {
+      transform: skew(-20deg);
+    }
+  }
   input[type="submit"],
   button[type="submit"] {
-    background: #ff460f;
-    color: white;
+    background: #ffffff;
+    color: #454b73;
     cursor: pointer;
     font-weight: bold;
     border: 0;
@@ -150,9 +161,20 @@ const StyledForm = styled.form`
     border-radius: 5px;
     padding: 1rem 1.7rem;
     margin: 2.2rem 1rem 1rem;
+    animation-duration: 0.8s;
+    animation-name: changeSkewAnimation;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
     &:hover {
       opacity: 0.7;
     }
+  }
+  button[type="submit"]:disabled{
+    background-color: #5d6180;
+    color: #4f5373;
+    cursor: default;
+    pointer-events: none;
+    animation: none;
   }
   span.free {
     font-size: 1.2rem;

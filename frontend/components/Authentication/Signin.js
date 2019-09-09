@@ -45,22 +45,29 @@ class Signin extends Component {
               const response = await signin();
               this.setState({ email: "", password: "" });
               Router.push({
-                pathname: "/",
+                pathname: "/"
               });
             }}
           >
             <fieldset disabled={loading} aria-busy={loading}>
               <h2> Connexion </h2>
               <Error error={error} />
-              <FacebookSignInButton />
-              <GoogleSignInButton />
+
+              <div className="socialNetworks">
+                <span className="facebookAuth">
+                  <FacebookSignInButton />
+                </span>
+                <span className="googleAuth">
+                  <GoogleSignInButton />
+                </span>
+              </div>
               {/* Email */}
               <label htmlFor="email">
-                Email
+                Adresse mail
                 <input
                   type="email"
                   name="email"
-                  placeholder="email"
+                  placeholder="Adresse mail"
                   value={this.state.email}
                   onChange={this.saveToState}
                 />
@@ -71,12 +78,17 @@ class Signin extends Component {
                 <input
                   type="password"
                   name="password"
-                  placeholder="password"
+                  placeholder="Mot de passe"
                   value={this.state.password}
                   onChange={this.saveToState}
                 />
               </label>
-              <button type="submit"> Se connecter ! </button>
+              <button
+                type="submit"
+                disabled={this.state.password === "" || this.state.email === ""}
+              >
+                Se connecter !
+              </button>
             </fieldset>
           </StyledForm>
         )}

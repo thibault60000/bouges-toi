@@ -85,6 +85,22 @@ const GlobalStyle = createGlobalStyle`
         text-decoration: none;
         color: #494949;
       }
+      /* Sweet Alert */
+      .popup-class-swal {
+        font-size: 1em !important;
+      }
+      .confirm-button-swal {
+        background-color: #4d5792 !important;
+        border: none;
+      }
+      .swal2-styled.confirm-button-swal:active,
+      .swal2-styled.confirm-button-swal:focus {
+        background-image: initial !important;
+        box-shadow: none !important;
+      }
+      .swal2-styled.confirm-button-swal:hover {
+        opacity: 0.8;
+      }
 `;
 
 export default withData(MonApp);

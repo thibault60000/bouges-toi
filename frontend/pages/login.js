@@ -3,17 +3,23 @@ import Link from "next/link";
 
 const LoginPage = props => (
   <div>
+    <Signin />
     <p>
-      {" "}
       Pas encore de compte ?
       <Link href="/signup">
-        <a>S'inscrire</a>
+        <a>
+          <strong style={{ "textDecoration": "underline" }}> S'inscrire</strong>
+        </a>
       </Link>
     </p>
-    <Signin />
-    <Link href="/requestResetPage">
-      <a> Mot de passe oublié ?</a>
-    </Link>
+    <p>
+      Mot de passe oublié ? 
+      <Link href="/requestResetPage">
+        <a>
+          <strong style={{ "textDecoration": "underline" }}> Récupérer mon mot de passe !</strong>
+        </a>
+      </Link>
+    </p>
   </div>
 );
 

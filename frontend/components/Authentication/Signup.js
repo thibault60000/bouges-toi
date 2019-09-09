@@ -56,10 +56,18 @@ class Signup extends Component {
       body: data
     });
     const image = await response.json();
-    this.setState({
-      picture: image.secure_url,
-      loadigImg: false
-    });
+    if (image.secure_url) {
+      this.setState({
+        picture: image.secure_url,
+        loadigImg: false
+      });
+    } else {
+      this.setState({
+        picture: "",
+        loadigImg: false
+      })
+    }
+    
   };
 
   // Set State des Inputs
@@ -102,11 +110,11 @@ class Signup extends Component {
 
               {/* Email */}
               <label htmlFor="email">
-                Email
+              Adresse mail
                 <input
                   type="email"
                   name="email"
-                  placeholder="email"
+                  placeholder="Adresse mail"
                   value={this.state.email}
                   onChange={this.saveToState}
                 />
@@ -117,7 +125,7 @@ class Signup extends Component {
                 <input
                   type="text"
                   name="name"
-                  placeholder="name"
+                  placeholder="Prénom"
                   value={this.state.name}
                   onChange={this.saveToState}
                 />
@@ -128,7 +136,7 @@ class Signup extends Component {
                 <input
                   type="text"
                   name="surname"
-                  placeholder="surname"
+                  placeholder="Nom"
                   value={this.state.surname}
                   onChange={this.saveToState}
                 />
@@ -139,7 +147,7 @@ class Signup extends Component {
                 <input
                   type="password"
                   name="password"
-                  placeholder="password"
+                  placeholder="Mot de passe"
                   value={this.state.password}
                   onChange={this.saveToState}
                 />
@@ -157,8 +165,7 @@ class Signup extends Component {
               <label htmlFor="picture"> Ajouter sa photo de profil</label>
               {!this.state.picture && this.state.loadigImg && (
                 <span className="imgLoading">
-                  {" "}
-                  Chargement de l'image en cours{" "}
+                  Chargement de l'image en cours
                 </span>
               )}
               {this.state.picture && (

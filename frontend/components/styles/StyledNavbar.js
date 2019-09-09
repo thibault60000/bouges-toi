@@ -30,6 +30,9 @@ const StyledNavbar = styled.ul`
       color: white;
       border-radius: 2.4rem;
       margin: 0 0.5rem;
+      :hover {
+        opacity: 0.8;
+      }
     }
     &:hover,
     &:focus {

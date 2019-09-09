@@ -7,7 +7,11 @@ const SignupPage = props => (
     <p>
       Déjà un compte ?
       <Link href="/login">
-        <a> Se connecter </a>
+        <a>
+          <strong style={{ "textDecoration": "underline" }}>
+            Se connecter
+          </strong>
+        </a>
       </Link>
     </p>
   </div>
