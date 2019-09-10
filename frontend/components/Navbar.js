@@ -6,6 +6,23 @@ import StyledNavbar from "./styles/StyledNavbar";
 import User from "./Authentication/User";
 import Signout from "./Authentication/Signout";
 import CartCount from "./Cart/CartCount";
+import styled from "styled-components";
+import { ShoppingCart } from "styled-icons/typicons/ShoppingCart";
+
+const ShoppingCartIcon = styled(ShoppingCart)`
+  color: #4f4949;
+  width: 2.8rem;
+  margin-right: 0.5rem;
+`;
+
+const StyledShoppingbutton = styled.button`
+  :hover svg {
+    color: #ff460f;
+  }
+  :hover div.count {
+    background-color: #ff460f;
+  }
+`;
 
 const Navbar = () => (
   <User>
@@ -38,15 +55,15 @@ const Navbar = () => (
             </Link> */}
             <Mutation mutation={TOGGLE_CART_MUTATION}>
               {toggleCart => (
-                <button className="authentication" onClick={toggleCart}>
-                  Mon panier
+                <StyledShoppingbutton onClick={toggleCart}>
+                  <ShoppingCartIcon />
                   <CartCount
                     count={me.cart.reduce(
                       (tally, cartItem) => tally + cartItem.quantity,
                       0
                     )}
                   />
-                </button>
+                </StyledShoppingbutton>
               )}
             </Mutation>
 

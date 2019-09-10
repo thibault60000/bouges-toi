@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import styled from "styled-components";
-/* import withScrollReveal from 'react-scrollreveal' */
 
 import Article from "./Article";
 import Pagination from "../Pagination";
@@ -11,7 +10,6 @@ import Search from "../Search";
 import { Time } from "styled-icons/boxicons-solid/Time";
 import User from "../Authentication/User";
 
-// https://www.npmjs.com/package/react-scrollreveal
 const ARTICLES_QUERY = gql`
   query ARTICLES_QUERY($skip: Int = 0, $first: Int = ${perPage}) {
     articles(first: $first, skip: $skip, orderBy: createdAt_DESC) {
@@ -74,8 +72,7 @@ class Articles extends Component {
             <StyledPageSlogan>
               <StyledTimeIcon /> Les derniers évènements
             </StyledPageSlogan>
-            {/* Pagination 1 */}
-            <Pagination page={this.props.page} />
+
             {/* Query */}
             <Query
               query={ARTICLES_QUERY}
@@ -87,17 +84,23 @@ class Articles extends Component {
               {({ data, error, loading }) => {
                 if (loading) return <p>Chargement</p>;
                 if (error) return <p> Erreur : {error.message}</p>;
-                return (
-                  <StyledArticlesList>
-                    {data.articles.map(article => (
-                      <Article me={me} article={article} key={article.id} />
-                    ))}
-                  </StyledArticlesList>
+                return data.articles.length ? (
+                  <>
+                    {/* Pagination 1 */}
+                    <Pagination page={this.props.page} />
+                    <StyledArticlesList>
+                      {data.articles.map(article => (
+                        <Article me={me} article={article} key={article.id} />
+                      ))}
+                    </StyledArticlesList>
+                    {/* Pagination 2*/}
+                    <Pagination page={this.props.page} />
+                  </>
+                ) : (
+                  <p> Aucun évènement </p>
                 );
               }}
             </Query>
-            {/* Pagination 2*/}
-            <Pagination page={this.props.page} />
           </StyledArticlesContainer>
         )}
       </User>

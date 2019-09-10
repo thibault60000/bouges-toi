@@ -9,7 +9,7 @@ const SignupPage = props => (
       <Link href="/login">
         <a>
           <strong style={{ "textDecoration": "underline" }}>
-            Se connecter
+            {" " }Se connecter
           </strong>
         </a>
       </Link>

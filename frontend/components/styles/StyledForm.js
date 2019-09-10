@@ -27,6 +27,7 @@ const StyledForm = styled.form`
   select {
     display: block;
     width: 75%;
+    max-width: 500px;
     padding: 0.1rem 0.8rem;
     font-size: 1.4rem;
     margin-top: 0.3rem;

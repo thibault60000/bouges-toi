@@ -20,13 +20,16 @@ const StyledNavbar = styled.ul`
     text-transform: uppercase;
     font-weight: bold;
     font-size: 1em;
+    :hover {
+      color: #ff460f;
+    }
     @media (max-width: 700px) {
       font-size: 1.5rem;
       padding: 0 10px;
     }
     &.authentication,
     &.authentication {
-      background-color: #FF460F;
+      background-color: #ff460f;
       color: white;
       border-radius: 2.4rem;
       margin: 0 0.5rem;

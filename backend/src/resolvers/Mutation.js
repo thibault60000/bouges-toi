@@ -260,6 +260,7 @@ const Mutations = {
     const passwordEncrypted = await bcrypt.hash(args.userID, 10);
     const nameBegin = args.name ? args.name.split(" ")[0] : "";
     const surnameEnd = args.name ? args.name.split(" ")[1] : "";
+    const picture = args.picture ? args.picture : "";
     const user = await ctx.db.mutation
       .createUser(
         {
@@ -268,6 +269,7 @@ const Mutations = {
             surname: surnameEnd,
             email: emailLowered,
             password: passwordEncrypted,
+            picture,
             permissions: {
               set: ["USER"]
             }
