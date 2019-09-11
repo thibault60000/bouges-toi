@@ -65,9 +65,8 @@ class Signup extends Component {
       this.setState({
         picture: "",
         loadigImg: false
-      })
+      });
     }
-    
   };
 
   // Set State des Inputs
@@ -100,17 +99,30 @@ class Signup extends Component {
             }}
           >
             <fieldset disabled={loading} aria-busy={loading}>
-              <h2> Inscription </h2>
+              <div className="top-container">
+                {/* Authentification */}
+                <div>
+                  <h2> Inscription </h2>
+                  <div className="socialNetworks">
+                    <span className="facebookAuth">
+                      <FacebookSignUpButton />
+                    </span>
+                    <span className="googleAuth">
+                      <GoogleSignUpButton />{" "}
+                    </span>
+                  </div>
+                </div>
+                {/* Image de fond */}
+                <div>
+                  <img src="../../static/img/login.svg" />
+                </div>
+              </div>
 
               <Error error={error} />
-              <div className="socialNetworks">
-                <span className="facebookAuth"><FacebookSignUpButton  /></span>
-                <span className="googleAuth"><GoogleSignUpButton /> </span>
-              </div>
 
               {/* Email */}
               <label htmlFor="email">
-              Adresse mail
+                Adresse mail
                 <input
                   type="email"
                   name="email"

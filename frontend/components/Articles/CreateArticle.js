@@ -75,10 +75,10 @@ export class CreateArticle extends Component {
     loadigImg: false,
     begin_date: moment(new Date(Date.now())).format("YYYY-MM-DD"),
     end_date: moment(new Date(Date.now()))
-    .add(1, "days")
-    .format("YYYY-MM-DD"),
+      .add(1, "days")
+      .format("YYYY-MM-DD"),
     rubrique: "",
-    category: "",
+    category: ""
   };
 
   // Fill Adresse
@@ -110,23 +110,27 @@ export class CreateArticle extends Component {
   // Handle Change
   handleChange = e => {
     const { name, type, value } = e.target;
-    const v = type === "number" ? parseFloat(value) : value;
-    // If Date
-    if (type === "date") {
-      const getCurrentDate = this.state[name];
-      this.setState({ [name]: value }, () => {
-        // debut<jour ou fin<debut
-        if (
-          this.state.begin_date > this.state.end_date ||
-          this.state.begin_date <
-            moment(new Date(Date.now())).format("YYYY-MM-DD")
-        ) {
-          alert("La date de fin doit être supérieure à la date de début");
-          this.setState({ [name]: getCurrentDate });
-        }
-      });
+    if (type !== "number" || (type === "number" && value !== "")) {
+      const v = type === "number" ? parseFloat(value) : value;
+      // If Date
+      if (type === "date") {
+        const getCurrentDate = this.state[name];
+        this.setState({ [name]: value }, () => {
+          // debut<jour ou fin<debut
+          if (
+            this.state.begin_date > this.state.end_date ||
+            this.state.begin_date <
+              moment(new Date(Date.now())).format("YYYY-MM-DD")
+          ) {
+            alert("La date de fin doit être supérieure à la date de début");
+            this.setState({ [name]: getCurrentDate });
+          }
+        });
+      } else {
+        this.setState({ [name]: v });
+      }
     } else {
-      this.setState({ [name]: v });
+      this.setState({ [name]: "" });
     }
   };
 
@@ -169,10 +173,7 @@ export class CreateArticle extends Component {
           >
             <Error error={error} />
 
-            <div>
-              <Adresses parentCallback={this.callbackAdressesFunction} />
-              <span> {this.state.adresse !== "" && "V"}</span>
-            </div>
+            
             <fieldset>
               <label> Rubrique </label>
               {/* RUBRIQUES */}
@@ -212,53 +213,42 @@ export class CreateArticle extends Component {
                   const categoriesList = data.categories.filter(
                     c => c.rubrique.id === this.state.rubrique
                   );
-                  if (this.state.rubrique === "")
+                  if (this.state.rubrique === "") 
                     return (
-                      <p> Selectionnez une rubrique puis une categorie </p>
-                    );
+                      <label> 
+                        Categorie 
+                        <input disabled="disabled" placeholder="Vous devez sélectionner une rubrique" />
+                      </label> 
+                    )
                   if (this.state.rubrique !== "" && categoriesList.length === 0)
                     return (
-                      <p>
-                        Cette rubrique ne dispose d'aucune catégorie pour le
-                        moment
-                      </p>
+                      <label> 
+                        Categorie 
+                        <input disabled="disabled" placeholder="Cette rubrique n'a pas de catégorie" />
+                      </label> 
                     );
                   return (
-                    <select
-                      onChange={this.handleCategoryChange}
-                      value={this.state.category}
-                    >
-                      <option key="categoryDefaultKey" value="">
-                        {" "}
-                        Selectionnez une catégorie{" "}
-                      </option>
-                      {categoriesList.map(category => (
-                        <option key={category.id} value={category.id}>
-                          {category.title}
+                    <label forHtml="category">
+                      Categorie
+                      <select
+                        onChange={this.handleCategoryChange}
+                        value={this.state.category}
+                        id="category"
+                      >
+                        <option key="categoryDefaultKey" value="">
+                          Selectionnez une catégorie
                         </option>
-                      ))}
-                    </select>
+                        {categoriesList.map(category => (
+                          <option key={category.id} value={category.id}>
+                            {category.title}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
                   );
                 }}
               </Query>
-              {/* Image */}
-              <label htmlFor="image">
-                Image
-                <input
-                  type="file"
-                  id="image"
-                  name="image"
-                  required
-                  placeholder="Selectionnez votre image"
-                  onChange={this.uploadImage}
-                />
-                {!this.state.image && this.state.loadigImg && (
-                  <span> Chargement de l'image en cours </span>
-                )}
-                {this.state.image && (
-                  <img width="200" src={this.state.image} alt="UploadedImage" />
-                )}
-              </label>
+
               {/* Titre */}
               <label htmlFor="title">
                 Titre
@@ -272,6 +262,14 @@ export class CreateArticle extends Component {
                   required
                 />
               </label>
+              {/* Adresse */}
+              <div className="autocomplete">
+                <label htmlFor="adresse">
+                  Adresse de l'évènement
+                  <Adresses id="adresse" parentCallback={this.callbackAdressesFunction} />
+                  <span> {this.state.adresse !== "" && "V"}</span>
+                </label> 
+              </div>
               {/* Date de début */}
               <label htmlFor="begin_date">
                 Date de début
@@ -327,9 +325,41 @@ export class CreateArticle extends Component {
                   required
                 />
               </label>
+              {/* Image */}
+              <input
+                type="file"
+                id="image"
+                name="image"
+                required
+                placeholder="Selectionnez votre image"
+                onChange={this.uploadImage}
+                disabled={this.state.image && this.state.loadigImg}
+              />
+              <label htmlFor="image">
+                {" "}
+                Ajouter l'image représentant l'évènement{" "}
+              </label>
+              {!this.state.image && this.state.loadigImg && (
+                <span className="imgLoading">
+                  Chargement de l'image en cours
+                </span>
+              )}
+              {this.state.image && (
+                <img
+                  className="imgNormal"
+                  src={this.state.image}
+                  alt="UploadedImage"
+                />
+              )}
               {/* Prix */}
-              <label htmlFor="price">
-                Prix
+              <label
+                htmlFor="price"
+                className={this.state.price === 0 ? "line" : ""}
+              >
+                <span>Prix par personne</span>
+                <span className="free">
+                  {this.state.price === 0 ? "Gratuit" : ""}
+                </span>
                 <input
                   type="number"
                   value={this.state.price}
@@ -339,9 +369,6 @@ export class CreateArticle extends Component {
                   placeholder="Prix"
                   required
                 />
-                <span className="free">
-                  {this.state.price === 0 ? "Gratuit" : ""}
-                </span>
               </label>
               {/* Submit */}
               <button

@@ -39,6 +39,18 @@ const StyledForm = styled.form`
       border-color: black;
     }
   }
+  input[disabled] {
+    background-color: #2c3261;
+  }
+  select {
+    height: 3.9rem;
+    color: grey;
+    appearance: none;
+    cursor: pointer;
+    :hover {
+      opacity: 0.9;
+    }
+  }
   input[type="date"] {
     display: block;
     padding: 0.1rem 0.8rem;
@@ -98,8 +110,16 @@ const StyledForm = styled.form`
     width: 200px;
     object-fit: cover;
     border: 4px solid #75a500;
-    
     height: 200px;
+  }
+  .imgNormal {
+    border-radius: 10px;
+    margin: 0 1.4rem 2.1rem;
+    display: block;
+    width: 200px;
+    object-fit: cover;
+    border: 4px solid #75a500;
+    height: 220px;
   }
   label {
     font-family: "robotolight";
@@ -128,6 +148,16 @@ const StyledForm = styled.form`
     padding: 0.5rem 1rem;
     &:hover {
         opacity: 0.8;
+    }
+  }
+  .top-container {
+    display: flex;
+    padding: 2rem 3rem 0;
+    & > div {
+      width: 50%;
+      & > img {
+        height: 250px;
+      }
     }
   }
   .googleAuth > div > button {
@@ -177,12 +207,17 @@ const StyledForm = styled.form`
     pointer-events: none;
     animation: none;
   }
-  span.free {
-    font-size: 1.2rem;
-    margin-left: 0rem;
-    font-family: "robotolight";
+  label.line {
+    span:not(.free) {
+      text-decoration: line-through;
+    }
+    span.free {
+      margin-left: 0.5rem;
+    font-weight: bold;
     font-style: italic;
-    color: #795548;
+    color: #75a500;
+    font-size: 1.6rem;
+    }
   }
 `;
 

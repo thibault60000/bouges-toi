@@ -50,17 +50,26 @@ class Signin extends Component {
             }}
           >
             <fieldset disabled={loading} aria-busy={loading}>
-              <h2> Connexion </h2>
-              <Error error={error} />
-
-              <div className="socialNetworks">
-                <span className="facebookAuth">
-                  <FacebookSignInButton />
-                </span>
-                <span className="googleAuth">
-                  <GoogleSignInButton />
-                </span>
+              <div className="top-container">
+                {/* Authentification */}
+                <div>
+                  <h2> Connexion </h2>
+                  <div className="socialNetworks">
+                    <span className="facebookAuth">
+                      <FacebookSignInButton />
+                    </span>
+                    <span className="googleAuth">
+                      <GoogleSignInButton />
+                    </span>
+                  </div>
+                </div>
+                {/* Image de fond */}
+                <div>
+                  <img src="../../static/img/authentication.svg" />
+                </div>
               </div>
+
+              <Error error={error} />
               {/* Email */}
               <label htmlFor="email">
                 Adresse mail
