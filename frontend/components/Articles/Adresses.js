@@ -18,8 +18,15 @@ const StyledAutoSuggest = styled.div`
     list-style: none;
     padding: 0.8rem;
   }
+  .react-autosuggest__suggestion {
+    color: black;
+    font-family: "robotoregular";
+    font-size: 1.8rem;
+    line-height: 2.7rem;
+
+  }
   .react-autosuggest__suggestion:hover {
-    opacity: 0.8;
+    font-weight: bold;
     cursor: pointer;
   }
 `;

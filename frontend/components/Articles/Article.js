@@ -84,7 +84,7 @@ export class Article extends Component {
             ) : (
               /* CREATION DATE */
               <span>
-                Créé le : {moment(article.createdAt).format("Do MMMM YYYY")} par
+                Créé le : {moment(article.createdAt).format("Do MMMM YYYY")} par{" "}
                 <Link
                   href={{
                     pathname: "/userPage",

@@ -39,6 +39,9 @@ const StyledForm = styled.form`
       border-color: black;
     }
   }
+  textarea {
+    line-height: 1.3;
+  }
   input[disabled] {
     background-color: #2c3261;
   }
