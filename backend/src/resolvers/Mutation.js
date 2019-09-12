@@ -81,7 +81,7 @@ const Mutations = {
   /* ---------------------------------------
   ------- JOIN ARTICLE ---------------------
   ------------------------------------------*/
-  async joinArticle(parent, { id }, ctx, info) {
+  async joinArticle(parent, args, ctx, info) {
     // 1. Test si le user est connecté
     if (!ctx.request.userId) {
       throw new Error("Vous devez être connecté");
@@ -92,15 +92,14 @@ const Mutations = {
     );
     if (!hasPermission)
       throw new Error("Vous n'êtes pas autorisé à faire ça ! ");
-    const article = await ctx.db.query.article(
-      {
-        where: {
-          id
-        }
-      },
-      info
-    );
-    console.log(article);
+      const article = await ctx.db.query.article(
+        { where: { id: args.id } },
+        ` { id nbPersons user { id } users { id }}`
+      );
+    const { nbPersons, users } = article;
+    console.log("Nombre", nbPersons);
+    console.log("Nombre courant", users.length);
+
     return article;
   },
   /* ------------------------------------------

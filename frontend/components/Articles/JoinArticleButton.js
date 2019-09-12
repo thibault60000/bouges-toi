@@ -15,6 +15,7 @@ const JOIN_ARTICLE_MUTATION = gql`
 class JoinArticle extends Component {
   // Join Article
   joinArticleMethod = joinArticle => {
+      console.log(this.props.article.id);
     joinArticle({
       variables: {
         id: this.props.article.id
