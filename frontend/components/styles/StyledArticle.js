@@ -56,6 +56,14 @@ const article = styled.li`
         color: #ffffff;
       }
     }
+    & > button[disabled] {
+      background-color: #f27474;
+      color: #4c4949;
+      cursor: default;
+      :hover {
+        opacity: 1;
+      }
+    }
     & > a {
       background-color: #454b73;
       color: white;
@@ -141,15 +149,24 @@ const article = styled.li`
   }
   .tooltip {
     background-color: white;
-    max-width: 400px;
+    max-width: 500px;
+    text-align: center;
     ul {
       display: flex;
       flex-wrap: wrap;
-      flex-direction: rows;
+      flex-direction: row;
+      padding: 0;
+      align-items: center;
       li {
-        list-style: none;
+        list-style: none; 
+        width: 70px;
+        height: 70px; 
+        margin: 0.5rem;
         img {
           border-radius: 4px;
+          max-height: 100%;
+          max-width: 100%;
+          object-fit: cover;
         }
       }
     }

@@ -15,18 +15,21 @@ const JOIN_ARTICLE_MUTATION = gql`
 class JoinArticle extends Component {
   // Join Article
   joinArticleMethod = joinArticle => {
-      console.log(this.props.article.id);
+    console.log(this.props.article.id);
     joinArticle({
       variables: {
         id: this.props.article.id
       }
-    }).catch(err => {
-      alert(err.message);
-    });
-    Router.push({
-      pathname: "/articles/article",
-      query: { id: this.props.article.id }
-    });
+    })
+      .catch(err => {
+        alert(err.message);
+      })
+      .then(() => {
+        Router.push({
+          pathname: "/articles/article",
+          query: { id: this.props.article.id }
+        });
+      });
   };
 
   // Render
@@ -37,14 +40,18 @@ class JoinArticle extends Component {
         variables={{ id: this.props.article.id }}
         refetchQueries={[{ query: PAGINATION_ARTICLE_QUERY }]}
       >
-        {(joinArticle, { data, error, loading }) => (
-          <button
-           className="join"
-            onClick={() => this.joinArticleMethod(joinArticle) }
-          >
-            {this.props.children}
-          </button>
-        )}
+        {(joinArticle, { data, error, loading }) => {
+          return this.props.article.users.length >= this.props.article.nbPersons ? (
+            <button disabled> Complet </button>
+          ) : (
+            <button
+              className="join"
+              onClick={() => this.joinArticleMethod(joinArticle)}
+            >
+              {this.props.children}
+            </button>
+          );
+        }}
       </Mutation>
     );
   }

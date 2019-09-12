@@ -92,15 +92,47 @@ const Mutations = {
     );
     if (!hasPermission)
       throw new Error("Vous n'êtes pas autorisé à faire ça ! ");
-      const article = await ctx.db.query.article(
-        { where: { id: args.id } },
-        ` { id nbPersons user { id } users { id }}`
-      );
-    const { nbPersons, users } = article;
-    console.log("Nombre", nbPersons);
-    console.log("Nombre courant", users.length);
-
-    return article;
+    // 3. Récupère l'article
+    const article = await ctx.db.query.article(
+      { where: { id: args.id } },
+      ` { id nbPersons user { id } users { id }}`
+    );
+    // 4. Test si on a pas dépassé le nombre max de personnes
+    const { nbPersons, users, id, user } = article;
+    if (users.length >= nbPersons)
+      throw new Error("Il ne reste aucune place sur cet évènement");
+    // 5. Ajoute l'utilisateur courant à l'article
+    const newUsers = users.map(u => {
+      const userId = { id: u.id };
+      return userId;
+    });
+    newUsers.push({ id: ctx.request.userId });
+    // 6. Supprimer les valeurs inutiles
+    const idCreator = user.id;
+    delete article.id;
+    delete user;
+    // 7. Update Article
+    const articleUpdated = ctx.db.mutation.updateArticle(
+      {
+        data: {
+          ...article,
+          user: {
+            connect: {
+              id: idCreator
+            }
+          },
+          users: {
+            connect: newUsers
+          }
+        },
+        where: {
+          id
+        }
+      },
+      info
+    );
+    // 8 . Retourne article
+    return articleUpdated;
   },
   /* ------------------------------------------
     ------- CREATE CATEGORY ----------------------
