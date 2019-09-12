@@ -31,6 +31,9 @@ const ARTICLES_QUERY = gql`
       }
       users {
         id
+        name
+        surname
+        picture
       }
     }
   }

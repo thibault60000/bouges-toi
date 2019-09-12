@@ -45,6 +45,7 @@
     "react-icons": "^2.2.7",
     "react-scrollreveal": "^1.2.0",
     "react-stripe-checkout": "^2.6.3",
+    "react-tooltip": "^3.11.1",
     "react-transition-group": "^2.5.0",
     "styled-components": "^4.0.0",
     "styled-icons": "^8.4.1",

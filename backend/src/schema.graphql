@@ -36,6 +36,7 @@ type Mutation {
     user: String
   ): Article!
   deleteArticle(id: ID!): Article
+  joinArticle(id: ID!): Article
   signup(
     email: String!
     password: String!

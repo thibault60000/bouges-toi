@@ -38,34 +38,38 @@ const article = styled.li`
     width: 20%;
     /* Enfants du actionButtons */
     & > button {
-        background-color: #1C1F36;
-        color: #4C546D;
-        padding: 1rem;
-        font-size: 1.6rem;
-        border: 0;
-        margin: 0.7rem;
-        cursor: pointer;
-        border-radius: 5px;
-        font-weight: bold;
-        text-align: center;
-        :hover {
-            opacity: 0.8;
-        }
+      background-color: #1c1f36;
+      color: #4c546d;
+      padding: 1rem;
+      font-size: 1.6rem;
+      border: 0;
+      margin: 0.7rem;
+      cursor: pointer;
+      border-radius: 5px;
+      font-weight: bold;
+      text-align: center;
+      :hover {
+        opacity: 0.8;
+      }
+      &.join {
+        background-color: #ff460f;
+        color: #ffffff;
+      }
     }
     & > a {
-        background-color: #454B73;
-        color: white;
-        padding: 2.3rem 1rem 1rem;
-        font-size: 1.6rem;
-        border: 0;
-        margin: 0.7rem;
-        cursor: pointer;
-        border-radius: 5px;
-        font-weight: bold;
-        text-align: center;
-        :hover {
-            opacity: 0.8;
-        }
+      background-color: #454b73;
+      color: white;
+      padding: 2.3rem 1rem 1rem;
+      font-size: 1.6rem;
+      border: 0;
+      margin: 0.7rem;
+      cursor: pointer;
+      border-radius: 5px;
+      font-weight: bold;
+      text-align: center;
+      :hover {
+        opacity: 0.8;
+      }
     }
   }
   p {
@@ -88,6 +92,10 @@ const article = styled.li`
     width: 180px;
     display: inline-block;
     padding: 0.4rem 0;
+    :hover {
+      cursor: pointer;
+      opacity: 0.8;
+    }
   }
   .adresse {
     color: #ff460f;
@@ -130,6 +138,21 @@ const article = styled.li`
     height: 100%;
     max-width: 200px;
     object-fit: cover;
+  }
+  .tooltip {
+    background-color: white;
+    max-width: 400px;
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: rows;
+      li {
+        list-style: none;
+        img {
+          border-radius: 4px;
+        }
+      }
+    }
   }
 `;
 

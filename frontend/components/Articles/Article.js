@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Link from "next/link";
 import moment from "moment";
+import ReactTooltip from "react-tooltip";
 moment.locale("fr");
 
 import StyledArticle, {
@@ -10,6 +11,8 @@ import StyledArticle, {
 } from "../styles/StyledArticle";
 import StyledTitle from "../styles/StyledTitle";
 import DeleteArticleButton from "./DeleteArticleButton";
+import JoinArticleButton from "./JoinArticleButton";
+
 const propTypes = {
   article: PropTypes.object.isRequired
 };
@@ -17,12 +20,8 @@ const propTypes = {
 export class Article extends Component {
   render() {
     const { article } = this.props;
-    console.log(this);
     return (
       <StyledArticle>
-        {/* <p className={"price" + (article.price === 0 ? "" : " notFree")}>
-          {article.price === 0 ? "Gratuit" : article.price + " € "}
-        </p> */}
         {article.image ? <img src={article.image} alt={article.title} /> : null}
         <div className="articleInformations">
           <StyledTitle>
@@ -34,24 +33,33 @@ export class Article extends Component {
               }}
             >
               <a>
-                {" "}
                 {article.title} <StylePageView />
               </a>
             </Link>
           </StyledTitle>
           {/* ARTICLE INFORMATIONS */}
           <p className="description"> {article.description}</p>
-          <p className="nbPersons">
+          <p className="nbPersons" data-tip data-for="nbPersonsTooltip">
             {article.users.length} / {article.nbPersons} participants
           </p>
+          <ReactTooltip className="tooltip" type="light" id="nbPersonsTooltip">
+            <ul>
+              {article.users &&
+                article.users.map(user => (
+                  <li key={`${user.id}${article.id}`}>
+                    <img src={user.picture} alt={user.name} />
+                  </li>
+                ))}
+            </ul>
+          </ReactTooltip>
         </div>
         <div className="articleMoreInformations">
           <p>
-            Démarre le{" "}
+            Démarre le
             <strong>{moment(article.begin_date).format("Do MMMM YYYY")}</strong>
           </p>
           <p>
-            Jusqu'au{" "}
+            Jusqu'au
             <strong>{moment(article.end_date).format("Do MMMM YYYY")}</strong>
           </p>
           <p className="adresse">{article.adresse}</p>
@@ -62,8 +70,7 @@ export class Article extends Component {
             )}/`}
           >
             <a className="localisation" target="_blank">
-              {" "}
-              Localiser <StyledMap />{" "}
+              Localiser <StyledMap />
             </a>
           </Link>
           {/* UPDATED DATE */}
@@ -111,12 +118,11 @@ export class Article extends Component {
                   <a> Modifier </a>
                 </Link>
                 <DeleteArticleButton id={article.id}>
-                  {" "}
-                  Supprimer{" "}
+                  Supprimer
                 </DeleteArticleButton>
               </>
             ) : (
-              <button> Rejoindre </button>
+              <JoinArticleButton article={article}> Rejoindre </JoinArticleButton>
             ))}
         </div>
       </StyledArticle>

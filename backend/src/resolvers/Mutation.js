@@ -78,6 +78,31 @@ const Mutations = {
 
     return article;
   },
+  /* ---------------------------------------
+  ------- JOIN ARTICLE ---------------------
+  ------------------------------------------*/
+  async joinArticle(parent, { id }, ctx, info) {
+    // 1. Test si le user est connecté
+    if (!ctx.request.userId) {
+      throw new Error("Vous devez être connecté");
+    }
+    // 2. Test si on a les droits de création
+    const hasPermission = ctx.request.user.permissions.some(p =>
+      ["USER", "ADMIN"].includes(p)
+    );
+    if (!hasPermission)
+      throw new Error("Vous n'êtes pas autorisé à faire ça ! ");
+    const article = await ctx.db.query.article(
+      {
+        where: {
+          id
+        }
+      },
+      info
+    );
+    console.log(article);
+    return article;
+  },
   /* ------------------------------------------
     ------- CREATE CATEGORY ----------------------
     ---------------------------------------------*/

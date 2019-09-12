@@ -64,6 +64,7 @@ class FacebookSignUpButton extends React.Component {
               autoLoad={false}
               fields="name,email,picture"
               callback={response => responseFacebook(response, client)}
+              onFailure={err => facebookError(err)}
               textButton="S'inscrire avec Facebook"
             />
           )}
