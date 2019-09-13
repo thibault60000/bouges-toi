@@ -55,6 +55,10 @@ const article = styled.li`
         background-color: #ff460f;
         color: #ffffff;
       }
+      &.exit {
+        background-color: #4d70b9;
+        color: #e6e7ea;
+      }
     }
     & > button[disabled] {
       background-color: #f27474;
@@ -158,9 +162,9 @@ const article = styled.li`
       padding: 0;
       align-items: center;
       li {
-        list-style: none; 
+        list-style: none;
         width: 70px;
-        height: 70px; 
+        height: 70px;
         margin: 0.5rem;
         img {
           border-radius: 4px;

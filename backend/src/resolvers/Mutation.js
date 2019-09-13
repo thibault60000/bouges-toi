@@ -122,7 +122,7 @@ const Mutations = {
             }
           },
           users: {
-            connect: newUsers
+            set: newUsers
           }
         },
         where: {
@@ -151,29 +151,27 @@ const Mutations = {
     // 3. Récupère l'article
     const article = await ctx.db.query.article(
       { where: { id: args.id } },
-      ` { id nbPersons user { id } users { id }}`
+      ` { id user { id } users { id }}`
     );
     // 4. Test si on fait parti de la liste des personnes mais qu'on est pas le créateur
-    const { nbPersons, users, id, user } = article;
+    const { users, user, id} = article;
     if (ctx.request.user === user.id)
       throw new Error("Vous ne pouvez pas quitter votre propre évènement");
-    const hasJoinedThisArticle = users.some(u => ctx.request.user === u);
+    const hasJoinedThisArticle = users.some(u => ctx.request.userId === u.id);
     if (!hasJoinedThisArticle)
       throw new Error("Vous ne faites pas parti de cet évènement");
-    if (users.length >= nbPersons)
-      throw new Error("Il ne reste aucune place sur cet évènement");
     // 5. Supprime l'utilisateur courant de l'article
     const newUsers = [];
     users.forEach(u => {
-      if (ctx.request.user !== u.id)
-        newUsers.push({ id: u.i })
+      if (ctx.request.userId !== u.id)
+        newUsers.push({ id: u.id })
     });
     // 6. Supprimer les valeurs inutiles
     const idCreator = user.id;
     delete article.id;
     delete user;
     // 7. Update Article
-    const articleUpdated = ctx.db.mutation.updateArticle(
+    const articleUpdated = await ctx.db.mutation.updateArticle(
       {
         data: {
           ...article,
@@ -183,15 +181,16 @@ const Mutations = {
             }
           },
           users: {
-            connect: newUsers
+            set: newUsers
           }
         },
         where: {
           id
         }
       },
-      info
+      `{id users { id } user { id }}`
     );
+    console.log(articleUpdated);
     // 8 . Retourne article
     return articleUpdated;
   },

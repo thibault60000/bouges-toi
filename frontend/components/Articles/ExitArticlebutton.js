@@ -4,18 +4,18 @@ import gql from "graphql-tag";
 import Router from "next/router";
 import { PAGINATION_ARTICLE_QUERY } from "../Pagination";
 
-const JOIN_ARTICLE_MUTATION = gql`
-  mutation JOIN_ARTICLE_MUTATION($id: ID!) {
-    joinArticle(id: $id) {
+const EXIT_ARTICLE_MUTATION = gql`
+  mutation EXIT_ARTICLE_MUTATION($id: ID!) {
+    quitArticle(id: $id) {
       id
     }
   }
 `;
 
-class JoinArticle extends Component {
+class ExitArticle extends Component {
   // Join Article
-  joinArticleMethod = joinArticle => {
-    joinArticle({
+  exitArticleMethod = quitArticle => {
+    quitArticle({
       variables: {
         id: this.props.article.id
       }
@@ -35,25 +35,21 @@ class JoinArticle extends Component {
   render() {
     return (
       <Mutation
-        mutation={JOIN_ARTICLE_MUTATION}
+        mutation={EXIT_ARTICLE_MUTATION}
         variables={{ id: this.props.article.id }}
         refetchQueries={[{ query: PAGINATION_ARTICLE_QUERY }]}
       >
-        {(joinArticle, { data, error, loading }) => {
-          return this.props.article.users.length >= this.props.article.nbPersons ? (
-            <button disabled> Complet </button>
-          ) : (
-            <button
-              className="join"
-              onClick={() => this.joinArticleMethod(joinArticle)}
-            >
-              {this.props.children}
-            </button>
-          );
+        {(quitArticle, { data, error, loading }) => {
+          return <button
+            className="exit"
+            onClick={() => this.exitArticleMethod(quitArticle)}
+          >
+            {this.props.children}
+          </button>;
         }}
       </Mutation>
     );
   }
 }
 
-export default JoinArticle;
+export default ExitArticle;
