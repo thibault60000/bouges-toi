@@ -86,7 +86,7 @@ const Mutations = {
     if (!ctx.request.userId) {
       throw new Error("Vous devez être connecté");
     }
-    // 2. Test si on a les droits de création
+    // 2. Test si on a les droits de JOINDRE
     const hasPermission = ctx.request.user.permissions.some(p =>
       ["USER", "ADMIN"].includes(p)
     );
@@ -107,6 +107,67 @@ const Mutations = {
       return userId;
     });
     newUsers.push({ id: ctx.request.userId });
+    // 6. Supprimer les valeurs inutiles
+    const idCreator = user.id;
+    delete article.id;
+    delete user;
+    // 7. Update Article
+    const articleUpdated = ctx.db.mutation.updateArticle(
+      {
+        data: {
+          ...article,
+          user: {
+            connect: {
+              id: idCreator
+            }
+          },
+          users: {
+            connect: newUsers
+          }
+        },
+        where: {
+          id
+        }
+      },
+      info
+    );
+    // 8 . Retourne article
+    return articleUpdated;
+  },
+  /* ---------------------------------------
+  ------- QUIT ARTICLE ---------------------
+  ------------------------------------------*/
+  async quitArticle(parent, args, ctx, info) {
+    // 1. Test si le user est connecté
+    if (!ctx.request.userId) {
+      throw new Error("Vous devez être connecté");
+    }
+    // 2. Test si on a les droits de quitter
+    const hasPermission = ctx.request.user.permissions.some(p =>
+      ["USER", "ADMIN"].includes(p)
+    );
+    if (!hasPermission)
+      throw new Error("Vous n'êtes pas autorisé à faire ça ! ");
+    // 3. Récupère l'article
+    const article = await ctx.db.query.article(
+      { where: { id: args.id } },
+      ` { id nbPersons user { id } users { id }}`
+    );
+    // 4. Test si on fait parti de la liste des personnes mais qu'on est pas le créateur
+    const { nbPersons, users, id, user } = article;
+    if (ctx.request.user === user.id)
+      throw new Error("Vous ne pouvez pas quitter votre propre évènement");
+    const hasJoinedThisArticle = users.some(u => ctx.request.user === u);
+    if (!hasJoinedThisArticle)
+      throw new Error("Vous ne faites pas parti de cet évènement");
+    if (users.length >= nbPersons)
+      throw new Error("Il ne reste aucune place sur cet évènement");
+    // 5. Supprime l'utilisateur courant de l'article
+    const newUsers = [];
+    users.forEach(u => {
+      if (ctx.request.user !== u.id)
+        newUsers.push({ id: u.i })
+    });
     // 6. Supprimer les valeurs inutiles
     const idCreator = user.id;
     delete article.id;
