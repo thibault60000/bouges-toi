@@ -61,8 +61,8 @@ const article = styled.li`
       }
     }
     & > button[disabled] {
-      background-color: #f27474;
-      color: #4c4949;
+      background-color: #8c8c8c;
+    color: #c3c3c3;
       cursor: default;
       :hover {
         opacity: 1;
