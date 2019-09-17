@@ -101,8 +101,14 @@ type Query {
 }
 
 type Subscription {
-  messageSent: Chat
+  messageSent: MessageSubscriptionPayload!
 }
+
+type MessageSubscriptionPayload {
+  mutation: String!
+  data: Chat!
+}
+
 type User {
   id: ID!
   email: String!

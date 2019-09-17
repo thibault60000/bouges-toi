@@ -711,8 +711,12 @@ const Mutations = {
         message
       }
     });
-    ctx.pubsub.publish(SOMETHING_CHANGED, { somethingChanged: { id: "123" }});
-    console.log("ENVOI", ctx.pubsub);
+    ctx.pubsub.publish("post", {
+      messageSent: {
+        mutation: "CREATED",
+        data: chat
+      }
+    });
     return chat;
   }
 };

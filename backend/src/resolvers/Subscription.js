@@ -2,13 +2,9 @@ const SOMETHING_CHANGED = "something changed";
 
 const Subscription = {
   messageSent: {
-    resolve: (payload, args, ctx, info) => {
-      console.log("wah",  payload, args, ctx, info);
-      return payload;
-    },
-    subscribe: (parent, args, ctx, info) => {
-      console.log("TEST", ctx.pubsub);
-      return ctx.pubsub.asyncIterator(SOMETHING_CHANGED);
+    subscribe(parent, args, ctx, info) {
+      console.log("GET", ctx.pubsub);
+      return ctx.pubsub.asyncIterator("post");
     }
   }
 };
