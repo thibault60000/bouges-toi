@@ -12,6 +12,7 @@ import Error from "../Error";
 import DeleteArticleButton from "./DeleteArticleButton";
 import JoinArticleButton from "./JoinArticleButton";
 import ExitArticlebutton from "./ExitArticlebutton";
+import ChatArticle from "./ChatArticle";
 
 import StyledReadArticle from "../styles/StyledReadArticle";
 
@@ -213,6 +214,7 @@ export default class ReadArticle extends Component {
                   </p>
                 </footer>
               </StyledReadArticle>
+              <ChatArticle />
             </>
           );
         }}

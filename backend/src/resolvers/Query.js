@@ -10,6 +10,7 @@ const Query = {
   premiumOffers: forwardTo("db"),
   category: forwardTo("db"),
   categories: forwardTo("db"),
+  chats: forwardTo("db"),
   /* ---------------------------------
   ---- RECUPERER USER AUTHENTIFIE ----
   ------------------------------------*/
@@ -62,7 +63,7 @@ const Query = {
     return order;
   },
   /* ----------------------------------
-  -------- RECUPERE MES COMMANDEs -----
+  -------- RECUPERE MES COMMANDES -----
   -------------------------------------*/
   async orders(parent, args, ctx, info) {
     const { userId } = ctx.request;
@@ -75,7 +76,7 @@ const Query = {
       },
       info
     );
-  }
+  },
 };
 
 module.exports = Query;

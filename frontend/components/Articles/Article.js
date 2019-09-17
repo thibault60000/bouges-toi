@@ -102,7 +102,7 @@ export class Article extends Component {
                     query: article.user.id
                   }}
                 >
-                  <a>{article.user.name + article.user.surname} </a>
+                  <a>{article.user.name + " " + article.user.surname} </a>
                 </Link>
               </span>
             )}

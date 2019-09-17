@@ -4,7 +4,14 @@ type SuccessMessage {
   message: String
 }
 
+type Chat {
+  id: ID
+  from: String!
+  message: String!
+}
+
 type Mutation {
+  sendMessage(from: String!, message: String!): Chat
   addToCart(id: ID!): CartItem
   removeFromCart(id: ID!): CartItem
   createArticle(
@@ -72,6 +79,7 @@ type Mutation {
 }
 
 type Query {
+  chats: [Chat]
   articles(
     where: ArticleWhereInput
     orderBy: ArticleOrderByInput
@@ -92,6 +100,9 @@ type Query {
   orders(orderBy: OrderOrderByInput): [Order]!
 }
 
+type Subscription {
+  messageSent: Chat
+}
 type User {
   id: ID!
   email: String!

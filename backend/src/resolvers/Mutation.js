@@ -6,6 +6,8 @@ const { transport, email } = require("../mail");
 const { hasPermission } = require("../utils");
 const stripe = require("../stripe");
 
+const SOMETHING_CHANGED = "something changed";
+
 const Mutations = {
   /* ------------------------------------------
     ------- CREATE ARTICLE ----------------------
@@ -154,7 +156,7 @@ const Mutations = {
       ` { id user { id } users { id }}`
     );
     // 4. Test si on fait parti de la liste des personnes mais qu'on est pas le créateur
-    const { users, user, id} = article;
+    const { users, user, id } = article;
     if (ctx.request.user === user.id)
       throw new Error("Vous ne pouvez pas quitter votre propre évènement");
     const hasJoinedThisArticle = users.some(u => ctx.request.userId === u.id);
@@ -163,8 +165,7 @@ const Mutations = {
     // 5. Supprime l'utilisateur courant de l'article
     const newUsers = [];
     users.forEach(u => {
-      if (ctx.request.userId !== u.id)
-        newUsers.push({ id: u.id })
+      if (ctx.request.userId !== u.id) newUsers.push({ id: u.id });
     });
     // 6. Supprimer les valeurs inutiles
     const idCreator = user.id;
@@ -699,6 +700,20 @@ const Mutations = {
     });
     // 7. Retourne la commande au client
     return order;
+  },
+  /* ------------------------------
+  -------- SEND MESSAGE -----------
+  ---------------------------------*/
+  async sendMessage(parent, { from, message }, ctx, info) {
+    const chat = await ctx.db.mutation.createChat({
+      data: {
+        from,
+        message
+      }
+    });
+    ctx.pubsub.publish(SOMETHING_CHANGED, { somethingChanged: { id: "123" }});
+    console.log("ENVOI", ctx.pubsub);
+    return chat;
   }
 };
 

@@ -21,6 +21,12 @@ type CartItem {
   user: User!
 }
 
+type Chat {
+  id: ID! @id
+  from: String!
+  message: String!
+}
+
 type OrderItem {
   id: ID! @id
   title: String!
