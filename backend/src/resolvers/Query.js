@@ -10,7 +10,7 @@ const Query = {
   premiumOffers: forwardTo("db"),
   category: forwardTo("db"),
   categories: forwardTo("db"),
-  chats: forwardTo("db"),
+  /* chats: forwardTo("db"), */
   /* ---------------------------------
   ---- RECUPERER USER AUTHENTIFIE ----
   ------------------------------------*/

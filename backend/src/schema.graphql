@@ -4,14 +4,7 @@ type SuccessMessage {
   message: String
 }
 
-type Chat {
-  id: ID
-  from: String!
-  message: String!
-}
-
 type Mutation {
-  sendMessage(from: String!, message: String!): Chat
   addToCart(id: ID!): CartItem
   removeFromCart(id: ID!): CartItem
   createArticle(
@@ -76,10 +69,13 @@ type Mutation {
   ): User
   updatePermissions(permissions: [Permission], userId: ID!): User
   createOrder(token: String!): Order!
+  createMessage(title: String!): Message
+  updateTitle(id: ID!, newTitle: String!): Message
+  deleteMessage(id: ID!): Message
 }
 
 type Query {
-  chats: [Chat]
+  getMessage: [Message!]!
   articles(
     where: ArticleWhereInput
     orderBy: ArticleOrderByInput
@@ -101,12 +97,24 @@ type Query {
 }
 
 type Subscription {
-  messageSent: MessageSubscriptionPayload!
+  publications: MessageSubscriptionPayload
+  messageDeleted: Message
+}
+type MessageSubscriptionPayload {
+  mutation: MutationType!
+  node: Message
+  updatedFields: [String!]
+  previousValues: MessagePreviousValues
+}
+type MessagePreviousValues {
+  id: ID!
+  title: String!
 }
 
-type MessageSubscriptionPayload {
-  mutation: String!
-  data: Chat!
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
 }
 
 type User {

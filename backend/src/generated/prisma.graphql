@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/thibault-jeanpierre/bouges-toi/dev
-# timestamp: Mon Sep 16 2019 20:41:16 GMT+0200 (GMT+02:00)
+# timestamp: Fri Sep 20 2019 19:02:31 GMT+0200 (GMT+02:00)
 
 type AggregateArticle {
   count: Int!
@@ -13,7 +13,7 @@ type AggregateCategory {
   count: Int!
 }
 
-type AggregateChat {
+type AggregateMessage {
   count: Int!
 }
 
@@ -1624,68 +1624,71 @@ input CategoryWhereUniqueInput {
   id: ID
 }
 
-type Chat implements Node {
+scalar DateTime
+
+"""
+The `Long` scalar type represents non-fractional signed whole numeric values.
+Long can represent values between -(2^63) and 2^63 - 1.
+"""
+scalar Long
+
+type Message implements Node {
   id: ID!
-  from: String!
-  message: String!
+  title: String!
 }
 
 """A connection to a list of items."""
-type ChatConnection {
+type MessageConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [ChatEdge]!
-  aggregate: AggregateChat!
+  edges: [MessageEdge]!
+  aggregate: AggregateMessage!
 }
 
-input ChatCreateInput {
+input MessageCreateInput {
   id: ID
-  from: String!
-  message: String!
+  title: String!
 }
 
 """An edge in a connection."""
-type ChatEdge {
+type MessageEdge {
   """The item at the end of the edge."""
-  node: Chat!
+  node: Message!
 
   """A cursor for use in pagination."""
   cursor: String!
 }
 
-enum ChatOrderByInput {
+enum MessageOrderByInput {
   id_ASC
   id_DESC
-  from_ASC
-  from_DESC
-  message_ASC
-  message_DESC
+  title_ASC
+  title_DESC
 }
 
-type ChatPreviousValues {
+type MessagePreviousValues {
   id: ID!
-  from: String!
-  message: String!
+  title: String!
 }
 
-type ChatSubscriptionPayload {
+type MessageSubscriptionPayload {
   mutation: MutationType!
-  node: Chat
+  node: Message
   updatedFields: [String!]
-  previousValues: ChatPreviousValues
+  previousValues: MessagePreviousValues
 }
 
-input ChatSubscriptionWhereInput {
+input MessageSubscriptionWhereInput {
   """Logical AND on all given filters."""
-  AND: [ChatSubscriptionWhereInput!]
+  AND: [MessageSubscriptionWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [ChatSubscriptionWhereInput!]
+  OR: [MessageSubscriptionWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [ChatSubscriptionWhereInput!]
+  NOT: [MessageSubscriptionWhereInput!]
 
   """
   The subscription event gets dispatched when it's listed in mutation_in
@@ -1706,28 +1709,26 @@ input ChatSubscriptionWhereInput {
   The subscription event gets only dispatched when some of the field names included in this list have been updated
   """
   updatedFields_contains_some: [String!]
-  node: ChatWhereInput
+  node: MessageWhereInput
 }
 
-input ChatUpdateInput {
-  from: String
-  message: String
+input MessageUpdateInput {
+  title: String
 }
 
-input ChatUpdateManyMutationInput {
-  from: String
-  message: String
+input MessageUpdateManyMutationInput {
+  title: String
 }
 
-input ChatWhereInput {
+input MessageWhereInput {
   """Logical AND on all given filters."""
-  AND: [ChatWhereInput!]
+  AND: [MessageWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [ChatWhereInput!]
+  OR: [MessageWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [ChatWhereInput!]
+  NOT: [MessageWhereInput!]
   id: ID
 
   """All values that are not equal to given value."""
@@ -1768,103 +1769,55 @@ input ChatWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
-  from: String
+  title: String
 
   """All values that are not equal to given value."""
-  from_not: String
+  title_not: String
 
   """All values that are contained in given list."""
-  from_in: [String!]
+  title_in: [String!]
 
   """All values that are not contained in given list."""
-  from_not_in: [String!]
+  title_not_in: [String!]
 
   """All values less than the given value."""
-  from_lt: String
+  title_lt: String
 
   """All values less than or equal the given value."""
-  from_lte: String
+  title_lte: String
 
   """All values greater than the given value."""
-  from_gt: String
+  title_gt: String
 
   """All values greater than or equal the given value."""
-  from_gte: String
+  title_gte: String
 
   """All values containing the given string."""
-  from_contains: String
+  title_contains: String
 
   """All values not containing the given string."""
-  from_not_contains: String
+  title_not_contains: String
 
   """All values starting with the given string."""
-  from_starts_with: String
+  title_starts_with: String
 
   """All values not starting with the given string."""
-  from_not_starts_with: String
+  title_not_starts_with: String
 
   """All values ending with the given string."""
-  from_ends_with: String
+  title_ends_with: String
 
   """All values not ending with the given string."""
-  from_not_ends_with: String
-  message: String
-
-  """All values that are not equal to given value."""
-  message_not: String
-
-  """All values that are contained in given list."""
-  message_in: [String!]
-
-  """All values that are not contained in given list."""
-  message_not_in: [String!]
-
-  """All values less than the given value."""
-  message_lt: String
-
-  """All values less than or equal the given value."""
-  message_lte: String
-
-  """All values greater than the given value."""
-  message_gt: String
-
-  """All values greater than or equal the given value."""
-  message_gte: String
-
-  """All values containing the given string."""
-  message_contains: String
-
-  """All values not containing the given string."""
-  message_not_contains: String
-
-  """All values starting with the given string."""
-  message_starts_with: String
-
-  """All values not starting with the given string."""
-  message_not_starts_with: String
-
-  """All values ending with the given string."""
-  message_ends_with: String
-
-  """All values not ending with the given string."""
-  message_not_ends_with: String
+  title_not_ends_with: String
 }
 
-input ChatWhereUniqueInput {
+input MessageWhereUniqueInput {
   id: ID
 }
 
-scalar DateTime
-
-"""
-The `Long` scalar type represents non-fractional signed whole numeric values.
-Long can represent values between -(2^63) and 2^63 - 1.
-"""
-scalar Long
-
 type Mutation {
   createCartItem(data: CartItemCreateInput!): CartItem!
-  createChat(data: ChatCreateInput!): Chat!
+  createMessage(data: MessageCreateInput!): Message!
   createOrder(data: OrderCreateInput!): Order!
   createArticle(data: ArticleCreateInput!): Article!
   createRubriqueNumber(data: RubriqueNumberCreateInput!): RubriqueNumber!
@@ -1874,7 +1827,7 @@ type Mutation {
   createOrderItem(data: OrderItemCreateInput!): OrderItem!
   createRubrique(data: RubriqueCreateInput!): Rubrique!
   updateCartItem(data: CartItemUpdateInput!, where: CartItemWhereUniqueInput!): CartItem
-  updateChat(data: ChatUpdateInput!, where: ChatWhereUniqueInput!): Chat
+  updateMessage(data: MessageUpdateInput!, where: MessageWhereUniqueInput!): Message
   updateOrder(data: OrderUpdateInput!, where: OrderWhereUniqueInput!): Order
   updateArticle(data: ArticleUpdateInput!, where: ArticleWhereUniqueInput!): Article
   updateRubriqueNumber(data: RubriqueNumberUpdateInput!, where: RubriqueNumberWhereUniqueInput!): RubriqueNumber
@@ -1884,7 +1837,7 @@ type Mutation {
   updateOrderItem(data: OrderItemUpdateInput!, where: OrderItemWhereUniqueInput!): OrderItem
   updateRubrique(data: RubriqueUpdateInput!, where: RubriqueWhereUniqueInput!): Rubrique
   deleteCartItem(where: CartItemWhereUniqueInput!): CartItem
-  deleteChat(where: ChatWhereUniqueInput!): Chat
+  deleteMessage(where: MessageWhereUniqueInput!): Message
   deleteOrder(where: OrderWhereUniqueInput!): Order
   deleteArticle(where: ArticleWhereUniqueInput!): Article
   deleteRubriqueNumber(where: RubriqueNumberWhereUniqueInput!): RubriqueNumber
@@ -1894,7 +1847,7 @@ type Mutation {
   deleteOrderItem(where: OrderItemWhereUniqueInput!): OrderItem
   deleteRubrique(where: RubriqueWhereUniqueInput!): Rubrique
   upsertCartItem(where: CartItemWhereUniqueInput!, create: CartItemCreateInput!, update: CartItemUpdateInput!): CartItem!
-  upsertChat(where: ChatWhereUniqueInput!, create: ChatCreateInput!, update: ChatUpdateInput!): Chat!
+  upsertMessage(where: MessageWhereUniqueInput!, create: MessageCreateInput!, update: MessageUpdateInput!): Message!
   upsertOrder(where: OrderWhereUniqueInput!, create: OrderCreateInput!, update: OrderUpdateInput!): Order!
   upsertArticle(where: ArticleWhereUniqueInput!, create: ArticleCreateInput!, update: ArticleUpdateInput!): Article!
   upsertRubriqueNumber(where: RubriqueNumberWhereUniqueInput!, create: RubriqueNumberCreateInput!, update: RubriqueNumberUpdateInput!): RubriqueNumber!
@@ -1904,7 +1857,7 @@ type Mutation {
   upsertOrderItem(where: OrderItemWhereUniqueInput!, create: OrderItemCreateInput!, update: OrderItemUpdateInput!): OrderItem!
   upsertRubrique(where: RubriqueWhereUniqueInput!, create: RubriqueCreateInput!, update: RubriqueUpdateInput!): Rubrique!
   updateManyCartItems(data: CartItemUpdateManyMutationInput!, where: CartItemWhereInput): BatchPayload!
-  updateManyChats(data: ChatUpdateManyMutationInput!, where: ChatWhereInput): BatchPayload!
+  updateManyMessages(data: MessageUpdateManyMutationInput!, where: MessageWhereInput): BatchPayload!
   updateManyOrders(data: OrderUpdateManyMutationInput!, where: OrderWhereInput): BatchPayload!
   updateManyArticles(data: ArticleUpdateManyMutationInput!, where: ArticleWhereInput): BatchPayload!
   updateManyRubriqueNumbers(data: RubriqueNumberUpdateManyMutationInput!, where: RubriqueNumberWhereInput): BatchPayload!
@@ -1914,7 +1867,7 @@ type Mutation {
   updateManyOrderItems(data: OrderItemUpdateManyMutationInput!, where: OrderItemWhereInput): BatchPayload!
   updateManyRubriques(data: RubriqueUpdateManyMutationInput!, where: RubriqueWhereInput): BatchPayload!
   deleteManyCartItems(where: CartItemWhereInput): BatchPayload!
-  deleteManyChats(where: ChatWhereInput): BatchPayload!
+  deleteManyMessages(where: MessageWhereInput): BatchPayload!
   deleteManyOrders(where: OrderWhereInput): BatchPayload!
   deleteManyArticles(where: ArticleWhereInput): BatchPayload!
   deleteManyRubriqueNumbers(where: RubriqueNumberWhereInput): BatchPayload!
@@ -3060,7 +3013,7 @@ input PremiumOfferWhereUniqueInput {
 
 type Query {
   cartItems(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CartItem]!
-  chats(where: ChatWhereInput, orderBy: ChatOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Chat]!
+  messages(where: MessageWhereInput, orderBy: MessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Message]!
   orders(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Order]!
   articles(where: ArticleWhereInput, orderBy: ArticleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Article]!
   rubriqueNumbers(where: RubriqueNumberWhereInput, orderBy: RubriqueNumberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RubriqueNumber]!
@@ -3070,7 +3023,7 @@ type Query {
   orderItems(where: OrderItemWhereInput, orderBy: OrderItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderItem]!
   rubriques(where: RubriqueWhereInput, orderBy: RubriqueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Rubrique]!
   cartItem(where: CartItemWhereUniqueInput!): CartItem
-  chat(where: ChatWhereUniqueInput!): Chat
+  message(where: MessageWhereUniqueInput!): Message
   order(where: OrderWhereUniqueInput!): Order
   article(where: ArticleWhereUniqueInput!): Article
   rubriqueNumber(where: RubriqueNumberWhereUniqueInput!): RubriqueNumber
@@ -3080,7 +3033,7 @@ type Query {
   orderItem(where: OrderItemWhereUniqueInput!): OrderItem
   rubrique(where: RubriqueWhereUniqueInput!): Rubrique
   cartItemsConnection(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CartItemConnection!
-  chatsConnection(where: ChatWhereInput, orderBy: ChatOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ChatConnection!
+  messagesConnection(where: MessageWhereInput, orderBy: MessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MessageConnection!
   ordersConnection(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrderConnection!
   articlesConnection(where: ArticleWhereInput, orderBy: ArticleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ArticleConnection!
   rubriqueNumbersConnection(where: RubriqueNumberWhereInput, orderBy: RubriqueNumberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RubriqueNumberConnection!
@@ -3521,7 +3474,7 @@ input RubriqueWhereUniqueInput {
 
 type Subscription {
   cartItem(where: CartItemSubscriptionWhereInput): CartItemSubscriptionPayload
-  chat(where: ChatSubscriptionWhereInput): ChatSubscriptionPayload
+  message(where: MessageSubscriptionWhereInput): MessageSubscriptionPayload
   order(where: OrderSubscriptionWhereInput): OrderSubscriptionPayload
   article(where: ArticleSubscriptionWhereInput): ArticleSubscriptionPayload
   rubriqueNumber(where: RubriqueNumberSubscriptionWhereInput): RubriqueNumberSubscriptionPayload

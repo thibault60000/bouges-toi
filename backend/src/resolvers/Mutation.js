@@ -195,6 +195,17 @@ const Mutations = {
     // 8 . Retourne article
     return articleUpdated;
   },
+  async createMessage(parent, { title }, ctx, info) {
+    const message = await ctx.db.mutation.createMessage(
+      {
+        data: {
+          title
+        }
+      },
+      info
+    );
+    return message;
+  },
   /* ------------------------------------------
     ------- CREATE CATEGORY ----------------------
     ---------------------------------------------*/
@@ -700,11 +711,11 @@ const Mutations = {
     });
     // 7. Retourne la commande au client
     return order;
-  },
+  }
   /* ------------------------------
   -------- SEND MESSAGE -----------
   ---------------------------------*/
-  async sendMessage(parent, { from, message }, ctx, info) {
+  /* async sendMessage(parent, { from, message }, ctx, info) {
     const chat = await ctx.db.mutation.createChat({
       data: {
         from,
@@ -718,7 +729,7 @@ const Mutations = {
       }
     });
     return chat;
-  }
+  } */
 };
 
 module.exports = Mutations;

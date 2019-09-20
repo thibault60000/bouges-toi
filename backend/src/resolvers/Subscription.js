@@ -1,11 +1,31 @@
-const SOMETHING_CHANGED = "something changed";
-
 const Subscription = {
-  messageSent: {
-    subscribe(parent, args, ctx, info) {
-      console.log("GET", ctx.pubsub);
-      return ctx.pubsub.asyncIterator("post");
-    }
+  publications: {
+    subscribe: (parent, args, ctx, info) => {
+      return ctx.db.subscription.message(
+        {
+          where: {
+            mutation_in: ['CREATED', 'UPDATED'],
+          },
+        },
+        info,
+      )
+    },
+  },
+  messageDeleted: {
+    subscribe: (parent, args, ctx, info) => {
+      const selectionSet = `{ previousValues { id title } }`
+      return ctx.db.subscription.message(
+        {
+          where: {
+            mutation_in: ['DELETED'],
+          },
+        },
+        selectionSet,
+      )
+    },
+    resolve: (payload, args, context, info) => {
+      return payload ? payload.message.previousValues : payload
+    },
   }
 };
 

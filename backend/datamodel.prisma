@@ -14,6 +14,7 @@ enum Permission {
   PREMIUM
 }
 
+
 type CartItem {
   id: ID! @id
   quantity: Int! @default(value: 1)
@@ -21,10 +22,9 @@ type CartItem {
   user: User!
 }
 
-type Chat {
+type Message {
   id: ID! @id
-  from: String!
-  message: String!
+  title: String!
 }
 
 type OrderItem {
