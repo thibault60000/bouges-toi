@@ -75,7 +75,7 @@ type Mutation {
 }
 
 type Query {
-  getMessage: [Message!]!
+  messages: [Message!]!
   articles(
     where: ArticleWhereInput
     orderBy: ArticleOrderByInput

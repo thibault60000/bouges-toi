@@ -6,8 +6,6 @@ const { transport, email } = require("../mail");
 const { hasPermission } = require("../utils");
 const stripe = require("../stripe");
 
-const SOMETHING_CHANGED = "something changed";
-
 const Mutations = {
   /* ------------------------------------------
     ------- CREATE ARTICLE ----------------------
@@ -195,6 +193,9 @@ const Mutations = {
     // 8 . Retourne article
     return articleUpdated;
   },
+  /* --------------------------------
+  ---------- CREATE MESSAGE ---------
+  -----------------------------------*/
   async createMessage(parent, { title }, ctx, info) {
     const message = await ctx.db.mutation.createMessage(
       {
@@ -205,6 +206,26 @@ const Mutations = {
       info
     );
     return message;
+  },
+  updateTitle(parent, { id, newTitle }, ctx, info) {
+    return ctx.db.mutation.updateMessage(
+      {
+        where: {
+          id,
+        },
+        data: {
+          title: newTitle,
+        },
+      },
+      info,
+    )
+  },
+  deleteMessage(parent, { id }, ctx, info) {
+    return ctx.db.mutation.deleteMessage({
+      where: {
+        id
+      }
+    })
   },
   /* ------------------------------------------
     ------- CREATE CATEGORY ----------------------
@@ -712,24 +733,6 @@ const Mutations = {
     // 7. Retourne la commande au client
     return order;
   }
-  /* ------------------------------
-  -------- SEND MESSAGE -----------
-  ---------------------------------*/
-  /* async sendMessage(parent, { from, message }, ctx, info) {
-    const chat = await ctx.db.mutation.createChat({
-      data: {
-        from,
-        message
-      }
-    });
-    ctx.pubsub.publish("post", {
-      messageSent: {
-        mutation: "CREATED",
-        data: chat
-      }
-    });
-    return chat;
-  } */
 };
 
 module.exports = Mutations;
