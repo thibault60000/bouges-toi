@@ -1,5 +1,5 @@
 const Subscription = {
-  publications: {
+  messageAdded: {
     subscribe: (parent, args, ctx, info) => {
       return ctx.db.subscription.message(
         {

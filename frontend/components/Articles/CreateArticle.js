@@ -105,8 +105,7 @@ export class CreateArticle extends Component {
       greatImage: image.eager[0].secure_url,
       loadigImg: false
     });
-  };
-
+  };  
   // Handle Change
   handleChange = e => {
     const { name, type, value } = e.target;

@@ -1,128 +1,112 @@
 import React, { Component } from "react";
-import { Query, Mutation } from "react-apollo";
 import gql from "graphql-tag";
+import { Mutation, Query } from "react-apollo";
 import StyledForm from "../styles/StyledForm";
-import Error from "../Error";
 
 const GET_MESSAGE_QUERY = gql`
   query GET_MESSAGE_QUERY {
-    chats {
+    messages {
       id
-      from
-      message
+      title
     }
   }
 `;
 
-const subscription = gql`
-  subscription Message {
-    messageSent {
-      mutation
-      data {
+const NEW_MESSAGE_SUBSCRIPTION = gql`
+  subscription MessageSubscription {
+    messageAdded {
+      node {
         id
-        from
-        message
+        title
       }
     }
   }
 `;
 
 const SEND_MESSSAGE_MUTATION = gql`
-  mutation SEND_MESSSAGE_MUTATION($from: String!, $message: String!) {
-    sendMessage(from: $from, message: $message) {
+  mutation SEND_MESSSAGE_MUTATION($title: String!) {
+    createMessage(title: $title) {
       id
-      from
-      message
     }
   }
 `;
 
-class MessageListView extends Component {
+class ChatView extends Component {
   componentDidMount() {
     this.props.subscribeToMore();
   }
   render() {
-    const { data } = this.props;
-    console.log("DATA 2 ", data);
     return (
-      <ul>
-        {data.chats.map(msg => (
-          <li key={msg.id}> {msg.message} </li>
+      <div>
+        {this.props.data.messages.map(message => (
+          <p> {message.title} </p>
         ))}
-      </ul>
+      </div>
     );
   }
 }
 
-class JoinArticle extends Component {
-  // State
+class ChatArticle extends Component {
   state = {
-    message: "",
-    from: "Me"
+    title: ""
   };
-  // Handle Change
   handleChange = e => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
   };
-
-  // Render
   render() {
     return (
-      <Query query={GET_MESSAGE_QUERY}>
-        {({ data, loading, error, subscribeToMore }) => {
-          if (loading) return <p> Chargement ...</p>;
-          if (error) return <Error error={error} />;
-          const more = () =>
-            subscribeToMore({
-              document: subscription,
-              updateQuery: (prev, { subscriptionData }) => {
-                if (!subscriptionData.data) return prev;
-                const { mutation, data } = subscriptionData.data.messageSent;
-                if (mutation !== "CREATED") return prev;
-                return Object.assign({}, prev, {
-                  GET_MESSAGE_QUERY: [data, ...prev.GET_MESSAGE_QUERY].slice(
-                    0,
-                    20
-                  )
-                });
-              }
-            });
-          return (
-            <>
-              <MessageListView data={data} subscribeToMore={more} />;
-              <Mutation
-                mutation={SEND_MESSSAGE_MUTATION}
-                variables={this.state}
-              >
-                {sendMessage => (
-                  <StyledForm>
-                    <fieldset>
-                      <input
-                        type="text"
-                        value={this.state.message}
-                        onChange={this.handleChange}
-                        id="message"
-                        name="message"
-                        placeholder="message"
-                        onKeyDown={async e => {
-                          if (e.key === "Enter") {
-                            e.preventDefault();
-                            await sendMessage();
-                          }
-                        }}
-                        required
-                      />
-                    </fieldset>
-                  </StyledForm>
-                )}
-              </Mutation>
-            </>
-          );
-        }}
-      </Query>
+      <>
+        <Query query={GET_MESSAGE_QUERY}>
+          {({ data, loading, error, subscribeToMore }) => {
+            console.log("DATA", data);
+            if (loading) return <p>Chargement ...</p>;
+            if (error) return <p>Erreur !</p>;
+            return (
+              <ChatView
+                data={data}
+                subscribeToMore={() =>
+                  subscribeToMore({
+                    document: NEW_MESSAGE_SUBSCRIPTION,
+                    updateQuery: (prev, { subscriptionData }) => {
+                      if (!subscriptionData.data) return prev;
+                      const { node } = subscriptionData.data.messageAdded;
+                      return Object.assign({}, prev, {
+                        messages: [...prev.messages, node]
+                      });
+                    }
+                  })
+                }
+              />
+            );
+          }}
+        </Query>
+        <Mutation mutation={SEND_MESSSAGE_MUTATION} variables={this.state}>
+          {createMessage => (
+            <StyledForm>
+              <fieldset>
+                <input
+                  type="text"
+                  value={this.state.title}
+                  onChange={this.handleChange}
+                  id="title"
+                  name="title"
+                  placeholder="message"
+                  onKeyDown={async e => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      await createMessage();
+                    }
+                  }}
+                  required
+                />
+              </fieldset>
+            </StyledForm>
+          )}
+        </Mutation>
+      </>
     );
   }
 }
 
-export default JoinArticle;
+export default ChatArticle;

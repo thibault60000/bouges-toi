@@ -97,7 +97,7 @@ type Query {
 }
 
 type Subscription {
-  publications: MessageSubscriptionPayload
+  messageAdded: MessageSubscriptionPayload
   messageDeleted: Message
 }
 type MessageSubscriptionPayload {
