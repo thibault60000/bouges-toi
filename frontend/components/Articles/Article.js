@@ -81,7 +81,7 @@ export class Article extends Component {
           <p className="createdEditedBy">
             {article.updatedAt !== article.createdAt ? (
               <span>
-                Mise à jour le
+                Mise à jour le{" "}
                 {moment(article.updatedAt).format("Do MMMM YYYY")} par
                 <Link
                   href={{

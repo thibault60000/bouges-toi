@@ -96,20 +96,6 @@ type Query {
   orders(orderBy: OrderOrderByInput): [Order]!
 }
 
-type Subscription {
-  messageAdded: MessageSubscriptionPayload
-  messageDeleted: Message
-}
-type MessageSubscriptionPayload {
-  mutation: MutationType!
-  node: Message
-  updatedFields: [String!]
-  previousValues: MessagePreviousValues
-}
-type MessagePreviousValues {
-  id: ID!
-  title: String!
-}
 
 enum MutationType {
   CREATED

@@ -189,18 +189,33 @@ const Mutations = {
       },
       `{id users { id } user { id }}`
     );
-    console.log(articleUpdated);
     // 8 . Retourne article
     return articleUpdated;
   },
   /* --------------------------------
   ---------- CREATE MESSAGE ---------
   -----------------------------------*/
-  async createMessage(parent, { title }, ctx, info) {
+  async createMessage(parent, args, ctx, info) {
+    // 1. Test si le user est connecté
+    if (!ctx.request.userId) {
+      throw new Error("Vous devez être connecté");
+    }
+    // 2. Test si on a les droits de quitter
+    const hasPermission = ctx.request.user.permissions.some(p =>
+      ["USER", "ADMIN"].includes(p)
+    );
+    if (!hasPermission)
+    throw new Error("Vous n'êtes pas autorisé à faire ça ! ");
+    // 3. Récupère l'ID du créateur du message et créer le lessage
     const message = await ctx.db.mutation.createMessage(
       {
         data: {
-          title
+          user: {
+            connect: {
+              id: ctx.request.userId
+            }
+          },
+          ...args
         }
       },
       info

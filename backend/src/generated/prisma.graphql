@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/thibault-jeanpierre/bouges-toi/dev
-# timestamp: Fri Sep 20 2019 19:02:31 GMT+0200 (GMT+02:00)
+# timestamp: Tue Oct 29 2019 17:56:11 GMT+0100 (GMT+01:00)
 
 type AggregateArticle {
   count: Int!
@@ -1635,6 +1635,9 @@ scalar Long
 type Message implements Node {
   id: ID!
   title: String!
+  user: User
+  createdAt: DateTime
+  updatedAt: DateTime
 }
 
 """A connection to a list of items."""
@@ -1650,6 +1653,7 @@ type MessageConnection {
 input MessageCreateInput {
   id: ID
   title: String!
+  user: UserCreateOneInput
 }
 
 """An edge in a connection."""
@@ -1666,11 +1670,17 @@ enum MessageOrderByInput {
   id_DESC
   title_ASC
   title_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type MessagePreviousValues {
   id: ID!
   title: String!
+  createdAt: DateTime
+  updatedAt: DateTime
 }
 
 type MessageSubscriptionPayload {
@@ -1714,6 +1724,7 @@ input MessageSubscriptionWhereInput {
 
 input MessageUpdateInput {
   title: String
+  user: UserUpdateOneInput
 }
 
 input MessageUpdateManyMutationInput {
@@ -1809,6 +1820,51 @@ input MessageWhereInput {
 
   """All values not ending with the given string."""
   title_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  user: UserWhereInput
 }
 
 input MessageWhereUniqueInput {
