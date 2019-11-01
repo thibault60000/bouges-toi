@@ -24,7 +24,8 @@ type CartItem {
 type Message {
   id: ID! @id
   title: String!
-  user: User
+  user: User!
+  article: Article!
   createdAt: DateTime @createdAt
   updatedAt: DateTime @updatedAt
 

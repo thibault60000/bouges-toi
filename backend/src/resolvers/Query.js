@@ -10,7 +10,6 @@ const Query = {
   premiumOffers: forwardTo("db"),
   category: forwardTo("db"),
   categories: forwardTo("db"),
-  messages: forwardTo("db"),
   /* ---------------------------------
   ---- RECUPERER USER AUTHENTIFIE ----
   ------------------------------------*/
@@ -36,6 +35,22 @@ const Query = {
     hasPermission(ctx.request.user, ["ADMIN", "PERMISSIONUPDATE"]);
     // 3. Récupérer les utilisateurs
     return ctx.db.query.users({}, info);
+  },
+  /* ----------------------------------------------
+  ---- RECUPERER TOUS LES MESSAGES D'UN ARTICLE ---
+  -------------------------------------------------*/
+  async messages(parent, args, ctx, info) {
+    const { userId } = ctx.request;
+    const { id } = args;
+    if (!userId) throw new Error("Vous devez être connecté!");
+    return ctx.db.query.messages(
+      {
+        where: {
+          article: { id }
+        }
+      },
+      info
+    );
   },
   /* ----------------------------------
   -------- RECUPERE UNE COMMANDE ------

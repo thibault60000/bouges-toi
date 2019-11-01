@@ -69,13 +69,13 @@ type Mutation {
   ): User
   updatePermissions(permissions: [Permission], userId: ID!): User
   createOrder(token: String!): Order!
-  createMessage(title: String!): Message
+  createMessage(title: String!, articleId: String!): Message
   updateTitle(id: ID!, newTitle: String!): Message
   deleteMessage(id: ID!): Message
 }
 
 type Query {
-  messages: [Message!]!
+  messages(id: ID!): [Message]!
   articles(
     where: ArticleWhereInput
     orderBy: ArticleOrderByInput

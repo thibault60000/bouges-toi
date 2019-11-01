@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/thibault-jeanpierre/bouges-toi/dev
-# timestamp: Tue Oct 29 2019 17:56:11 GMT+0100 (GMT+01:00)
+# timestamp: Fri Nov 01 2019 13:22:02 GMT+0100 (GMT+01:00)
 
 type AggregateArticle {
   count: Int!
@@ -95,6 +95,11 @@ input ArticleCreateManyWithoutUserInput {
 input ArticleCreateManyWithoutUsersInput {
   create: [ArticleCreateWithoutUsersInput!]
   connect: [ArticleWhereUniqueInput!]
+}
+
+input ArticleCreateOneInput {
+  create: ArticleCreateInput
+  connect: ArticleWhereUniqueInput
 }
 
 input ArticleCreateWithoutUserInput {
@@ -602,6 +607,22 @@ input ArticleSubscriptionWhereInput {
   node: ArticleWhereInput
 }
 
+input ArticleUpdateDataInput {
+  title: String
+  description: String
+  image: String
+  nbPersons: Int
+  greatImage: String
+  adresse: String
+  begin_date: DateTime
+  end_date: DateTime
+  price: Int
+  rubrique: RubriqueUpdateOneRequiredInput
+  category: CategoryUpdateOneRequiredInput
+  user: UserUpdateOneRequiredWithoutArticlesInput
+  users: UserUpdateManyWithoutMemberOfInput
+}
+
 input ArticleUpdateInput {
   title: String
   description: String
@@ -671,6 +692,13 @@ input ArticleUpdateManyWithWhereNestedInput {
   data: ArticleUpdateManyDataInput!
 }
 
+input ArticleUpdateOneRequiredInput {
+  create: ArticleCreateInput
+  connect: ArticleWhereUniqueInput
+  update: ArticleUpdateDataInput
+  upsert: ArticleUpsertNestedInput
+}
+
 input ArticleUpdateWithoutUserDataInput {
   title: String
   description: String
@@ -709,6 +737,11 @@ input ArticleUpdateWithWhereUniqueWithoutUserInput {
 input ArticleUpdateWithWhereUniqueWithoutUsersInput {
   where: ArticleWhereUniqueInput!
   data: ArticleUpdateWithoutUsersDataInput!
+}
+
+input ArticleUpsertNestedInput {
+  update: ArticleUpdateDataInput!
+  create: ArticleCreateInput!
 }
 
 input ArticleUpsertWithWhereUniqueWithoutUserInput {
@@ -1635,7 +1668,8 @@ scalar Long
 type Message implements Node {
   id: ID!
   title: String!
-  user: User
+  user: User!
+  article: Article!
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -1653,7 +1687,8 @@ type MessageConnection {
 input MessageCreateInput {
   id: ID
   title: String!
-  user: UserCreateOneInput
+  user: UserCreateOneInput!
+  article: ArticleCreateOneInput!
 }
 
 """An edge in a connection."""
@@ -1724,7 +1759,8 @@ input MessageSubscriptionWhereInput {
 
 input MessageUpdateInput {
   title: String
-  user: UserUpdateOneInput
+  user: UserUpdateOneRequiredInput
+  article: ArticleUpdateOneRequiredInput
 }
 
 input MessageUpdateManyMutationInput {
@@ -1865,6 +1901,7 @@ input MessageWhereInput {
   """All values greater than or equal the given value."""
   updatedAt_gte: DateTime
   user: UserWhereInput
+  article: ArticleWhereInput
 }
 
 input MessageWhereUniqueInput {
@@ -1875,61 +1912,61 @@ type Mutation {
   createCartItem(data: CartItemCreateInput!): CartItem!
   createMessage(data: MessageCreateInput!): Message!
   createOrder(data: OrderCreateInput!): Order!
-  createArticle(data: ArticleCreateInput!): Article!
   createRubriqueNumber(data: RubriqueNumberCreateInput!): RubriqueNumber!
   createPremiumOffer(data: PremiumOfferCreateInput!): PremiumOffer!
   createCategory(data: CategoryCreateInput!): Category!
   createUser(data: UserCreateInput!): User!
+  createArticle(data: ArticleCreateInput!): Article!
   createOrderItem(data: OrderItemCreateInput!): OrderItem!
   createRubrique(data: RubriqueCreateInput!): Rubrique!
   updateCartItem(data: CartItemUpdateInput!, where: CartItemWhereUniqueInput!): CartItem
   updateMessage(data: MessageUpdateInput!, where: MessageWhereUniqueInput!): Message
   updateOrder(data: OrderUpdateInput!, where: OrderWhereUniqueInput!): Order
-  updateArticle(data: ArticleUpdateInput!, where: ArticleWhereUniqueInput!): Article
   updateRubriqueNumber(data: RubriqueNumberUpdateInput!, where: RubriqueNumberWhereUniqueInput!): RubriqueNumber
   updatePremiumOffer(data: PremiumOfferUpdateInput!, where: PremiumOfferWhereUniqueInput!): PremiumOffer
   updateCategory(data: CategoryUpdateInput!, where: CategoryWhereUniqueInput!): Category
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateArticle(data: ArticleUpdateInput!, where: ArticleWhereUniqueInput!): Article
   updateOrderItem(data: OrderItemUpdateInput!, where: OrderItemWhereUniqueInput!): OrderItem
   updateRubrique(data: RubriqueUpdateInput!, where: RubriqueWhereUniqueInput!): Rubrique
   deleteCartItem(where: CartItemWhereUniqueInput!): CartItem
   deleteMessage(where: MessageWhereUniqueInput!): Message
   deleteOrder(where: OrderWhereUniqueInput!): Order
-  deleteArticle(where: ArticleWhereUniqueInput!): Article
   deleteRubriqueNumber(where: RubriqueNumberWhereUniqueInput!): RubriqueNumber
   deletePremiumOffer(where: PremiumOfferWhereUniqueInput!): PremiumOffer
   deleteCategory(where: CategoryWhereUniqueInput!): Category
   deleteUser(where: UserWhereUniqueInput!): User
+  deleteArticle(where: ArticleWhereUniqueInput!): Article
   deleteOrderItem(where: OrderItemWhereUniqueInput!): OrderItem
   deleteRubrique(where: RubriqueWhereUniqueInput!): Rubrique
   upsertCartItem(where: CartItemWhereUniqueInput!, create: CartItemCreateInput!, update: CartItemUpdateInput!): CartItem!
   upsertMessage(where: MessageWhereUniqueInput!, create: MessageCreateInput!, update: MessageUpdateInput!): Message!
   upsertOrder(where: OrderWhereUniqueInput!, create: OrderCreateInput!, update: OrderUpdateInput!): Order!
-  upsertArticle(where: ArticleWhereUniqueInput!, create: ArticleCreateInput!, update: ArticleUpdateInput!): Article!
   upsertRubriqueNumber(where: RubriqueNumberWhereUniqueInput!, create: RubriqueNumberCreateInput!, update: RubriqueNumberUpdateInput!): RubriqueNumber!
   upsertPremiumOffer(where: PremiumOfferWhereUniqueInput!, create: PremiumOfferCreateInput!, update: PremiumOfferUpdateInput!): PremiumOffer!
   upsertCategory(where: CategoryWhereUniqueInput!, create: CategoryCreateInput!, update: CategoryUpdateInput!): Category!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertArticle(where: ArticleWhereUniqueInput!, create: ArticleCreateInput!, update: ArticleUpdateInput!): Article!
   upsertOrderItem(where: OrderItemWhereUniqueInput!, create: OrderItemCreateInput!, update: OrderItemUpdateInput!): OrderItem!
   upsertRubrique(where: RubriqueWhereUniqueInput!, create: RubriqueCreateInput!, update: RubriqueUpdateInput!): Rubrique!
   updateManyCartItems(data: CartItemUpdateManyMutationInput!, where: CartItemWhereInput): BatchPayload!
   updateManyMessages(data: MessageUpdateManyMutationInput!, where: MessageWhereInput): BatchPayload!
   updateManyOrders(data: OrderUpdateManyMutationInput!, where: OrderWhereInput): BatchPayload!
-  updateManyArticles(data: ArticleUpdateManyMutationInput!, where: ArticleWhereInput): BatchPayload!
   updateManyRubriqueNumbers(data: RubriqueNumberUpdateManyMutationInput!, where: RubriqueNumberWhereInput): BatchPayload!
   updateManyPremiumOffers(data: PremiumOfferUpdateManyMutationInput!, where: PremiumOfferWhereInput): BatchPayload!
   updateManyCategories(data: CategoryUpdateManyMutationInput!, where: CategoryWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  updateManyArticles(data: ArticleUpdateManyMutationInput!, where: ArticleWhereInput): BatchPayload!
   updateManyOrderItems(data: OrderItemUpdateManyMutationInput!, where: OrderItemWhereInput): BatchPayload!
   updateManyRubriques(data: RubriqueUpdateManyMutationInput!, where: RubriqueWhereInput): BatchPayload!
   deleteManyCartItems(where: CartItemWhereInput): BatchPayload!
   deleteManyMessages(where: MessageWhereInput): BatchPayload!
   deleteManyOrders(where: OrderWhereInput): BatchPayload!
-  deleteManyArticles(where: ArticleWhereInput): BatchPayload!
   deleteManyRubriqueNumbers(where: RubriqueNumberWhereInput): BatchPayload!
   deleteManyPremiumOffers(where: PremiumOfferWhereInput): BatchPayload!
   deleteManyCategories(where: CategoryWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
+  deleteManyArticles(where: ArticleWhereInput): BatchPayload!
   deleteManyOrderItems(where: OrderItemWhereInput): BatchPayload!
   deleteManyRubriques(where: RubriqueWhereInput): BatchPayload!
 }
@@ -3071,31 +3108,31 @@ type Query {
   cartItems(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CartItem]!
   messages(where: MessageWhereInput, orderBy: MessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Message]!
   orders(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Order]!
-  articles(where: ArticleWhereInput, orderBy: ArticleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Article]!
   rubriqueNumbers(where: RubriqueNumberWhereInput, orderBy: RubriqueNumberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RubriqueNumber]!
   premiumOffers(where: PremiumOfferWhereInput, orderBy: PremiumOfferOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PremiumOffer]!
   categories(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Category]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  articles(where: ArticleWhereInput, orderBy: ArticleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Article]!
   orderItems(where: OrderItemWhereInput, orderBy: OrderItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderItem]!
   rubriques(where: RubriqueWhereInput, orderBy: RubriqueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Rubrique]!
   cartItem(where: CartItemWhereUniqueInput!): CartItem
   message(where: MessageWhereUniqueInput!): Message
   order(where: OrderWhereUniqueInput!): Order
-  article(where: ArticleWhereUniqueInput!): Article
   rubriqueNumber(where: RubriqueNumberWhereUniqueInput!): RubriqueNumber
   premiumOffer(where: PremiumOfferWhereUniqueInput!): PremiumOffer
   category(where: CategoryWhereUniqueInput!): Category
   user(where: UserWhereUniqueInput!): User
+  article(where: ArticleWhereUniqueInput!): Article
   orderItem(where: OrderItemWhereUniqueInput!): OrderItem
   rubrique(where: RubriqueWhereUniqueInput!): Rubrique
   cartItemsConnection(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CartItemConnection!
   messagesConnection(where: MessageWhereInput, orderBy: MessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MessageConnection!
   ordersConnection(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrderConnection!
-  articlesConnection(where: ArticleWhereInput, orderBy: ArticleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ArticleConnection!
   rubriqueNumbersConnection(where: RubriqueNumberWhereInput, orderBy: RubriqueNumberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RubriqueNumberConnection!
   premiumOffersConnection(where: PremiumOfferWhereInput, orderBy: PremiumOfferOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PremiumOfferConnection!
   categoriesConnection(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CategoryConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  articlesConnection(where: ArticleWhereInput, orderBy: ArticleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ArticleConnection!
   orderItemsConnection(where: OrderItemWhereInput, orderBy: OrderItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrderItemConnection!
   rubriquesConnection(where: RubriqueWhereInput, orderBy: RubriqueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RubriqueConnection!
 
@@ -3532,11 +3569,11 @@ type Subscription {
   cartItem(where: CartItemSubscriptionWhereInput): CartItemSubscriptionPayload
   message(where: MessageSubscriptionWhereInput): MessageSubscriptionPayload
   order(where: OrderSubscriptionWhereInput): OrderSubscriptionPayload
-  article(where: ArticleSubscriptionWhereInput): ArticleSubscriptionPayload
   rubriqueNumber(where: RubriqueNumberSubscriptionWhereInput): RubriqueNumberSubscriptionPayload
   premiumOffer(where: PremiumOfferSubscriptionWhereInput): PremiumOfferSubscriptionPayload
   category(where: CategorySubscriptionWhereInput): CategorySubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  article(where: ArticleSubscriptionWhereInput): ArticleSubscriptionPayload
   orderItem(where: OrderItemSubscriptionWhereInput): OrderItemSubscriptionPayload
   rubrique(where: RubriqueSubscriptionWhereInput): RubriqueSubscriptionPayload
 }

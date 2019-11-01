@@ -206,13 +206,20 @@ const Mutations = {
     );
     if (!hasPermission)
     throw new Error("Vous n'êtes pas autorisé à faire ça ! ");
-    // 3. Récupère l'ID du créateur du message et créer le lessage
+    // 3. Récupère l'ID de l'article et supprime des données
+    const { articleId } = args;
+    delete args.articleId;
     const message = await ctx.db.mutation.createMessage(
       {
         data: {
           user: {
             connect: {
               id: ctx.request.userId
+            }
+          },
+          article: {
+            connect: {
+              id: articleId
             }
           },
           ...args
@@ -222,6 +229,7 @@ const Mutations = {
     );
     return message;
   },
+  
   updateTitle(parent, { id, newTitle }, ctx, info) {
     return ctx.db.mutation.updateMessage(
       {
