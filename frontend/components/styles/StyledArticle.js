@@ -104,6 +104,9 @@ const article = styled.li`
     width: 180px;
     display: inline-block;
     padding: 0.4rem 0;
+    &.is-full {
+      background-color: #d61010;
+    }
     :hover {
       cursor: pointer;
       opacity: 0.8;

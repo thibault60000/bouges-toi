@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import classnames from "classnames";
 import Link from "next/link";
 import moment from "moment";
 import ReactTooltip from "react-tooltip";
@@ -40,7 +41,11 @@ export class Article extends Component {
           </StyledTitle>
           {/* ARTICLE INFORMATIONS */}
           <p className="description"> {article.description}</p>
-          <p className="nbPersons" data-tip data-for={`${article.id}-nbPersonsTooltip`}>
+          <p className="nbPersons"
+          className={classnames("nbPersons", {
+            "is-full":article.nbPersons === article.users.length
+          })}
+           data-tip data-for={`${article.id}-nbPersonsTooltip`}>
             {article.users.length} / {article.nbPersons} participants
           </p>
           {/* Tooltip Images Users */}
