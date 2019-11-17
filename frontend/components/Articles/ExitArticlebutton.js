@@ -3,6 +3,7 @@ import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
 import Router from "next/router";
 import { PAGINATION_ARTICLE_QUERY } from "../Pagination";
+import { READ_ARTICLE_QUERY } from "./ReadArticle";
 
 const EXIT_ARTICLE_MUTATION = gql`
   mutation EXIT_ARTICLE_MUTATION($id: ID!) {
@@ -37,7 +38,8 @@ class ExitArticle extends Component {
       <Mutation
         mutation={EXIT_ARTICLE_MUTATION}
         variables={{ id: this.props.article.id }}
-        refetchQueries={[{ query: PAGINATION_ARTICLE_QUERY }]}
+        refetchQueries={[{ query: PAGINATION_ARTICLE_QUERY }, { query: READ_ARTICLE_QUERY, variables: { id: this.props.article.id }}]}
+
       >
         {(quitArticle, { data, error, loading }) => {
           return <button

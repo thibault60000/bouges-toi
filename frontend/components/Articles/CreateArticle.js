@@ -227,12 +227,13 @@ export class CreateArticle extends Component {
                       </label> 
                     );
                   return (
-                    <label forHtml="category">
+                    <label htmlFor="category">
                       Categorie
                       <select
                         onChange={this.handleCategoryChange}
                         value={this.state.category}
                         id="category"
+                        name="category"
                       >
                         <option key="categoryDefaultKey" value="">
                           Selectionnez une catégorie
@@ -266,7 +267,6 @@ export class CreateArticle extends Component {
                 <label htmlFor="adresse">
                   Adresse de l'évènement
                   <Adresses id="adresse" parentCallback={this.callbackAdressesFunction} />
-                  <span> {this.state.adresse !== "" && "V"}</span>
                 </label> 
               </div>
               {/* Date de début */}

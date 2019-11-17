@@ -25,7 +25,7 @@ const StyledPremiumOffersList = styled.ul`
   display: grid;
   max-width: 1200px;
   margin: 0 auto;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr;
   grid-gap: 40px;
   li {
     list-style: none;
@@ -44,6 +44,7 @@ class PremiumOffers extends Component {
               <StyledPremiumOffersList>
                 {data.premiumOffers.map(premiumOffer => (
                   <PremiumOffer
+                    me={this.props.me}
                     premiumOffer={premiumOffer}
                     key={premiumOffer.id}
                   />

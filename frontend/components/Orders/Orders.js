@@ -5,7 +5,6 @@ import Link from "next/link";
 import styled from "styled-components";
 import gql from "graphql-tag";
 import Error from "../Error";
-import formatMoney from "../../lib/formatMoney";
 import StyledOrderItem from "../styles/StyledOrderItem";
 moment.locale("fr");
 

@@ -43,6 +43,7 @@ const StyledDropdownArticleSearch = styled.div`
     position: relative;
   }
   input {
+    outline: none;
     width: 100%;
     padding: 0.9rem 1.8rem;
     font-size: 1.9rem;

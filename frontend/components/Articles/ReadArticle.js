@@ -45,7 +45,7 @@ const READ_ARTICLE_QUERY = gql`
   }
 `;
 
-export default class ReadArticle extends Component {
+class ReadArticle extends Component {
   render() {
     return (
       <Query query={READ_ARTICLE_QUERY} variables={{ id: this.props.id }}>
@@ -214,7 +214,7 @@ export default class ReadArticle extends Component {
                   </p>
                 </footer>
               </StyledReadArticle>
-              <ChatArticle />
+              <ChatArticle article={article} />
             </>
           );
         }}
@@ -222,3 +222,6 @@ export default class ReadArticle extends Component {
     );
   }
 }
+
+export default ReadArticle;
+export { READ_ARTICLE_QUERY };

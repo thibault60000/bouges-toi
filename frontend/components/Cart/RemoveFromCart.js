@@ -14,9 +14,15 @@ const REMOVE_FROM_CART_MUTATION = gql`
 `;
 
 const StyledDeleteCartButton = styled.button`
-  font-size: 3rem;
-  background: none;
-  border: 0;
+    font-size: 1.7rem;
+    background: #454b73;
+    color: white;
+    width: fit-content;
+    border: none;
+    border-radius: 2px;
+    margin: 0.8rem 0.1rem;
+    display: inline-block;
+    padding: 0.4rem 1.5rem;
   &:hover {
     cursor: pointer;
     opacity: 0.8;
@@ -66,7 +72,7 @@ class RemoveFromCart extends React.Component {
             }}
             title="Supprimer l'élément du panier"
           >
-            &times;
+            Supprimer cette ofrre
           </StyledDeleteCartButton>
         )}
       </Mutation>

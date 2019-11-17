@@ -86,6 +86,9 @@ const StyledForm = styled.form`
     opacity: 0.8;
     cursor: pointer;
   }
+  label.msg {
+    margin-left: 0;
+  }
   @keyframes changeScaleAnimation {
     from {
       transform: scaleX(1.05);

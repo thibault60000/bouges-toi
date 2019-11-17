@@ -3,6 +3,7 @@ import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
 import Router from "next/router";
 import { PAGINATION_ARTICLE_QUERY } from "../Pagination";
+import { READ_ARTICLE_QUERY } from "./ReadArticle";
 
 const JOIN_ARTICLE_MUTATION = gql`
   mutation JOIN_ARTICLE_MUTATION($id: ID!) {
@@ -37,7 +38,7 @@ class JoinArticle extends Component {
       <Mutation
         mutation={JOIN_ARTICLE_MUTATION}
         variables={{ id: this.props.article.id }}
-        refetchQueries={[{ query: PAGINATION_ARTICLE_QUERY }]}
+        refetchQueries={[{ query: PAGINATION_ARTICLE_QUERY }, { query: READ_ARTICLE_QUERY, variables: { id: this.props.article.id }}]}
       >
         {(joinArticle, { data, error, loading }) => {
           return this.props.article.users.length >= this.props.article.nbPersons ? (
