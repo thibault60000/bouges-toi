@@ -6,7 +6,7 @@ import Link from "next/link";
 import DeletePremiumOfferButton from "./DeletePremiumOfferButton";
 import AddToCart from "../Cart/AddToCart";
 import { EditAlt } from "styled-icons/boxicons-solid/EditAlt";
-
+import formatMoney from "../../lib/formatMoney";
 
 const StyledEditIcon = styled(EditAlt)`
   height: 1.7rem;
@@ -102,8 +102,9 @@ export class PremiumOffer extends Component {
           "is-admin": me.permissions.includes("ADMIN")
         })}
       >
+        {/* Prix */}
         <p className="price">
-          {premiumOffer.price ? premiumOffer.price : ""} €
+          {premiumOffer.price ? formatMoney(premiumOffer.price) : ""}
         </p>
         <StyledPremiumOfferTitle>
           {/* Titre  */}

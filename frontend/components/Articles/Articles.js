@@ -53,7 +53,7 @@ const StyledArticlesList = styled.ul`
   }
 `;
 
-const StyledPageSlogan = styled.p`
+export const StyledPageSlogan = styled.p`
   font-weight: bold;
   font-size: 2.5rem;
   color: #4f5770;

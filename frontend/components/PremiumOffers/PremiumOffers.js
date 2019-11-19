@@ -36,6 +36,7 @@ class PremiumOffers extends Component {
   render() {
     return (
       <StyledPremiumOffersContainer>
+        <h3> Liste des offres payantes </h3>
         <Query query={PREMIUM_OFFERS_QUERY}>
           {({ data, error, loading }) => {
             if (loading) return <p> Chargement ... </p>;
