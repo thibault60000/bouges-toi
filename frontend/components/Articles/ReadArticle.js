@@ -100,7 +100,7 @@ class ReadArticle extends Component {
                         <li key={`${user.id}-${article.id}`}>
                           <Link
                             href={{
-                              pathname: "/Users/UserPage",
+                              pathname: "/users/userPage",
                               query: { id: user.id }
                             }}
                           >

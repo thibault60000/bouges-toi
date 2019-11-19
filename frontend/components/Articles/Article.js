@@ -63,11 +63,11 @@ export class Article extends Component {
         {/* Dates */}
         <div className="articleMoreInformations">
           <p>
-            Démarre le
+            Démarre le{" "}
             <strong>{moment(article.begin_date).format("Do MMMM YYYY")}</strong>
           </p>
           <p>
-            Jusqu'au
+            Jusqu'au{" "}
             <strong>{moment(article.end_date).format("Do MMMM YYYY")}</strong>
           </p>
           {/* Adresse */}

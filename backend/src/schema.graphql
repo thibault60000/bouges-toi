@@ -91,6 +91,7 @@ type Query {
   premiumOffer(where: PremiumOfferWhereUniqueInput!): PremiumOffer
   premiumOffers(where: PremiumOfferWhereInput): [PremiumOffer]!
   me: User
+  user(where: UserWhereUniqueInput!): User
   users: [User]!
   order(id: ID!): Order
   orders(orderBy: OrderOrderByInput): [Order]!
@@ -112,4 +113,6 @@ type User {
   permissions: [Permission!]!
   cart: [CartItem!]!
   orders: [OrderItem]
+  articles: [Article]
+  memberOf: [Article]
 }

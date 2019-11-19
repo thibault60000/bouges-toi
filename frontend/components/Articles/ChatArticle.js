@@ -99,7 +99,6 @@ class ChatArticle extends Component {
         <User>
           {({ data: { me } }) =>
             me ? (
-              me && me.id !== this.props.article.user.id ? (
                 this.props.article.users.some(u => u.id === me.id) ? (
                   <>
                     {/* Récupère les commentaire de l'article */}
@@ -187,11 +186,10 @@ class ChatArticle extends Component {
                 ) : (
                   /* Message ne s'affichant que lorsqu'on est connecté mais qu'on ne fait pas parti de l'article */
                   <p>
-                    Vous devez rejoindre l'article pour participer au fil de
+                    Vous devez rejoindre l'évènement pour participer au fil de
                     discussion de celui-ci
                   </p>
                 )
-              ) : null
             ) : (
               <>
                 {/* Message ne s'affichant que lorsque l'on ai pas connecté */}
