@@ -7,6 +7,7 @@ import Article from "./Article";
 import Pagination from "../Pagination";
 import { perPage } from "../../config";
 import Search from "../Search";
+import Filters from "../Filters";
 import { Time } from "styled-icons/boxicons-solid/Time";
 import User from "../Authentication/User";
 
@@ -65,6 +66,14 @@ const StyledTimeIcon = styled(Time)`
 `;
 
 class Articles extends Component {
+  state = {
+    articlesFind: []
+  };
+  startSearch = (articles) => {
+    this.setState({
+      articlesFind: articles
+    });
+  }
   render() {
     return (
       <User>
@@ -72,38 +81,60 @@ class Articles extends Component {
           <StyledArticlesContainer>
             {/* Title */}
             <Search />
+            <Filters startSearch={this.startSearch} />
             <StyledPageSlogan>
               <StyledTimeIcon /> Les derniers évènements
             </StyledPageSlogan>
 
             {/* Query */}
-            <Query
-              query={ARTICLES_QUERY}
-              variables={{
-                skip: this.props.page * perPage - perPage
-              }}
-              fetchPolicy="network-only"
-            >
-              {({ data, error, loading }) => {
-                if (loading) return <p>Chargement</p>;
-                if (error) return <p> Erreur : {error.message}</p>;
-                return data.articles.length ? (
-                  <>
-                    {/* Pagination 1 */}
-                    <Pagination page={this.props.page} />
-                    <StyledArticlesList>
-                      {data.articles.map(article => (
-                        <Article me={me} article={article} key={article.id} />
-                      ))}
-                    </StyledArticlesList>
-                    {/* Pagination 2*/}
-                    <Pagination page={this.props.page} />
-                  </>
-                ) : (
-                  <p> Aucun évènement </p>
-                );
-              }}
-            </Query>
+            {this.state.articlesFind.length ? (
+              <>
+                {" "}
+                <>
+                  {/* Pagination 1 */}
+                  <Pagination page={this.props.page} />
+                  <StyledArticlesList>
+                    {this.state.articlesFind.map(article => (
+                      <Article
+                        me={me}
+                        article={article}
+                        key={article.id + "findArticles"}
+                      />
+                    ))}
+                  </StyledArticlesList>
+                  {/* Pagination 2*/}
+                  <Pagination page={this.props.page} />
+                </>{" "}
+              </>
+            ) : (
+              <Query
+                query={ARTICLES_QUERY}
+                variables={{
+                  skip: this.props.page * perPage - perPage
+                }}
+                fetchPolicy="network-only"
+              >
+                {({ data, error, loading }) => {
+                  if (loading) return <p>Chargement</p>;
+                  if (error) return <p> Erreur : {error.message}</p>;
+                  return data.articles.length ? (
+                    <>
+                      {/* Pagination 1 */}
+                      <Pagination page={this.props.page} />
+                      <StyledArticlesList>
+                        {data.articles.map(article => (
+                          <Article me={me} article={article} key={article.id} />
+                        ))}
+                      </StyledArticlesList>
+                      {/* Pagination 2*/}
+                      <Pagination page={this.props.page} />
+                    </>
+                  ) : (
+                    <p> Aucun évènement </p>
+                  );
+                }}
+              </Query>
+            )}
           </StyledArticlesContainer>
         )}
       </User>

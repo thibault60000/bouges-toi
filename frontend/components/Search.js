@@ -79,7 +79,7 @@ class AutoComplete extends React.Component {
                       {...getInputProps({
                         type: "Search",
                         placeholder: "Recherchez un évènement",
-                        className: this.state.loading ? "loading" : "",
+                        className: this.state.loading ? "Chargement" : "",
                         onChange: e => {
                           e.persist();
                           this.onChange(e, client);
@@ -109,7 +109,7 @@ class AutoComplete extends React.Component {
                   ))}
                   {!this.state.articles.length && !this.state.loading && (
                     <StyledDropdownArticleItem>
-                      Aucun résultat pour: <strong>{inputValue}</strong>
+                      Aucun résultat pour :{" " }<strong> {inputValue}</strong>
                     </StyledDropdownArticleItem>
                   )}
                 </StyledDropdownArticle>
