@@ -34,9 +34,7 @@ export class Article extends Component {
                 query: { id: article.id }
               }}
             >
-              <a>
-                {article.title} <StylePageView />
-              </a>
+              <a>{article.title}<StylePageView /></a>
             </Link>
           </StyledTitle>
           {/* ARTICLE INFORMATIONS */}
