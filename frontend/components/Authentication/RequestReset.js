@@ -36,7 +36,7 @@ class RequestReset extends Component {
             }}
           >
             <fieldset disabled={loading} aria-busy={loading}>
-              <h2> Récupérer son mot de passe </h2>
+              <h2> Récupérer (ou modifier) son mot de passe </h2>
 
               <Error error={error} />
               {!error && !loading && called && <p> Mot de passe envoyé ! </p>}
@@ -51,7 +51,7 @@ class RequestReset extends Component {
                   onChange={this.saveToState}
                 />
               </label>
-              <button type="submit"> Je veux mon mot de passe ! </button>
+              <button type="submit"> Je veux un nouveau mot de passe ! </button>
             </fieldset>
           </StyledForm>
         )}

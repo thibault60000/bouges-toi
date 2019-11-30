@@ -41,6 +41,14 @@ const Navbar = () => (
             <Link href="/articles/createArticlePage">
               <a> Création </a>
             </Link>
+            <Link
+              href={{
+                pathname: "users/userPage",
+                query: { id: me.id }
+              }}
+            >
+              <a> Mon Compte </a>
+            </Link>
             <Link href="/articles/articles">
               <a> Articles </a>
             </Link>
