@@ -40,7 +40,7 @@ class MonApp extends App {
     return (
       <Container>
         <ApolloProvider client={apollo}>
-          <Page>
+          <Page client={apollo}>
             <GlobalStyle />
             <Component {...pageProps} />
           </Page>

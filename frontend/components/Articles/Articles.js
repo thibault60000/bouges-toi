@@ -1,15 +1,33 @@
 import React, { Component } from "react";
-import { Query } from "react-apollo";
+import { Query, ApolloConsumer } from "react-apollo";
+import { adopt } from "react-adopt";
 import gql from "graphql-tag";
-import styled from "styled-components";
+import isEmpty from "lodash.isempty";
+
+// Styled
+import {
+  StyledArticlesContainer,
+  StyledArticlesList,
+  StyledPageSlogan,
+  StyledTimeIcon
+} from "../styles/StyledArticle";
+
+// Filters
+import FiltersAdresses, {
+  SEARCH_ARTICLES_QUERY_ADRESSES
+} from "../Filters/FiltersAdresses";
+import FiltersNbPersons, {
+  SEARCH_ARTICLES_QUERY_NB_PERSONS
+} from "../Filters/FiltersNbPersons";
+import User from "../Authentication/User";
+
+// Paginations
+import PaginationNbPersons from "../Paginations/ArticleNbPersonsPagination";
 
 import Article from "./Article";
 import Pagination from "../Pagination";
 import { perPage } from "../../config";
 import Search from "../Search";
-import Filters from "../Filters";
-import { Time } from "styled-icons/boxicons-solid/Time";
-import User from "../Authentication/User";
 
 const ARTICLES_QUERY = gql`
   query ARTICLES_QUERY($skip: Int = 0, $first: Int = ${perPage}) {
@@ -40,89 +58,116 @@ const ARTICLES_QUERY = gql`
   }
 `;
 
-const StyledArticlesContainer = styled.div``;
-
-const StyledArticlesList = styled.ul`
-  display: grid;
-  max-width: 1200px;
-  margin: 0;
-  grid-template-rows: repeat(6, 210px);
-  grid-gap: 40px;
-  padding-left: 0.4rem !important;
-  li {
-    list-style: none;
-  }
-`;
-
-export const StyledPageSlogan = styled.p`
-  font-weight: bold;
-  font-size: 2.5rem;
-  color: #4f5770;
-  margin: 3.5rem 0 0.5rem 0;
-`;
-
-const StyledTimeIcon = styled(Time)`
-  height: 2.5rem;
-`;
+const Composed = adopt({
+  // User Component
+  user: ({ render }) => <User>{render}</User>,
+  // Main Search Query
+  getLastArticles: ({ page, render }) => (
+    <Query
+      query={ARTICLES_QUERY}
+      variables={{
+        skip: page * perPage - perPage
+      }}
+    >
+      {render}
+    </Query>
+  )
+});
 
 class Articles extends Component {
+  // State
   state = {
-    articlesFind: []
+    articlesNbPersons: []
   };
-  startSearch = (articles) => {
-    this.setState({
-      articlesFind: articles
+  // Start Search By NbPersons
+  startSearchNbPersons = async (min, max, client) => {
+    const response = await client.query({
+      query: SEARCH_ARTICLES_QUERY_NB_PERSONS,
+      variables: {
+        numberMin: min,
+        numberMax: max,
+        skip: this.props.page * perPage - perPage
+      }
     });
-  }
+    const { articles } = response.data;
+    this.setState({
+      articlesNbPersons: articles,
+      min: min,
+      max: max
+    });
+  };
+  /* ------------------
+  ------ Render -------
+  ---------------------*/
   render() {
     return (
-      <User>
-        {({ data: { me } }) => (
-          <StyledArticlesContainer>
-            {/* Title */}
-            <Search />
-            <Filters startSearch={this.startSearch} />
-            <StyledPageSlogan>
-              <StyledTimeIcon /> Les derniers évènements
-            </StyledPageSlogan>
-
-            {/* Query */}
-            {this.state.articlesFind.length ? (
-              <>
-                {" "}
-                <>
-                  {/* Pagination 1 */}
-                  <Pagination page={this.props.page} />
-                  <StyledArticlesList>
-                    {this.state.articlesFind.map(article => (
-                      <Article
-                        me={me}
-                        article={article}
-                        key={article.id + "findArticles"}
-                      />
-                    ))}
-                  </StyledArticlesList>
-                  {/* Pagination 2*/}
-                  <Pagination page={this.props.page} />
-                </>{" "}
-              </>
-            ) : (
-              <Query
-                query={ARTICLES_QUERY}
-                variables={{
-                  skip: this.props.page * perPage - perPage
-                }}
-                fetchPolicy="network-only"
-              >
-                {({ data, error, loading }) => {
-                  if (loading) return <p>Chargement</p>;
-                  if (error) return <p> Erreur : {error.message}</p>;
-                  return data.articles.length ? (
+      <ApolloConsumer>
+        {client => (
+          <Composed page={this.props.page}>
+            {({ user, getLastArticles }) => {
+              /* Variables */
+              const me = user.data.me;
+              const { articles } = getLastArticles.data;
+              const { min, max } = this.state;
+              const { articlesNbPersons } = this.state;
+              /* Si User non authentifié */
+              if (!me) return null;
+              return (
+                <StyledArticlesContainer>
+                  {/* SearchBar */}
+                  <Search />
+                  {/* Filters */}
+                  <FiltersNbPersons
+                    page={this.props.page}
+                    startSearch={this.startSearchNbPersons}
+                    client={client}
+                  />
+                  {/* Si recherche par nombre de personnes */}
+                  {articlesNbPersons.length && (
                     <>
+                      {/* Title */}
+                      <StyledPageSlogan>
+                        Filtre par nombre de personnes
+                      </StyledPageSlogan>
+                      {/* Pagination 1 */}
+                      <PaginationNbPersons
+                        min={min}
+                        max={max}
+                        page={this.props.page}
+                      />
+                      
+                      {/* Liste d'articles */}
+                      <StyledArticlesList>
+                        {articlesNbPersons.map(article => (
+                          /* Article */
+                          <Article
+                            me={me}
+                            article={article}
+                            key={article.id + "findArticles"}
+                          />
+                        ))}
+                      </StyledArticlesList>
+                      {/* Pagination 2*/}
+                      <PaginationNbPersons
+                        min={min}
+                        max={max}
+                        page={this.props.page}
+                      />
+                    </>
+                  )}
+                  {/* Liste des derniers évènements */}
+                  {isEmpty(articlesNbPersons) && articles.length ? (
+                    <>
+                      {/* Title */}
+                      <StyledPageSlogan>
+                        <StyledTimeIcon /> Les derniers évènements
+                      </StyledPageSlogan>
                       {/* Pagination 1 */}
                       <Pagination page={this.props.page} />
+                      {/* Liste d'articles  */}
                       <StyledArticlesList>
-                        {data.articles.map(article => (
+                        {articles.map(article => (
+                          /* Article */
                           <Article me={me} article={article} key={article.id} />
                         ))}
                       </StyledArticlesList>
@@ -131,13 +176,13 @@ class Articles extends Component {
                     </>
                   ) : (
                     <p> Aucun évènement </p>
-                  );
-                }}
-              </Query>
-            )}
-          </StyledArticlesContainer>
+                  )}
+                </StyledArticlesContainer>
+              );
+            }}
+          </Composed>
         )}
-      </User>
+      </ApolloConsumer>
     );
   }
 }

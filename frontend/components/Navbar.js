@@ -43,7 +43,7 @@ const Navbar = () => (
             </Link>
             <Link
               href={{
-                pathname: "users/userPage",
+                pathname: "/users/userPage",
                 query: { id: me.id }
               }}
             >

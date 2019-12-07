@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Pageview } from "styled-icons/material/Pageview";
 import { Map } from "styled-icons/boxicons-solid/Map";
+import { Time } from "styled-icons/boxicons-solid/Time";
 
 const StylePageView = styled(Pageview)`
   height: 3.2rem;
@@ -8,6 +9,31 @@ const StylePageView = styled(Pageview)`
 `;
 const StyledMap = styled(Map)`
   height: 1.5rem;
+`;
+
+const StyledArticlesContainer = styled.div``;
+
+const StyledArticlesList = styled.ul`
+  display: grid;
+  max-width: 1200px;
+  margin: 0;
+  grid-template-rows: repeat(6, 210px);
+  grid-gap: 40px;
+  padding-left: 0.4rem !important;
+  li {
+    list-style: none;
+  }
+`;
+
+const StyledPageSlogan = styled.p`
+  font-weight: bold;
+  font-size: 2.5rem;
+  color: #4f5770;
+  margin: 3.5rem 0 0.5rem 0;
+`;
+
+const StyledTimeIcon = styled(Time)`
+  height: 2.5rem;
 `;
 
 const article = styled.li`
@@ -62,7 +88,7 @@ const article = styled.li`
     }
     & > button[disabled] {
       background-color: #8c8c8c;
-    color: #c3c3c3;
+      color: #c3c3c3;
       cursor: default;
       :hover {
         opacity: 1;
@@ -181,4 +207,11 @@ const article = styled.li`
 `;
 
 export default article;
-export { StylePageView, StyledMap };
+export {
+  StylePageView,
+  StyledMap,
+  StyledArticlesContainer,
+  StyledArticlesList,
+  StyledPageSlogan,
+  StyledTimeIcon
+};

@@ -6,13 +6,17 @@ import Link from "next/link";
 import StyledPagination, {
   StyledLeftArrow,
   StyledRightArrow
-} from "./styles/StyledPagination";
-import Error from "./Error";
-import { perPage } from "../config";
+} from "../styles/StyledPagination";
+import Error from "../Error";
+import { perPage } from "../../config";
 
-const PAGINATION_ARTICLE_QUERY = gql`
-  query PAGINATION_ARTICLE_QUERY {
-    articlesConnection {
+const PAGINATION_ARTICLE_NB_PERSONS_QUERY = gql`
+  query PAGINATION_ARTICLE_NB_PERSONS_QUERY($numberMin: Int, $numberMax: Int) {
+    articlesConnection(
+      where: {
+        AND: [{ nbPersons_gte: $numberMin }, { nbPersons_lte: $numberMax }]
+      }
+    ) {
       aggregate {
         count
       }
@@ -20,17 +24,24 @@ const PAGINATION_ARTICLE_QUERY = gql`
   }
 `;
 
-class Pagination extends Component {
+class PaginationNbPersons extends Component {
   render() {
+    const { min, max, page } = this.props;
     return (
-      <Query query={PAGINATION_ARTICLE_QUERY} fetchPolicy="network-only">
+      <Query
+        query={PAGINATION_ARTICLE_NB_PERSONS_QUERY}
+        variables={{
+          numberMin: parseInt(min, 10),
+          numberMax: parseInt(max, 10)
+        }}
+        fetchPolicy="network-only"
+      >
         {({ data, loading, error }) => {
           if (loading) return <p> Chargement ... </p>;
           if (error) return <Error error={error} />;
           // Nombre de pages
           const count = data.articlesConnection.aggregate.count;
           const pages = Math.ceil(count / perPage);
-          const page = this.props.page;
           return (
             <StyledPagination>
               <Head>
@@ -78,5 +89,5 @@ class Pagination extends Component {
   }
 }
 
-export default Pagination;
-export { PAGINATION_ARTICLE_QUERY };
+export default PaginationNbPersons;
+export { PAGINATION_ARTICLE_NB_PERSONS_QUERY };
