@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
 import Router from "next/router";
-import { PAGINATION_ARTICLE_QUERY } from "../Pagination";
+import { PAGINATION_ARTICLE_QUERY } from "../Paginations/LastArticlesPagination";
 import { READ_ARTICLE_QUERY } from "./ReadArticle";
 
 const JOIN_ARTICLE_MUTATION = gql`

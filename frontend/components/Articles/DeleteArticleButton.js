@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
-import { ARTICLES_QUERY } from "./Articles";
+import { ARTICLES_QUERY } from "../SearchResults/LastArticlesSearch";
 import Router from "next/router";
-import { PAGINATION_ARTICLE_QUERY } from "../Pagination";
+import { PAGINATION_ARTICLE_QUERY } from "../Paginations/LastArticlesPagination";
 
 const DELETE_ARTICLE_MUTATION = gql`
   mutation DELETE_ARTICLE_MUTATION($id: ID!) {

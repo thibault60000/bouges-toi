@@ -6,9 +6,9 @@ import Link from "next/link";
 import StyledPagination, {
   StyledLeftArrow,
   StyledRightArrow
-} from "./styles/StyledPagination";
-import Error from "./Error";
-import { perPage } from "../config";
+} from "../styles/StyledPagination";
+import Error from "../Error";
+import { perPage } from "../../config";
 
 const PAGINATION_ARTICLE_QUERY = gql`
   query PAGINATION_ARTICLE_QUERY {
@@ -20,7 +20,7 @@ const PAGINATION_ARTICLE_QUERY = gql`
   }
 `;
 
-class Pagination extends Component {
+class LastArticlesPagination extends Component {
   render() {
     return (
       <Query query={PAGINATION_ARTICLE_QUERY} fetchPolicy="network-only">
@@ -78,5 +78,5 @@ class Pagination extends Component {
   }
 }
 
-export default Pagination;
+export default LastArticlesPagination;
 export { PAGINATION_ARTICLE_QUERY };

@@ -8,39 +8,6 @@ import Router from "next/router";
 import { perPage } from "../../config"
 import StyledNbPersonsTag from "../styles/StyledNbPersonsTag";
 
-const SEARCH_ARTICLES_QUERY_NB_PERSONS = gql`
-  query SEARCH_ARTICLES_QUERY_NB_PERSONS($numberMin: Int, $numberMax: Int, $skip: Int = 0, $first: Int = ${perPage}) {
-    articles(
-      where: {
-        AND: [{ nbPersons_gte: $numberMin }, { nbPersons_lte: $numberMax }]
-      }, first: $first, skip: $skip, orderBy: createdAt_DESC
-    ) {
-      id
-      title
-      description
-      image
-      price
-      nbPersons
-      adresse
-      begin_date
-      end_date
-      createdAt
-      updatedAt
-      user {
-        id
-        name
-        surname
-      }
-      users {
-        id
-        name
-        surname
-        picture
-      }
-    }
-  }
-`;
-
 class FiltersNbPersons extends React.Component {
   // State
   state = {
@@ -139,4 +106,3 @@ class FiltersNbPersons extends React.Component {
 }
 
 export default FiltersNbPersons;
-export { SEARCH_ARTICLES_QUERY_NB_PERSONS };
