@@ -57,6 +57,8 @@ class LastArticlesSearch extends Component {
       >
         {({ data, error, loading }) => {
           const { articles } = data;
+          if (error) return <p> Aucun article </p>;
+          if (loading) return <p> Chargement ... </p>;
           return (
             <>
               {/* Title */}

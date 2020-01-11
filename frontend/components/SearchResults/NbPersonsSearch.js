@@ -5,13 +5,12 @@ import gql from "graphql-tag";
 import isEmpty from "lodash.isempty";
 
 // Styled
-import {
-  StyledArticlesList,
-  StyledPageSlogan
-} from "../styles/StyledArticle";
+import { StyledArticlesList, StyledPageSlogan } from "../styles/StyledArticle";
 
 import Article from "../Articles/Article";
-import ArticleNbPersonsPagination, { PAGINATION_ARTICLE_NB_PERSONS_QUERY } from "../Paginations/ArticleNbPersonsPagination";
+import ArticleNbPersonsPagination, {
+  PAGINATION_ARTICLE_NB_PERSONS_QUERY
+} from "../Paginations/ArticleNbPersonsPagination";
 import { perPage } from "../../config";
 
 const SEARCH_ARTICLES_QUERY_NB_PERSONS = gql`
@@ -54,20 +53,23 @@ class NbPersonsSearch extends Component {
     return (
       <Query
         query={SEARCH_ARTICLES_QUERY_NB_PERSONS}
-        variables= {{
-            numberMin: min,
-            numberMax: max,
-            skip: page * perPage - perPage
-          }}
+        variables={{
+          numberMin: min,
+          numberMax: max,
+          skip: page * perPage - perPage
+        }}
       >
         {({ data, error, loading }) => {
           const { articles } = data;
+          if (error) return <p>Aucun article pour ce nombre de personnes </p>;
+          if (loading) return <p> Chargement ... </p>;
           return (
             <>
               {/* Title */}
               <StyledPageSlogan>
                 Filtre par nombre de personnes
               </StyledPageSlogan>
+              <p> <strong> Critère choisi : </strong> {min} à {max}</p>
               {/* Pagination 1 */}
               <ArticleNbPersonsPagination min={min} max={max} page={page} />
 

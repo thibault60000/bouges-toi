@@ -60,7 +60,7 @@ class Articles extends Component {
               const { min, max } = this.state;
               const { articlesNbPersons } = this.state;
               /* Si User non authentifié */
-              if (!me) return null;
+              if (!me) return <p> Connectez vous pour accéder au site</p> 
               return (
                 <StyledArticlesContainer>
                   {/* SearchBar */}
@@ -72,7 +72,7 @@ class Articles extends Component {
                     client={client}
                   />
                   {/* Si recherche par nombre de personnes */}
-                  {articlesNbPersons.length && (
+                  {!isEmpty(articlesNbPersons) && (
                     <NbPersonsSearch me={me} page={this.props.page} min={min} max={max} />
                   )}
                   {/* Liste des derniers évènements */}
