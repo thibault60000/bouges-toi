@@ -2,20 +2,15 @@ import React, { Component } from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 
-// Styled
 import { StyledArticlesList, StyledPageSlogan } from "../styles/StyledArticle";
 
 import Article from "../Articles/Article";
-import ArticleNbPersonsPagination from "../Paginations/ArticleNbPersonsPagination";
+import ArticleAdressesPagination from "../Paginations/ArticleAdressesPagination";
 import { perPage } from "../../config";
 
-const SEARCH_ARTICLES_QUERY_NB_PERSONS = gql`
-  query SEARCH_ARTICLES_QUERY_NB_PERSONS($numberMin: Int, $numberMax: Int, $skip: Int = 0, $first: Int = ${perPage}) {
-    articles(
-      where: {
-        AND: [{ nbPersons_gte: $numberMin }, { nbPersons_lte: $numberMax }]
-      }, first: $first, skip: $skip, orderBy: createdAt_DESC
-    ) {
+const SEARCH_ARTICLES_QUERY_ADRESSES = gql`
+  query SEARCH_ARTICLES_QUERY_ADRESSES($searchTerm: String, $skip: Int = 0, $first: Int = ${perPage}) {
+    articles(where: { AND: [{ adresse_contains: $searchTerm }]}, first: $first, skip: $skip, orderBy: createdAt_DESC) {
       id
       title
       description
@@ -42,36 +37,33 @@ const SEARCH_ARTICLES_QUERY_NB_PERSONS = gql`
   }
 `;
 
-class NbPersonsSearch extends Component {
+class AdressesSearch extends Component {
   state = {};
   render() {
-    const { me, page, min, max, clearFilter } = this.props;
+    const { me, page, adresses, clearFilter } = this.props;
     return (
       <Query
-        query={SEARCH_ARTICLES_QUERY_NB_PERSONS}
+        query={SEARCH_ARTICLES_QUERY_ADRESSES}
         variables={{
-          numberMin: min,
-          numberMax: max,
+          searchTerm: adresses,
           skip: page * perPage - perPage
         }}
       >
         {({ data, error, loading }) => {
           const { articles } = data;
-          if (error) return <p>Aucun article pour ce nombre de personnes </p>;
+          if (error) return <p>Aucun article pour cette adresse </p>;
           if (loading) return <p> Chargement ... </p>;
           return (
             <>
               {/* Title */}
-              <StyledPageSlogan>
-                Filtre par nombre de personnes
-              </StyledPageSlogan>
+              <StyledPageSlogan>Filtre par Adresse</StyledPageSlogan>
               <p>
-                <strong> Critère choisi : </strong> {min} à {max}
+                <strong> Critère choisi : </strong> " {adresses} "
                 <button onClick={clearFilter}> X </button>
               </p>
 
               {/* Pagination 1 */}
-              <ArticleNbPersonsPagination min={min} max={max} page={page} />
+              <ArticleAdressesPagination adresses={adresses} page={page} />
 
               {/* Liste d'articles */}
               <StyledArticlesList>
@@ -85,7 +77,7 @@ class NbPersonsSearch extends Component {
                 ))}
               </StyledArticlesList>
               {/* Pagination 2*/}
-              <ArticleNbPersonsPagination min={min} max={max} page={page} />
+              <ArticleAdressesPagination adresses={adresses} page={page} />
             </>
           );
         }}
@@ -94,5 +86,5 @@ class NbPersonsSearch extends Component {
   }
 }
 
-export default NbPersonsSearch;
-export { SEARCH_ARTICLES_QUERY_NB_PERSONS };
+export default AdressesSearch;
+export { SEARCH_ARTICLES_QUERY_ADRESSES };

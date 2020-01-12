@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-import { Query, ApolloConsumer } from "react-apollo";
-import { adopt } from "react-adopt";
+import { Query } from "react-apollo";
 import gql from "graphql-tag";
-import isEmpty from "lodash.isempty";
 
 // Styled
 import {

@@ -1,75 +1,32 @@
 import React from "react";
 import { ApolloConsumer } from "react-apollo";
-import gql from "graphql-tag";
 import debounce from "lodash.debounce";
 import classnames from "classnames";
+import Router from "next/router";
 
 import StyledAdresseTag from "../styles/StyledAdresseTag";
-
-const SEARCH_ARTICLES_QUERY_ADRESSES = gql`
-  query SEARCH_ARTICLES_QUERY_ADRESSES($searchTerm: String) {
-    articles(where: { adresse_contains: $searchTerm }) {
-      id
-      title
-      description
-      image
-      price
-      nbPersons
-      adresse
-      begin_date
-      end_date
-      createdAt
-      updatedAt
-      user {
-        id
-        name
-        surname
-      }
-      users {
-        id
-        name
-        surname
-        picture
-      }
-    }
-  }
-`;
 
 class FiltersAdresses extends React.Component {
   // State
   state = {
     articles: [],
     loading: false,
-    adresseTag: ""
+    adresses: "",
+    errorAdresses: false
   };
 
   // OnChange Select Adresse
   onChange = debounce(async (e, client) => {
     const { value } = e.target;
-    this.setState({ loading: true, adresseTag: value });
-    // On effectue une requête manuelle grâce à ApolloConsumer
-    const response = await client.query({
-      query: SEARCH_ARTICLES_QUERY,
-      variables: { searchTerm: value }
-    });
-    const { articles } = response.data;
-    this.setState(
-      {
-        articles,
-        loading: false
-      },
-      () => {
-        this.props.startSearch(articles);
-        setTimeout(() => {
-          this.setState({
-            adresseTag: ""
-          });
-        }, 2000);
-      }
-    );
+    if (this.state.adresses !== value) {
+      Router.push({
+        pathname: "/"
+      });
+    }
+    this.props.startSearch(value, client);
   }, 350);
   render() {
-    const { adresseTag } = this.state;
+    const { adresses } = this.state;
     return (
       <div>
         <ApolloConsumer>
@@ -87,10 +44,10 @@ class FiltersAdresses extends React.Component {
                 />
                 <span
                   className={classnames("adresseTag", {
-                    reveal: adresseTag !== ""
+                    reveal: adresses !== ""
                   })}
                 >
-                  {adresseTag}
+                  {adresses}
                 </span>
               </StyledAdresseTag>
             </>
@@ -102,4 +59,4 @@ class FiltersAdresses extends React.Component {
 }
 
 export default FiltersAdresses;
-export { SEARCH_ARTICLES_QUERY_ADRESSES };
+

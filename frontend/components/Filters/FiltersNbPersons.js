@@ -1,11 +1,9 @@
 import React from "react";
 import { ApolloConsumer } from "react-apollo";
-import gql from "graphql-tag";
 import debounce from "lodash.debounce";
 import classnames from "classnames";
 import Router from "next/router";
 
-import { perPage } from "../../config"
 import StyledNbPersonsTag from "../styles/StyledNbPersonsTag";
 
 class FiltersNbPersons extends React.Component {
