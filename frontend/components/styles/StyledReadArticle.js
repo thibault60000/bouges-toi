@@ -1,4 +1,32 @@
 import styled from "styled-components";
+import { ArrowBack } from "styled-icons/boxicons-regular/ArrowBack";
+
+const StyledTitleReadArticle = styled.h3`
+  display: inline-block;
+  width: fit-content;
+  font-size: 3.5rem;
+  margin: 0.3rem 0 0;
+  vertical-align: middle;
+`;
+const StyledBackButton = styled.button`
+  display: inline-block;
+  background: initial;
+  width: 4.8rem;
+  vertical-align: middle;
+  height: 3.7rem;
+  border: 2px solid #494949;
+  border-radius: 3px;
+  margin-right: 1.1rem;
+  padding: 0 0.5rem 0;
+  :hover {
+    cursor: pointer;
+    border: 2px solid #d9501e;
+    background-color: #d9501e;
+    svg {
+      color: white;
+    }
+  }
+`;
 
 const StyledReadArticle = styled.div`
   padding: 0.5rem;
@@ -65,19 +93,14 @@ const StyledReadArticle = styled.div`
   section.description {
     width: 100%;
     padding: 0.5rem;
-    h1 {
-      margin: 0.2rem 0 0.4rem;
-      max-width: 95%;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
     p.desc {
       max-width: 95%;
       overflow: hidden;
       text-overflow: ellipsis;
       font-style: italic;
       margin: 0.1rem 0 0.5rem;
-      color: #d9501e;
+      font-size: 1.6rem;
+      color: rgb(69, 75, 115);
     }
     div.articleDates {
       p {
@@ -151,4 +174,14 @@ const StyledReadArticle = styled.div`
   }
 `;
 
-export default StyledReadArticle;
+const PreviousIcon = styled(ArrowBack)`
+  height: 3.5rem;
+  color: #494949;
+`;
+
+export {
+  StyledReadArticle,
+  StyledTitleReadArticle,
+  PreviousIcon,
+  StyledBackButton
+};

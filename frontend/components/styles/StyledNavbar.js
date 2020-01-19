@@ -91,12 +91,15 @@ const StyledNavbar = styled.ul`
     /* Bouton 'Authentification' */
     &.authentication,
     &.authentication {
-      background-color: ${props => props.theme.bt_orange};
+      background-color: #d9501e;
+      border: 2px solid #d9501e;
       color: white;
-      border-radius: 2.4rem;
-      margin: 0 0.5rem;
+      border-radius: 3px;
+      margin: 0.4rem 0;
+      width: 150px;
       :hover {
-        opacity: 0.8;
+        background-color: white;
+        color: #d9501e;
       }
     }
     &:hover,

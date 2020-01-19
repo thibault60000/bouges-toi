@@ -19,40 +19,12 @@ import ExitArticlebutton from "./ExitArticlebutton";
 import ChatArticle from "./ChatArticle";
 
 // Styled
-import styled from "styled-components";
-import StyledReadArticle from "../styles/StyledReadArticle";
-import { ArrowBack } from "styled-icons/boxicons-regular/ArrowBack";
-
-const StyledTitleReadArticle = styled.h3`
-  display: inline-block;
-  width: fit-content;
-  font-size: 3.5rem;
-  margin: 0.3rem 0 0;
-  vertical-align: middle;
-`;
-const StyledBackButton = styled.button`
-  display: inline-block;
-  background: initial;
-  width: 4.8rem;
-  vertical-align: middle;
-  height: 3.7rem;
-  border: 2px solid #494949;
-  border-radius: 3px;
-  margin-right: 1.1rem;
-  padding: 0 0.5rem 0;
-  :hover {
-    cursor: pointer;
-    border: 2px solid #d9501e;
-    background-color: #d9501e;
-    svg {
-      color: white;
-    }
-  }
-`;
-const ArrowBackIcon = styled(ArrowBack)`
-  height: 3.5rem;
-  color: #494949;
-`;
+import {
+  StyledReadArticle,
+  StyledTitleReadArticle,
+  PreviousIcon,
+  StyledBackButton
+} from "../styles/StyledReadArticle";
 
 const READ_ARTICLE_QUERY = gql`
   query READ_ARTICLE_QUERY($id: ID!) {
@@ -98,7 +70,7 @@ function ReadArticle(props) {
           <>
             {/* Titre */}
             <StyledBackButton onClick={previous}>
-              <ArrowBackIcon />
+              <PreviousIcon />
             </StyledBackButton>
             <StyledTitleReadArticle
               style={{ fontSize: "3.8rem", textTransform: "Capitalize" }}
@@ -111,13 +83,12 @@ function ReadArticle(props) {
               <Head>
                 <title> Bouge toi ! Sortie : {article.title}</title>
               </Head>
-                {/* Image */}
-                <section className="articleImg">
-                  <img src={article.greatImage} alt={article.title} />
-                </section>
+              {/* Image */}
+              <section className="articleImg">
+                <img src={article.greatImage} alt={article.title} />
+              </section>
               {/* Descriptif */}
               <section className="description">
-                <h1> Description de l'évènement </h1>
                 <p className="desc"> {article.description}</p>
                 <div className="articleDates">
                   <p>

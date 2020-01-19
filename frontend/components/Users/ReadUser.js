@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import gql from "graphql-tag";
-
+import styled from "styled-components";
 import Link from "next/link";
 import Head from "next/head";
 import { Query } from "react-apollo";
@@ -37,6 +37,14 @@ const READ_USER_QUERY = gql`
   }
 `;
 
+const StyledUserArticleList = styled.ul`
+  display: flex;
+  max-width: 100%;
+  overflow: hidden;
+  overflow-x: auto;
+  padding: 1.1rem 0;
+`;
+
 class ReadUser extends Component {
   render() {
     return (
@@ -68,7 +76,7 @@ class ReadUser extends Component {
                 <strong>Membre de </strong>{" "}
                 <span> {user.memberOf.length} évènements </span>
               </p>
-              <ul style={{ display: "flex" }}>
+              <StyledUserArticleList>
                 {user.memberOf.map(article => (
                   <li
                     style={{
@@ -100,13 +108,13 @@ class ReadUser extends Component {
                     </Link>
                   </li>
                 ))}
-              </ul>
+              </StyledUserArticleList>
               {/* Créateur des articles */}
               <p>
                 <strong>Créateur de </strong>{" "}
                 <span>{user.articles.length} évènements </span>{" "}
               </p>
-              <ul style={{ display: "flex" }}>
+              <StyledUserArticleList>
                 {user.articles.map(article => (
                   <li
                     style={{
@@ -138,7 +146,7 @@ class ReadUser extends Component {
                     </Link>
                   </li>
                 ))}
-              </ul>
+              </StyledUserArticleList>
               <hr />
               <p>
                 {/* Est ADMIN de l'application */}
