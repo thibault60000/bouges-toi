@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 // React Hooks
 import { useRouter } from "next/router";
 
@@ -17,11 +15,14 @@ import Signout from "./Authentication/Signout";
 import CartCount from "./Cart/CartCount";
 
 // Styled
-import StyledNavbar from "./styles/StyledNavbar";
-import styled from "styled-components";
-import { ShoppingCart } from "styled-icons/typicons/ShoppingCart";
-import { Menu } from "styled-icons/boxicons-regular/Menu";
-import { Close } from "styled-icons/material/Close";
+import {
+  StyledNavbar,
+  MenuIcon,
+  CloseIcon,
+  ShoppingCartIcon,
+  StyledMenuButton,
+  StyledShoppingbutton
+} from "./styles/StyledNavbar";
 
 const LOCAL_STATE_QUERY_MENU_OPEN = gql`
   query {
@@ -32,51 +33,6 @@ const LOCAL_STATE_QUERY_MENU_OPEN = gql`
 const TOGGLE_MENU_MUTATION = gql`
   mutation {
     toggleMenu @client
-  }
-`;
-
-const MenuIcon = styled(Menu)`
-  color: #4f4949;
-`;
-const CloseIcon = styled(Close)`
-  color: #4f4949;
-`;
-
-const ShoppingCartIcon = styled(ShoppingCart)`
-  color: #4f4949;
-  width: 2.8rem;
-  margin-right: 0.5rem;
-`;
-
-const StyledMenuButton = styled.button`
-  position: absolute;
-  top: 8.5rem;
-  border: none;
-  background: initial;
-  outline: none;
-  right: 0;
-  width: 5rem;
-  height: 5rem;
-  transition-duration: 0.8s;
-  transition-property: top;
-  z-index: 15;
-  :hover {
-    cursor: pointer;
-  }
-  :hover svg {
-    color: ${props => props.theme.bt_orange};
-  }
-`;
-
-const StyledShoppingbutton = styled.button`
-  font-family: "robotoregular";
-  text-transform: "uppercase";
-  color: #4f4949;
-  :hover svg {
-    color: ${props => props.theme.bt_orange};
-  }
-  :hover div.count {
-    background-color: ${props => props.theme.bt_orange};
   }
 `;
 
@@ -93,9 +49,15 @@ function Navbar() {
   const router = useRouter();
   // Method: Go To Page
   const goToArticle = (href, toggleMenu) => {
-    console.log(toggleMenu);
-    console.log(href);
     router.push(`${href}`);
+    toggleMenu();
+  };
+  // Method : Go to My Account Page
+  const goToMyAccount = (id, toggleMenu) => {
+    router.push({
+      pathname: "/users/userPage",
+      query: { id: id }
+    });
     toggleMenu();
   };
   return (
@@ -114,12 +76,12 @@ function Navbar() {
                   <a onClick={() => goToArticle("/", toggleMenu)}> Accueil </a>
                   {me && me.permissions.includes("ADMIN") && (
                     <a onClick={() => goToArticle("/adminPage", toggleMenu)}>
-                      {" "}
-                      Admin{" "}
+                      Admin
                     </a>
                   )}
                   {me && (
                     <>
+                      {/* CREATION D'ARTICLES */}
                       <a
                         onClick={() =>
                           goToArticle("/articles/createArticlePage", toggleMenu)
@@ -127,26 +89,42 @@ function Navbar() {
                       >
                         Création
                       </a>
-                      <Link
-                        href={{
-                          pathname: "/users/userPage",
-                          query: { id: me.id }
-                        }}
+                      {/* MON COMPTE */}
+                      <a onClick={() => goToMyAccount(me.id, toggleMenu)}>
+                        Mon Compte
+                      </a>
+                      {/* ARTICLES */}
+                      <a
+                        onClick={() =>
+                          goToArticle("/articles/articles", toggleMenu)
+                        }
                       >
+                        Articles
+                      </a>
+                      {/* 
+                        <Link href="/commandes">
+                        <a> Commandes </a>
+                        </Link> 
+                      */}
+
+                      {/* OFFRES PAYANTES */}
+                      <a
+                        onClick={() =>
+                          goToArticle(
+                            "/premiumOffers/premiumOffersPage",
+                            toggleMenu
+                          )
+                        }
+                      >
+                        Offres payantes
+                      </a>
+
+                      {/*
+                        <Link href="/orders/orders">
                         <a> Mon Compte </a>
-                      </Link>
-                      <Link href="/articles/articles">
-                        <a> Articles </a>
-                      </Link>
-                      {/* <Link href="/commandes">
-              <a> Commandes </a>
-            </Link> */}
-                      <Link href="/premiumOffers/premiumOffersPage">
-                        <a> Offres payantes </a>
-                      </Link>
-                      {/* <Link href="/orders/orders">
-              <a> Mon Compte </a>
-            </Link> */}
+                        </Link> 
+                      */}
+
                       <Mutation mutation={TOGGLE_CART_MUTATION}>
                         {toggleCart => (
                           <StyledShoppingbutton onClick={toggleCart}>
@@ -165,15 +143,24 @@ function Navbar() {
                     </>
                   )}
 
+                  {/* INSCRIPTION */}
                   {!me && (
-                    <Link href="/signup">
-                      <a className="authentication"> Inscription </a>
-                    </Link>
+                    <a
+                      onClick={() => goToArticle("/signup", toggleMenu)}
+                      className="authentication"
+                    >
+                      Inscription
+                    </a>
                   )}
+
+                  {/* CONNEXION */}
                   {!me && (
-                    <Link href="/login">
-                      <a className="authentication"> Connexion </a>
-                    </Link>
+                    <a
+                      onClick={() => goToArticle("/login", toggleMenu)}
+                      className="authentication"
+                    >
+                      Connexion
+                    </a>
                   )}
                 </div>
               </StyledNavbar>

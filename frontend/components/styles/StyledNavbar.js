@@ -1,4 +1,52 @@
 import styled from "styled-components";
+import { ShoppingCart } from "styled-icons/typicons/ShoppingCart";
+import { Menu } from "styled-icons/boxicons-regular/Menu";
+import { Close } from "styled-icons/material/Close";
+
+const MenuIcon = styled(Menu)`
+  color: #4f4949;
+`;
+const CloseIcon = styled(Close)`
+  color: #4f4949;
+`;
+
+const ShoppingCartIcon = styled(ShoppingCart)`
+  color: #4f4949;
+  width: 2.8rem;
+  margin-right: 0.5rem;
+`;
+
+const StyledMenuButton = styled.button`
+  position: absolute;
+  top: 8.5rem;
+  border: none;
+  background: initial;
+  outline: none;
+  right: 0;
+  width: 5rem;
+  height: 5rem;
+  transition-duration: 0.8s;
+  transition-property: top;
+  z-index: 15;
+  :hover {
+    cursor: pointer;
+  }
+  :hover svg {
+    color: ${props => props.theme.bt_orange};
+  }
+`;
+
+const StyledShoppingbutton = styled.button`
+  font-family: "robotoregular";
+  text-transform: "uppercase";
+  color: #4f4949;
+  :hover svg {
+    color: ${props => props.theme.bt_orange};
+  }
+  :hover div.count {
+    background-color: ${props => props.theme.bt_orange};
+  }
+`;
 
 const StyledNavbar = styled.ul`
   /* Liste de liens */
@@ -78,4 +126,11 @@ const StyledNavbar = styled.ul`
     `}
 `;
 
-export default StyledNavbar;
+export {
+  StyledNavbar,
+  MenuIcon,
+  CloseIcon,
+  ShoppingCartIcon,
+  StyledMenuButton,
+  StyledShoppingbutton
+};
