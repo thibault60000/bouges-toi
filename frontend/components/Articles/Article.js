@@ -20,12 +20,14 @@ import {
 } from "../styles/Icons/ArticleIcons";
 
 const propTypes = {
-  article: PropTypes.object.isRequired
+  article: PropTypes.object.isRequired,
+  me: PropTypes.object.isRequired
 };
 
 function Article(props) {
   const { article, me } = props;
   const router = useRouter();
+  // Method: Go To Article
   const goToArticle = e => {
     e.preventDefault();
     router.push({
@@ -41,20 +43,10 @@ function Article(props) {
           <h4>
             {/* Titre  */}
             {article.title}
-            {/* <Link
-                href={{
-                  pathname: "/articles/article",
-                  query: { id: article.id }
-                }}
-              >
-                <a>
-                  
-                  <StylePageView />
-                </a>
-              </Link> */}
           </h4>
           {/* ARTICLE INFORMATIONS */}
           <p className="description"> {article.description}</p>
+          {/* NOMBRE DE PERSONNES  */}
           <p
             className="nbPersons"
             className={classnames("nbPersons", {
