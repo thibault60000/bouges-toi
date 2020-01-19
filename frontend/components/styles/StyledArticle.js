@@ -30,6 +30,9 @@ const StyledCritereChoice = styled.p`
   button {
     vertical-align: middle;
   }
+  strong {
+    text-decoration: underline;
+  }
 `;
 const StyledArticlesList = styled.ul`
   display: grid;
@@ -44,12 +47,15 @@ const StyledArticlesList = styled.ul`
 
 const StyledClearFilterBtn = styled.button`
   border: none;
-  margin-left: 0.3rem;
+  margin-left: 0.6rem;
   background: initial;
   cursor: pointer;
+  border-radius: 3px;
+  border: 1px solid lightgrey;
+  padding: 0.2rem 0.5rem;
   :hover {
     > svg {
-      color: #d9501e;
+      color: lightgrey;
     }
   }
 `;
@@ -72,6 +78,10 @@ const article = styled.li`
   border-radius: 5px;
   max-width: 100%;
   width: 100%;
+  :hover {
+    box-shadow: 0px 1px 10px 3px rgba(0, 0, 0, 0.52);
+    cursor: pointer;
+  }
   .firstInformations {
     display: flex;
     flex-direction: row;
@@ -137,7 +147,7 @@ const article = styled.li`
       .adresse {
         color: #d9501e;
         font-weight: bold;
-        margin: 1rem 0 0.5rem;
+        margin: 1rem 0 0;
 
         .localisation {
           display: inline-block;
@@ -145,8 +155,20 @@ const article = styled.li`
           border-radius: 3px;
           color: white;
           width: fit-content;
-          padding: 0.2rem 0.7rem;
+          padding: 0 0.6rem;
           margin-left: 0.4rem;
+          line-height: 2.5rem;
+          transition-duration: 0.5s;
+          transition-property: transform, padding, margin-left;
+          :hover {
+            transform: rotate(8deg);
+            margin-left: 0.4rem;
+            background-color: white;
+            color: #d9501e;
+            width: calc(fit-content - 4px);
+            line-height: calc(2.5rem - 4px);
+            border: 2px solid #d9501e;
+          }
         }
       }
     }

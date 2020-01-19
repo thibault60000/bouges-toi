@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const StyledNavbar = styled.ul`
+  /* Liste de liens */
   position: absolute;
   top: 0;
   left: 0;
@@ -9,6 +10,7 @@ const StyledNavbar = styled.ul`
   margin: 0 auto;
   z-index: 100;
   > div {
+    /* Container de liens */
     background-color: white;
     display: flex;
     position: absolute;
@@ -23,6 +25,7 @@ const StyledNavbar = styled.ul`
     transition-duration: 0.8s;
     transition-property: top, opacity;
   }
+  /* Liens et boutons */
   button:not(.menuBtn),
   a {
     background: none;
@@ -37,6 +40,7 @@ const StyledNavbar = styled.ul`
     :hover {
       color: ${props => props.theme.bt_orange};
     }
+    /* Bouton 'Authentification' */
     &.authentication,
     &.authentication {
       background-color: ${props => props.theme.bt_orange};
@@ -55,13 +59,14 @@ const StyledNavbar = styled.ul`
       }
     }
   }
+  /* Lorsque la liste de liens est ouverte */
   ${props =>
     !props.open &&
     `
     > div {
       opacity: 0;
-      left: 100%;
-      top: 0;
+      top: -50vh;
+      z-index: -1;
       transition-duration: 0.8s;
       transition-property: top, opacity;
     }

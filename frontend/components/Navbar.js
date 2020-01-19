@@ -88,7 +88,7 @@ const Navbar = () => (
                 {/* Burger Menu Bouton */}
                 {localState.data.menuOpen ? <CloseIcon /> : <MenuIcon />}
               </StyledMenuButton>
-              <div>
+              <div className="menuContent">
                 <Link href="/">
                   <a> Accueil </a>
                 </Link>
