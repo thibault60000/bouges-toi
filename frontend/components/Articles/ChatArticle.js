@@ -22,7 +22,7 @@ const StyledChatArticle = styled.div`
       display: flex;
       position: relative;
       padding: 0.7rem;
-      width: 50%;
+      width: fit-content;
     }
     &.left {
       justify-content: flex-start;

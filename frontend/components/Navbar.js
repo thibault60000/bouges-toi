@@ -108,7 +108,7 @@ function Navbar() {
                       */}
 
                       {/* OFFRES PAYANTES */}
-                      <a
+                      {/* <a
                         onClick={() =>
                           goToArticle(
                             "/premiumOffers/premiumOffersPage",
@@ -117,7 +117,7 @@ function Navbar() {
                         }
                       >
                         Offres payantes
-                      </a>
+                      </a> */}
 
                       {/*
                         <Link href="/orders/orders">
@@ -125,7 +125,7 @@ function Navbar() {
                         </Link> 
                       */}
 
-                      <Mutation mutation={TOGGLE_CART_MUTATION}>
+                      {/* <Mutation mutation={TOGGLE_CART_MUTATION}>
                         {toggleCart => (
                           <StyledShoppingbutton onClick={toggleCart}>
                             <ShoppingCartIcon /> Panier
@@ -137,7 +137,7 @@ function Navbar() {
                             />
                           </StyledShoppingbutton>
                         )}
-                      </Mutation>
+                      </Mutation> */}
 
                       <Signout />
                     </>

@@ -1,19 +1,15 @@
 import styled from "styled-components";
 
 const StyledReadArticle = styled.div`
-  padding: 1.5rem;
-  max-width: ${props => props.theme.maxWidth};
-  margin: 2rem auto;
-  box-shadow: ${props => props.theme.boxS};
+  padding: 0.5rem;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-direction: column;
   img {
     object-fit: cover;
   }
   section.articleImg {
-    width: 30%;
-    padding: 2.7rem;
+    width: 60%;
+    padding: 0.5rem;
     img {
       max-width: 100%;
       border-radius: 3px;
@@ -67,11 +63,21 @@ const StyledReadArticle = styled.div`
   }
 
   section.description {
-    width: 40%;
-    padding-right: 5rem;
+    width: 100%;
+    padding: 0.5rem;
+    h1 {
+      margin: 0.2rem 0 0.4rem;
+      max-width: 95%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
     p.desc {
-      margin: 0.2rem 0 2rem;
+      max-width: 95%;
+      overflow: hidden;
+      text-overflow: ellipsis;
       font-style: italic;
+      margin: 0.1rem 0 0.5rem;
+      color: #d9501e;
     }
     div.articleDates {
       p {
@@ -85,17 +91,15 @@ const StyledReadArticle = styled.div`
     }
   }
   section.participants {
-    width: 30%;
-
     p.nbParticipants {
-      background-color: rgb(69, 75, 115);
-      color: white;
+      color: rgb(69, 75, 115);
       font-weight: bold;
-      border-radius: 15px;
+      text-transform: uppercase;
+      border-radius: 3px;
+      border: 1px solid rgb(69, 75, 115);
       display: inline-block;
       font-size: 1.5rem;
-      padding: 0.5rem 1.7rem;
-      margin-top: 2.2rem;
+      padding: 0.4rem 1.3rem;
     }
     ul.participantsList {
       margin: 1.4rem 0 0;
