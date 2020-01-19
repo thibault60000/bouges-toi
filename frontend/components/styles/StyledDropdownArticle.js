@@ -36,9 +36,8 @@ const glow = keyframes`
 `;
 
 const StyledDropdownArticleSearch = styled.div`
-  position: relative;
-  max-width: 50%;
-  min-width: 550px;
+    width: 95%;
+    display: inline-block;
   div[role="combobox"] {
     position: relative;
   }
@@ -47,9 +46,22 @@ const StyledDropdownArticleSearch = styled.div`
     width: 100%;
     padding: 0.9rem 1.8rem;
     font-size: 1.9rem;
-    border: 2px solid #454b73;
+    border: 2px solid #d9501e;
     border-radius: 10rem;
-    color: #454b73;
+    margin-bottom: 1rem;
+    color: #d9501e;
+    &::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+      color: #454b73;
+      opacity: 1; /* Firefox */
+    }
+
+    &:-ms-input-placeholder { /* Internet Explorer 10-11 */
+      color: #454b73;
+    }
+
+    &::-ms-input-placeholder { /* Microsoft Edge */
+      color: #454b73;
+    }
     &.loading {
       animation: ${glow} 0.5s ease-in-out infinite alternate;
     }
@@ -57,7 +69,7 @@ const StyledDropdownArticleSearch = styled.div`
   .inputIcon {
     position: absolute;
     display: block;
-    background-color: #454b73;
+    background-color: #d9501e;
     width: 3.6rem;
     height: 3.6rem;
     top: 0.4rem;

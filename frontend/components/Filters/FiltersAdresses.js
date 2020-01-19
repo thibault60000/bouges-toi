@@ -28,7 +28,6 @@ class FiltersAdresses extends React.Component {
   render() {
     const { adresses } = this.state;
     return (
-      <div>
         <ApolloConsumer>
           {client => (
             <>
@@ -53,7 +52,6 @@ class FiltersAdresses extends React.Component {
             </>
           )}
         </ApolloConsumer>
-      </div>
     );
   }
 }

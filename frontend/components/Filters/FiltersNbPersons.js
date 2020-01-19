@@ -40,7 +40,6 @@ class FiltersNbPersons extends React.Component {
 
   render() {
     return (
-      <div>
         <ApolloConsumer>
           {client => (
             <StyledNbPersonsTag>
@@ -98,7 +97,6 @@ class FiltersNbPersons extends React.Component {
             </StyledNbPersonsTag>
           )}
         </ApolloConsumer>
-      </div>
     );
   }
 }

@@ -22,33 +22,44 @@ const StyledPagination = styled.div`
   text-align: center;
   margin: 1.5rem 0;
   & > * {
-    margin: 0;
-    padding: 0.8rem 1.6rem;
-    margin: 0 0.5rem;
-    border-radius: 3px;
+    color: #d9501e;
+    background-color: #ffffff;
+    border: 2px solid #d9501e;
+    border-radius: 2px;
+    padding: 0.2rem 0.5rem;
+    height: 3.5rem;
+    display: inline-block;
+    align-self: center;
+    justify-self: center;
+    margin-right: 0.4rem;
+    :hover {
+      cursor: pointer;
+    }
   }
   a[aria-disabled="true"] {
     color: #bdbdbd;
     background-color: #f3f3f3;
+    border: 2px solid #f3f3f3;
     pointer-events: none;
   }
   .previous,
   .next {
-    background-color: #673ab7;
-    color: white;
+    color: #4f5770;
+    font-weight: bold;
   }
   .previous :hover,
   .next:hover {
-    opacity: 0.8;
+    background-color: #d9501e;
+    color: white;
   }
   .pageNumber {
-    border: 2px solid lightgrey;
+    border: 2px solid #d9501e;
     font-weight: bold;
-    color: #3D4EDE;
+    color: #d9501e;
   }
   .total {
-    color: #FFC50D;
-    border: 2px solid lightgrey;
+    color: #d9501e;
+    border: 2px solid #d9501e;
     font-weight: bold;
   }
 `;

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const StyledNbPersonsTag = styled.div`
+  margin-top: 1rem;
   input[type="radio"] {
     opacity: 0;
     position: fixed;
@@ -8,23 +9,22 @@ const StyledNbPersonsTag = styled.div`
   }
   label {
     display: inline-block;
-    background-color: #ddd;
-    padding: 10px 20px;
+    padding: 0.4rem 1.4rem;
     font-family: sans-serif, Arial;
-    font-size: 16px;
-    border: 2px solid #444;
+    font-size: 1.6rem;
+    border: 2px solid #4f5770;
     border-radius: 4px;
-  }
-  input[type="radio"]:checked + label {
-    background-color: #bfb;
-    border-color: #4c4;
-  }
-  input[type="radio"].error:checked + label {
-    background-color: #f57167;
-    border-color: #e21708;
+    font-weight: bold;
+    color: #4f5770;
+    margin-right: 0.4rem;
+    :hover {
+      cursor: pointer;
+    }
   }
   input[type="radio"]:focus + label {
-    border: 2px dashed #444;
+    border: 2px solid #d9501e;
+    background-color: #d9501e;
+    color: white;
   }
 `;
 

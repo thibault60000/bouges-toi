@@ -11,7 +11,7 @@ import formatMoney from "../../lib/formatMoney";
 import TakeMyMoney from "../TakeMyMoney";
 import { ArrowBack } from "styled-icons/boxicons-regular/ArrowBack";
 
-const LOCAL_STATE_QUERY = gql`
+const LOCAL_STATE_QUERY_CART_OPEN = gql`
   query {
     cartOpen @client
   }
@@ -42,7 +42,7 @@ const Composed = adopt({
   toggleCart: ({ render }) => (
     <Mutation mutation={TOGGLE_CART_MUTATION}>{render}</Mutation>
   ),
-  localState: ({ render }) => <Query query={LOCAL_STATE_QUERY}>{render}</Query>
+  localState: ({ render }) => <Query query={LOCAL_STATE_QUERY_CART_OPEN}>{render}</Query>
 });
 
 // Cart Component
@@ -100,4 +100,4 @@ const Cart = () => {
 };
 
 export default Cart;
-export { LOCAL_STATE_QUERY, TOGGLE_CART_MUTATION };
+export { LOCAL_STATE_QUERY_CART_OPEN, TOGGLE_CART_MUTATION };

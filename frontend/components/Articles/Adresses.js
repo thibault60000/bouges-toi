@@ -23,7 +23,6 @@ const StyledAutoSuggest = styled.div`
     font-family: "robotoregular";
     font-size: 1.8rem;
     line-height: 2.7rem;
-
   }
   .react-autosuggest__suggestion:hover {
     font-weight: bold;

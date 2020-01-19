@@ -3,7 +3,13 @@ import { Query } from "react-apollo";
 import gql from "graphql-tag";
 
 // Styled
-import { StyledArticlesList, StyledPageSlogan } from "../styles/StyledArticle";
+import {
+  StyledArticlesList,
+  StyledPageSlogan,
+  StyledCritereChoice,
+  StyledClearFilterBtn
+} from "../styles/StyledArticle";
+import { CrossIcon } from "../styles/Icons/ArticleIcons";
 
 import Article from "../Articles/Article";
 import ArticleNbPersonsPagination from "../Paginations/ArticleNbPersonsPagination";
@@ -65,10 +71,15 @@ class NbPersonsSearch extends Component {
               <StyledPageSlogan>
                 Filtre par nombre de personnes
               </StyledPageSlogan>
-              <p>
-                <strong> Critère choisi : </strong> {min} à {max}
-                <button onClick={clearFilter}> X </button>
-              </p>
+              <StyledCritereChoice>
+                <strong> Critère choisi : </strong>{" "}
+                <span>
+                  {min} à {max}
+                </span>
+                <StyledClearFilterBtn onClick={clearFilter}>
+                  <CrossIcon />
+                </StyledClearFilterBtn>
+              </StyledCritereChoice>
 
               {/* Pagination 1 */}
               <ArticleNbPersonsPagination min={min} max={max} page={page} />

@@ -6,7 +6,9 @@ import gql from "graphql-tag";
 import {
   StyledArticlesList,
   StyledPageSlogan,
-  StyledTimeIcon
+  StyledTimeIcon,
+  StyledCritereChoice,
+  StyledClearFilterBtn
 } from "../styles/StyledArticle";
 
 import Article from "../Articles/Article";

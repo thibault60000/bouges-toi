@@ -59,15 +59,15 @@ class PaginationNbPersons extends Component {
               >
                 <a className="previous" aria-disabled={page <= 1}>
                   {" "}
-                  <StyledLeftArrow /> Précédent{" "}
+                  <StyledLeftArrow /> Préc.{" "}
                 </a>
               </Link>
               {/* Page actuelle */}
               <p className="pageNumber">
-                {this.props.page} sur {pages}
+                Page {this.props.page} / {pages}
               </p>
               {/* Nombre d'articles */}
-              <p className="total">{count} évènements au total </p>
+              <p className="total">{count} Events. </p>
               {/* Suivant */}
               <Link
                 prefetch
@@ -78,7 +78,7 @@ class PaginationNbPersons extends Component {
               >
                 <a className="next" aria-disabled={page >= pages}>
                   {" "}
-                  Suivant <StyledRightArrow />{" "}
+                  Suiv. <StyledRightArrow />{" "}
                 </a>
               </Link>
             </StyledPagination>

@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 
-import { StyledArticlesList, StyledPageSlogan } from "../styles/StyledArticle";
+import { StyledArticlesList, StyledPageSlogan, StyledCritereChoice, StyledClearFilterBtn } from "../styles/StyledArticle";
+import { CrossIcon } from "../styles/Icons/ArticleIcons";
 
 import Article from "../Articles/Article";
 import ArticleAdressesPagination from "../Paginations/ArticleAdressesPagination";
@@ -57,10 +58,12 @@ class AdressesSearch extends Component {
             <>
               {/* Title */}
               <StyledPageSlogan>Filtre par Adresse</StyledPageSlogan>
-              <p>
-                <strong> Critère choisi : </strong> " {adresses} "
-                <button onClick={clearFilter}> X </button>
-              </p>
+              <StyledCritereChoice>
+              <strong> Critère choisi : </strong> <span>" {adresses} "</span>
+                <StyledClearFilterBtn onClick={clearFilter}>
+                  <CrossIcon />
+                </StyledClearFilterBtn>
+              </StyledCritereChoice>
 
               {/* Pagination 1 */}
               <ArticleAdressesPagination adresses={adresses} page={page} />

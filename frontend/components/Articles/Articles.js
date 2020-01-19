@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { ApolloConsumer } from "react-apollo";
+import styled from "styled-components";
 import { adopt } from "react-adopt";
 import isEmpty from "lodash.isempty";
 
@@ -24,6 +25,22 @@ import AdressesSearch, {
 
 import { perPage } from "../../config";
 import Search from "../Search";
+
+// Icons
+import { LocationCity } from "styled-icons/material/LocationCity";
+import { ListNumbered } from "styled-icons/icomoon/ListNumbered";
+
+const LocationCityIcon = styled(LocationCity)`
+  height: 1.8rem;
+  vertical-align: middle;
+  margin-right: 0.5rem;
+`;
+
+const NumbersIcon = styled(ListNumbered)`
+  height: 1.5rem;
+  vertical-align: middle;
+  margin-right: 0.5rem;
+`;
 
 const Composed = adopt({
   // User Component
@@ -94,10 +111,20 @@ class Articles extends Component {
                   {/* SearchBar */}
                   <Search />
                   {/* Filters */}
+                  <h3>
+                    {" "}
+                    <NumbersIcon />
+                    Nombre de personnes{" "}
+                  </h3>
                   <FiltersNbPersons
                     startSearch={this.startSearchNbPersons}
                     client={client}
                   />
+                  <h3 className="location">
+                    {" "}
+                    <LocationCityIcon />
+                    Adresse{" "}
+                  </h3>
                   <FiltersAdresses
                     client={client}
                     startSearch={this.startSearchByAdresses}

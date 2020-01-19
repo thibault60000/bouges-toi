@@ -19,33 +19,25 @@ Router.onRouteChangeError = () => {
 
 const StyledTitle = styled.h1`
   font-size: 4rem;
-  margin-left: 1.5rem;
-  position: relative;
-  transform: skew(-6deg);
-  z-index: 2;
+  display: inline-block;
+  margin: 0.5rem;
+  z-index: 10;
   a {
-    padding: 0.3rem 0.6rem;
-    background: ${props => props.theme.violet};
+    padding: 0.4rem 0.6rem;
+    border-radius: 3px;
+    background: ${props => props.theme.bt_red};
     text-transform: uppercase;
     color: ${props => props.theme.whiteText} !important;
     text-decoration: none;
   }
-  @media (max-width: 1200px) {
-    font-size: 2rem;
-  
-  }
+
 `;
 
 const StyledHeader = styled.header`
   .navbar {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    justify-content: space-between;
-    align-items: stretch;
-    @media (max-width: 1200px) {
-      grid-template-columns: 1fr;
-      justify-content: center;
-    }
+    margin: 0 auto;
+    padding: 0.5rem;
+    position: relative;
   }
   .sub-navbar {
     display: grid;
@@ -65,7 +57,7 @@ const Header = () => (
       <Navbar />
     </div>
     {/* Panier */}
-    <Cart />
+    {/* <Cart /> */}
   </StyledHeader>
 );
 

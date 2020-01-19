@@ -29,14 +29,14 @@ const StyledDotAnimation = styled.span`
 `;
 const Dot = styled.div`
   font-size: 1.1rem;
-  background: #454b73;
+  background: #4f4949;
   color: white;
   margin-top: -2rem;
   border-radius: 50%;
   padding: 0.4rem;
   line-height: 1.4rem;
   min-width: 2.3rem;
-  margin-left: -0.4rem;
+  margin-left: 0.5rem;
   font-family: "robotolight";
   font-feature-settings: "tnum";
   font-variant-numeric: tabular-nums;

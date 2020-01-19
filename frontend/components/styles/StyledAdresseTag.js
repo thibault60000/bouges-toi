@@ -3,6 +3,29 @@ import styled from "styled-components";
 const StyledAdresseTag = styled.p`
   position: relative;
   display: inline-block;
+  margin: 0.5em 0 0;
+  input {
+    display: inline-block;
+    padding: 0.4rem 1.4rem;
+    font-family: sans-serif,Arial;
+    font-size: 1.6rem;
+    border: 2px solid #4f5770;
+    border-radius: 4px;
+    color: #4f5770;
+    margin-right: 0.4rem;
+    &::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+      color: #454b73;
+      opacity: 1; /* Firefox */
+    }
+
+    &:-ms-input-placeholder { /* Internet Explorer 10-11 */
+      color: #454b73;
+    }
+
+    &::-ms-input-placeholder { /* Microsoft Edge */
+      color: #454b73;
+    }
+  }
   .adresseTag {
     display: inline-block;
     position: absolute;
