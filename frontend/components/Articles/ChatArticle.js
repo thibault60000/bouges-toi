@@ -13,7 +13,6 @@ const StyledChatArticle = styled.div`
   display: flex;
   flex-direction: column;
   & > div.container {
-    display: flex;
     width: 100%;
     margin-bottom: 1.5rem;
     > div {
@@ -22,7 +21,6 @@ const StyledChatArticle = styled.div`
       display: flex;
       position: relative;
       padding: 0.7rem;
-      width: fit-content;
     }
     &.left {
       justify-content: flex-start;

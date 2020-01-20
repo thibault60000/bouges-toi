@@ -1,7 +1,8 @@
 import App, { Container } from "next/app";
 import { ApolloProvider } from "react-apollo";
+import { ApolloProvider as ApolloHooksProvider } from "@apollo/react-hooks";
 import { createGlobalStyle } from "styled-components";
-import * as Sentry from '@sentry/browser';
+import * as Sentry from "@sentry/browser";
 
 import Page from "../components/Page";
 import withData from "../lib/withData";
@@ -10,7 +11,6 @@ import withData from "../lib/withData";
 Sentry.init({
   dsn: "https://1e0c685fd42d444bb935c3821411e5c6@sentry.io/1540930"
 });
-
 
 class MonApp extends App {
   // getInitialProps
@@ -40,10 +40,12 @@ class MonApp extends App {
     return (
       <Container>
         <ApolloProvider client={apollo}>
-          <Page client={apollo}>
-            <GlobalStyle />
-            <Component {...pageProps} />
-          </Page>
+          <ApolloHooksProvider client={apollo}>
+            <Page client={apollo}>
+              <GlobalStyle />
+              <Component {...pageProps} />
+            </Page>
+          </ApolloHooksProvider>
         </ApolloProvider>
       </Container>
     );

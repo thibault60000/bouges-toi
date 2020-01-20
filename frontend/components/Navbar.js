@@ -2,7 +2,7 @@
 import { useRouter } from "next/router";
 
 // Apollo Resolvers
-import gql from "graphql-tag";
+import {gql} from "apollo-boost";
 import { Mutation, Query } from "react-apollo";
 import { TOGGLE_CART_MUTATION } from "./Cart/Cart";
 
