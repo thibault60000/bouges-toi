@@ -22,13 +22,7 @@ bougestoi.contact@gmail.com
 Postmark
 
 ### TWITTER
-bougestoi.contact@gmail.com
-
-### FACEBOOK
- - AUTH : bougestoi
- - Contact mail : thibault60000@gmail.com
- - ID de l’app : 2497386717161081
- - AppSecret : b3d0fbf44f3968efdd83abb3593830c3
+-
 
 ### DRIBBLE
 -
@@ -43,59 +37,52 @@ bougestoi.contact@gmail.com
 ### GOOGLE (gmail/auth/youtube)
 Maps JavaScript API
 bougestoi.contact@gmail.com
-- Mail Client : thibault60000@gmail.com 
-- ID Client : 490758671748-e7t4bs8rbisrr6kk2crfdurqsfjtees8.apps.googleusercontent.com
-- Secret 7XjMhs4TqkRIIKH8okz02dYu
 
 ### KICKSTARTER
+-
 
 ### OVH 
-thibault jeanpierre  (jt65186-ovh)
+-
 
-### HEROKU 
-https://dashboard.heroku.com/apps
-
+### HEROKU
+-
 
 ## DOCUMENTATION :page_facing_up: 
 
 ###  Inscrire une deuxième clé SSH sur son PC : 
-https://medium.com/@thibault60000/cr%C3%A9er-cl%C3%A9-ssh-2-comptes-git-sur-windows-19702d1f62d7
+-
 
 ###  APOLLO : Client Front
-https://www.apollographql.com/docs/react/
+-
 
 ### MAILTRAP : Safe Email Testing 
-https://mailtrap.io/
+-
 
 ###   GRAPHQL : Système de requêtage 
-https://graphql.org/learn/
+-
 
 ###   PRISMA : ORM GraphQL + BDD
-https://www.prisma.io/
+-
 
 ###  YOGA SERVER : Serveur Express / GraphQL
-https://github.com/prisma/graphql-yoga
+-
 
 ###  NEXT.JS : FrontEnd (SSR)
-https://nextjs.org/
+-
 
 ###  HEROKU (Déploiement, hypothèse 1)
-https://www.heroku.com/
+
 
 ###  STRIPE : Système de paiement
-https://stripe.com/en-fr
-Fausse CB : 4242 4242 4242 4242   02/22 222
+-
 
 ### CRYPTO
-Le module de cryptage fournit des fonctionnalités cryptographiques comprenant un ensemble de wrappers pour les fonctions de hachage, HMAC, chiffrement, déchiffrement, signature et vérification d'OpenSSL.
+-
 
 ### STYLED 
- - Styled Components : 
- - Styled Icons : https://styled-icons.js.org/?s=search
-### PROMISIFY
-Convertit une fonction callback en une fonction basée sur une Promise.
-
+-
 ## DEPLOIEMENT
+-
 
 ### Prisma Server
  - MySQL
